@@ -48,3 +48,9 @@ $ 1startup-client.bat
 ```console
 $ npm i vue-router@next
 ```
+
+#### vue-sweetalert2
+
+```console
+$ npm i vue-sweetalert2
+```

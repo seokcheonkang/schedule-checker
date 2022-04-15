@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+// swal[
+import swal from 'sweetalert2';
+swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Under Construction...',
+  footer: '<a href="/">Return to Home</a>',
+});
+// swal]
+</script>
 
 <template>
   <div>Under Construction...</div>
