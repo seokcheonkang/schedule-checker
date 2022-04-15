@@ -6,7 +6,13 @@
 
 #### Visual Studio Code EXTENSIONS
 
--
+- Vue Language Features (Volar)
+
+- HTML CSS Support
+
+- Auto Rename Tag
+
+- indent-rainbow
 
 ### [Node.js](https://nodejs.org/ko)
 
@@ -27,4 +33,10 @@ $ npm init vite@latest -y
 $ cd client
 $ npm i
 $ npm run dev
+```
+
+### run vue (alternative)
+
+```
+$ 1startup-client.bat
 ```
