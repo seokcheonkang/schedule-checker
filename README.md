@@ -40,3 +40,11 @@ $ npm run dev
 ```
 $ 1startup-client.bat
 ```
+
+### add modules
+
+#### vue-router
+
+```console
+$ npm i vue-router@next
+```
