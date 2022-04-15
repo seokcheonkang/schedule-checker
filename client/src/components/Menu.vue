@@ -18,6 +18,9 @@ function setActive() {
           <li class="nav-item">
             <router-link to="/about" :class="active" @click="setActive">About</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/board" :class="active" @click="setActive">Board</router-link>
+          </li>
         </ul>
       </div>
     </div>
