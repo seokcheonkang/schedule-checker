@@ -1,0 +1,6 @@
+.chkWithText {
+  position: relative;
+  top: 1.5px;
+  cursor: pointer;
+  margin-right: 0.25rem !important;
+}

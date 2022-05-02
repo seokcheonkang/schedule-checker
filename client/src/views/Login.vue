@@ -22,7 +22,8 @@ onMounted(() => {
             <label for="floatingPassword">비밀번호</label>
           </div>
           <div class="checkbox mb-3">
-            <label> <input type="checkbox" value="remember-me" />이메일 기억하기 </label>
+            <input type="checkbox" value="remember-me" class="chkWithText" />
+            <span>이메일 기억하기</span>
           </div>
           <button class="w-100 btn btn-lg btn-dark" type="button">로그인</button>
           <hr class="my-4" />
