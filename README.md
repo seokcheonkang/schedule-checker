@@ -41,6 +41,12 @@ $ npm run dev
 $ 1startup-client.bat
 ```
 
+### buld vue (alternative)
+
+```
+$ 2build-client.bat
+```
+
 ### add modules
 
 #### vue-router
