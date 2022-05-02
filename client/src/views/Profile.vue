@@ -4,12 +4,20 @@ import swal from 'sweetalert2';
 // swal]
 
 const leave = () => {
-  swal.fire({
-    icon: 'warning',
-    title: 'Delete Account',
-    text: 'Are you want to delete your account?',
-    footer: '<a href="/">Return to Home</a>',
-  });
+  swal
+    .fire({
+      title: '정말 회원을 탈퇴하시겠습니까?',
+      showDenyButton: true,
+      confirmButtonText: '예',
+      denyButtonText: '아니오',
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        swal.fire('완료되었습니다.', '', 'success');
+      } else if (result.isDenied) {
+        swal.fire('취소하셨습니다.', '', 'info');
+      }
+    });
 };
 </script>
 
