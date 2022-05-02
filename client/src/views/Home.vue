@@ -15,7 +15,7 @@
       <div class="d-flex gap-2 w-100 justify-content-between">
         <div>
           <h6 class="mb-0">긴급 요청 사항입니다.</h6>
-          <p class="mb-0 opacity-75">오늘까지 작성해주세요.</p>
+          <p class="mb-0 opacity-75">2022-05-02 23:59:59</p>
         </div>
         <small class="opacity-50 text-nowrap">
           <span class="badge bg-warning text-dark">New</span>
@@ -32,8 +32,8 @@
       />
       <div class="d-flex gap-2 w-100 justify-content-between">
         <div>
-          <h6 class="mb-0">축하드립니다.</h6>
-          <p class="mb-0 opacity-75">홍길동님이 사내우수상을 수상하셨습니다.</p>
+          <h6 class="mb-0">자격증 업데이트 부탁드립니다.</h6>
+          <p class="mb-0 opacity-75">2022-05-31 23:59:59</p>
         </div>
         <small class="opacity-50 text-nowrap">1일전</small>
       </div>
@@ -48,8 +48,8 @@
       />
       <div class="d-flex gap-2 w-100 justify-content-between">
         <div>
-          <h6 class="mb-0">알립니다.</h6>
-          <p class="mb-0 opacity-75">환영합니다. 드디어 오픈했습니다.</p>
+          <h6 class="mb-0">개인 영수증 정산 신청바랍니다.</h6>
+          <p class="mb-0 opacity-75">2022-05-03 23:59:59</p>
         </div>
         <small class="opacity-50 text-nowrap">1주전</small>
       </div>

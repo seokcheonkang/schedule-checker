@@ -37,20 +37,7 @@ const toggleShowMobileMenu = () => {
       <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" v-show="isShowMobileMenu">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/">홈</router-link>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="true"
-              >게시판</a
-            >
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown01">
-              <li>
-                <router-link class="dropdown-item" to="/notice">공지사항</router-link>
-              </li>
-              <li>
-                <router-link class="dropdown-item" to="/schedule">스케줄</router-link>
-              </li>
-            </ul>
+            <router-link class="nav-link" aria-current="page" to="/schedule">스케줄</router-link>
           </li>
         </ul>
         <div class="d-flex">

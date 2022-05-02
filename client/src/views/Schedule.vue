@@ -9,26 +9,30 @@
         <th scope="col" class="text-nowrap">이름</th>
         <th scope="col" class="text-nowrap">제목</th>
         <th scope="col" class="text-nowrap">날짜</th>
+        <th scope="col" class="text-nowrap">마감일시</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <th scope="row">3</th>
-        <td>김철수</td>
-        <td>안녕하세요.</td>
+        <td>관리자</td>
+        <td>긴급 요청 사항입니다.</td>
         <td>2022-05-02 00:00:03</td>
+        <td>2022-05-02 23:59:59</td>
       </tr>
       <tr>
         <th scope="row">2</th>
-        <td>홍길동</td>
-        <td>첫 게시물입니다.</td>
+        <td>관리자</td>
+        <td>자격증 업데이트 부탁드립니다.</td>
         <td>2022-05-02 00:00:02</td>
+        <td>2022-05-31 23:59:59</td>
       </tr>
       <tr>
         <th scope="row">1</th>
         <td>관리자</td>
-        <td>환영합니다.</td>
+        <td>개인 영수증 정산 신청바랍니다.</td>
         <td>2022-05-02 00:00:01</td>
+        <td>2022-05-03 23:59:59</td>
       </tr>
     </tbody>
   </table>

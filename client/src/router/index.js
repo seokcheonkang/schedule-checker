@@ -7,7 +7,6 @@ import Profile from '../views/Profile.vue';
 import Join from '../views/Join.vue';
 import Find from '../views/Find.vue';
 
-import Notice from '../views/Notice.vue';
 import Schedule from '../views/Schedule.vue';
 
 const routes = [
@@ -35,11 +34,6 @@ const routes = [
     path: '/find',
     name: 'Find',
     component: Find,
-  },
-  {
-    path: '/notice',
-    name: 'Notice',
-    component: Notice,
   },
   {
     path: '/schedule',
