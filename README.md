@@ -1,4 +1,4 @@
-# vue
+# schedule-checker
 
 ## installation
 
