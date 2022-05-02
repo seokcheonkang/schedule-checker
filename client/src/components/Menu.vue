@@ -1,4 +1,7 @@
 <script setup>
+// ref
+import { ref } from 'vue';
+
 // swal[
 import swal from 'sweetalert2';
 // swal]
@@ -11,6 +14,11 @@ const logout = () => {
     footer: '<a href="/" class="btn btn-warning">홈으로</a>',
   });
 };
+
+let isShowMobileMenu = ref(true);
+const toggleMobileMenu = () => {
+  isShowMobileMenu.value = !isShowMobileMenu.value;
+};
 </script>
 
 <template>
@@ -18,10 +26,16 @@ const logout = () => {
     <div class="container-fluid">
       <!-- <a class="navbar-brand" href="./index.html">Schedule Checker</a> -->
       <router-link class="navbar-brand" to="/">Schedule Checker</router-link>
-      <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler p-0 border-0"
+        type="button"
+        id="navbarSideCollapse"
+        aria-label="Toggle navigation"
+        @click="toggleMobileMenu"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" v-show="isShowMobileMenu">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/">홈</router-link>
