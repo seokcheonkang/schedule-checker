@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  document.querySelector('#floatingEmail').focus();
+});
+</script>
 
 <template>
   <h1 class="text-center">Login</h1>
@@ -8,7 +14,7 @@
         <form class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">로그인</h4>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" autofocus />
+            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" />
             <label for="floatingEmail">이메일</label>
           </div>
           <div class="form-floating mb-3">

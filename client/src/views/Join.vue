@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  document.querySelector('#floatingName').focus();
+});
+</script>
 
 <template>
   <h1 class="text-center">Join</h1>
@@ -8,7 +14,7 @@
         <form class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">회원가입</h4>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingName" placeholder="홍길동" autofocus />
+            <input type="text" class="form-control" id="floatingName" placeholder="홍길동" />
             <label for="floatingName">이름</label>
           </div>
           <div class="form-floating mb-3">

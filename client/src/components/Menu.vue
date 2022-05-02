@@ -2,9 +2,8 @@
 // ref
 import { ref } from 'vue';
 
-// swal[
+// swal
 import swal from 'sweetalert2';
-// swal]
 
 const logout = () => {
   swal.fire({
@@ -16,7 +15,7 @@ const logout = () => {
 };
 
 let isShowMobileMenu = ref(true);
-const toggleMobileMenu = () => {
+const toggleShowMobileMenu = () => {
   isShowMobileMenu.value = !isShowMobileMenu.value;
 };
 </script>
@@ -31,7 +30,7 @@ const toggleMobileMenu = () => {
         type="button"
         id="navbarSideCollapse"
         aria-label="Toggle navigation"
-        @click="toggleMobileMenu"
+        @click="toggleShowMobileMenu"
       >
         <span class="navbar-toggler-icon"></span>
       </button>

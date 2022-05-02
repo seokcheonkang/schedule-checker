@@ -1,21 +1,20 @@
 <script setup>
-// swal[
+// swal
 import swal from 'sweetalert2';
-// swal]
 
 const leave = () => {
   swal
     .fire({
-      title: '정말 회원을 탈퇴하시겠습니까?',
+      title: '정말 탈퇴하시겠습니까?',
       showDenyButton: true,
       confirmButtonText: '예',
       denyButtonText: '아니오',
     })
     .then((result) => {
       if (result.isConfirmed) {
-        swal.fire('완료되었습니다.', '', 'success');
+        swal.fire('완료했습니다.', '', 'success');
       } else if (result.isDenied) {
-        swal.fire('취소하셨습니다.', '', 'info');
+        swal.fire('취소했습니다.', '', 'info');
       }
     });
 };
