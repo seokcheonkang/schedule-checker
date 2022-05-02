@@ -1,30 +1,61 @@
-<script setup>
-// setActive[
-let active = 'nav-link';
-function setActive() {
-  active = 'nav-link active';
-}
-// setActive]
-</script>
+<script setup></script>
 
 <template>
-  <div class="navbar navbar-expand-lg navbar-dark bg-dark overflow-hidden">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
     <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- <a class="navbar-brand" href="./index.html">Schedule Checker</a> -->
+      <router-link class="navbar-brand" to="/">Schedule Checker</router-link>
+      <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/" :class="active" @click="setActive">Home</router-link>
+            <router-link class="nav-link" aria-current="page" to="/">홈</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/about" :class="active" @click="setActive">About</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/board" :class="active" @click="setActive">Board</router-link>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="true"
+              >게시판</a
+            >
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown01">
+              <li>
+                <router-link class="dropdown-item" to="/notice">공지사항</router-link>
+              </li>
+              <li>
+                <router-link class="dropdown-item" to="/schedule">스케줄</router-link>
+              </li>
+            </ul>
           </li>
         </ul>
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="dropdown02"
+                data-bs-toggle="dropdown"
+                aria-expanded="true"
+              >
+                <img id="profile_img" src="http://picsum.photos/20" class="rounded-circle" alt="사용자 이미지" />
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right" aria-labelledby="dropdown02">
+                <li>
+                  <router-link class="dropdown-item" to="/profile">프로필</router-link>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">로그아웃</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex">
+          <router-link class="btn btn-outline-light" id="btnLogin" to="/login">로그인</router-link>
+        </div>
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 
 <style scoped></style>

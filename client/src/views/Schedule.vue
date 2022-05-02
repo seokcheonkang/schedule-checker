@@ -11,6 +11,7 @@ swal.fire({
 </script>
 
 <template>
+  <h1 class="text-center">Schedule</h1>
   <div>Under Construction...</div>
 </template>
 

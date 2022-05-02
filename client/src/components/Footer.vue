@@ -7,21 +7,8 @@ let copyright = `Copyright ${yyyy} ${author} All rights reserved.`;
 </script>
 
 <template>
-  <div class="container-fluid">
-    <div class="py-3 my-4">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item">
-          <router-link to="/" class="nav-link px-2 text-muted">Home</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/about" class="nav-link px-2 text-muted">About</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/board" class="nav-link px-2 text-muted">Board</router-link>
-        </li>
-      </ul>
-      <p class="text-center text-muted">{{ copyright }}</p>
-    </div>
+  <div class="my-1 border-top">
+    <p class="text-center text-muted">{{ copyright }}</p>
   </div>
 </template>
 

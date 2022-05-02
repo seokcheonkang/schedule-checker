@@ -7,14 +7,15 @@ import Footer from './components/Footer.vue';
   <header>
     <Menu />
   </header>
-  <nav></nav>
-  <main>
-    <router-view />
-  </main>
-  <aside></aside>
-  <footer>
-    <Footer />
-  </footer>
+  <div class="container py-2">
+    <main>
+      <router-view />
+    </main>
+    <aside></aside>
+    <footer>
+      <Footer />
+    </footer>
+  </div>
 </template>
 
 <style scoped></style>

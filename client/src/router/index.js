@@ -1,7 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import Home from '../views/Home.vue';
-import About from '../views/About.vue';
-import Board from '../views/Board.vue';
+
+import Login from '../views/Login.vue';
+import Profile from '../views/Profile.vue';
+import Join from '../views/Join.vue';
+import Find from '../views/Find.vue';
+
+import Notice from '../views/Notice.vue';
+import Schedule from '../views/Schedule.vue';
 
 const routes = [
   {
@@ -10,14 +17,34 @@ const routes = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   {
-    path: '/board',
-    name: 'Board',
-    component: Board,
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+  },
+  {
+    path: '/join',
+    name: 'Join',
+    component: Join,
+  },
+  {
+    path: '/find',
+    name: 'Find',
+    component: Find,
+  },
+  {
+    path: '/notice',
+    name: 'Notice',
+    component: Notice,
+  },
+  {
+    path: '/schedule',
+    name: 'Schedule',
+    component: Schedule,
   },
 ];
 
