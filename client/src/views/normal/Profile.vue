@@ -21,7 +21,7 @@ const leave = () => {
 </script>
 
 <template>
-  <h1 class="text-center">Profile</h1>
+  <h1 class="text-center">프로필</h1>
   <div class="container">
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">

@@ -13,11 +13,6 @@ const logout = () => {
     footer: '<a href="/" class="btn btn-warning">홈으로</a>',
   });
 };
-
-let isShowMobileMenu = ref(true);
-const toggleShowMobileMenu = () => {
-  isShowMobileMenu.value = !isShowMobileMenu.value;
-};
 </script>
 
 <template>
@@ -30,14 +25,30 @@ const toggleShowMobileMenu = () => {
         type="button"
         id="navbarSideCollapse"
         aria-label="Toggle navigation"
-        @click="toggleShowMobileMenu"
+        data-bs-toggle="collapse"
+        data-bs-target="#navBarsMobile"
+        aria-controls="navBarsMobile"
+        aria-expanded="true"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" v-show="isShowMobileMenu">
+      <div class="navbar-collapse collapse show" id="navBarsMobile">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/schedule">스케줄</router-link>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="true"
+              >관리</a
+            >
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown01">
+              <li>
+                <router-link class="dropdown-item" to="/admin/memberList">회원</router-link>
+              </li>
+              <li>
+                <router-link class="dropdown-item" to="/admin/schedule">스케줄</router-link>
+              </li>
+            </ul>
           </li>
         </ul>
         <div class="d-flex">

@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1 class="text-center">Find</h1>
+  <h1 class="text-center">비밀번호 찾기</h1>
   <div class="container">
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
