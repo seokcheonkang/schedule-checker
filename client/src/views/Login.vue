@@ -1,8 +1,14 @@
 <script setup>
-import { onMounted } from 'vue';
+// vue lifecycle
+import { onMounted, ref } from 'vue';
+
+// swal
+import swal from 'sweetalert2';
+
+const refEmail = ref(null);
 
 onMounted(() => {
-  document.querySelector('#floatingEmail').focus();
+  refEmail.value.focus();
 });
 </script>
 
@@ -14,16 +20,12 @@ onMounted(() => {
         <form class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">로그인</h4>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" />
+            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" ref="refEmail" />
             <label for="floatingEmail">이메일</label>
           </div>
           <div class="form-floating mb-3">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" />
             <label for="floatingPassword">비밀번호</label>
-          </div>
-          <div class="checkbox mb-3">
-            <input type="checkbox" value="remember-me" class="chkWithText" />
-            <span>이메일 기억하기</span>
           </div>
           <button class="w-100 btn btn-lg btn-dark" type="button">로그인</button>
           <hr class="my-4" />
