@@ -1,7 +1,7 @@
 <script setup>
 // copyright[
 const yyyy = new Date().getFullYear();
-const author = 'yunbeom.kim@bespinglobal.com';
+const author = 'DevOps 2 team, BespinGlobalKorea';
 let copyright = `Copyright ${yyyy} ${author} All rights reserved.`;
 // copyright]
 </script>
