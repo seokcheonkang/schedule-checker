@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1 class="text-center">홈</h1>
+  <h1 class="text-center my-3">홈</h1>
   <!-- list-group[ -->
   <div class="list-group">
     <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">

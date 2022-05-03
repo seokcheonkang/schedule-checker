@@ -26,32 +26,34 @@ const members = reactive({
 </script>
 
 <template>
-  <h1 class="text-center">회원</h1>
-  <form class="d-flex">
-    <input class="form-control me-2 w-85" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
-    <button class="btn btn-outline-dark w-15" type="button">검색</button>
+  <h1 class="text-center my-3">회원</h1>
+  <form class="d-flex justify-content-center my-3">
+    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
+    <button class="btn btn-outline-dark" type="button">검색</button>
   </form>
-  <table class="table table-light table-hover mt-3">
-    <thead>
-      <tr>
-        <th scope="col" class="text-nowrap">순번</th>
-        <th scope="col" class="text-nowrap">이메일</th>
-        <th scope="col" class="text-nowrap">이름</th>
-        <th scope="col" class="text-nowrap">권한</th>
-        <th scope="col" class="text-nowrap">가입일시</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in members.items" role="button">
-        <th scope="row">{{ item.seq }}</th>
-        <td>{{ item.userEmail }}</td>
-        <td>{{ item.userName }}</td>
-        <td>{{ item.auth }}</td>
-        <td>{{ item.insDate }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <nav aria-label="Page navigation example">
+  <div class="table-responsive">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-nowrap">순번</th>
+          <th scope="col" class="text-nowrap">이메일</th>
+          <th scope="col" class="text-nowrap">이름</th>
+          <th scope="col" class="text-nowrap">권한</th>
+          <th scope="col" class="text-nowrap">가입일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in members.items" role="button">
+          <th scope="row">{{ item.seq }}</th>
+          <td>{{ item.userEmail }}</td>
+          <td>{{ item.userName }}</td>
+          <td>{{ item.auth }}</td>
+          <td>{{ item.insDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Page navigation" class="py-3">
     <ul class="pagination justify-content-center">
       <li class="page-item disabled">
         <a class="page-link">이전</a>

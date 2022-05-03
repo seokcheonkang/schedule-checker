@@ -8,7 +8,7 @@ import Footer from './components/Footer.vue';
     <Menu />
   </header>
   <div class="container py-2">
-    <main>
+    <main class="my-3">
       <router-view />
     </main>
     <aside></aside>

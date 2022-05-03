@@ -20,30 +20,32 @@ const schedules = reactive({
 </script>
 
 <template>
-  <h1 class="text-center">스케줄</h1>
-  <form class="d-flex">
-    <input class="form-control me-2 w-85" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
-    <button class="btn btn-outline-dark w-15" type="button">검색</button>
+  <h1 class="text-center my-3">스케줄</h1>
+  <form class="d-flex justify-content-center my-3">
+    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
+    <button class="btn btn-outline-dark" type="button">검색</button>
   </form>
-  <table class="table table-light table-hover mt-3">
-    <thead>
-      <tr>
-        <th scope="col" class="text-nowrap">순번</th>
-        <th scope="col" class="text-nowrap">이름</th>
-        <th scope="col" class="text-nowrap">제목</th>
-        <th scope="col" class="text-nowrap">마감일시</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in schedules.items" role="button">
-        <th scope="row">{{ item.seq }}</th>
-        <td>{{ item.userName }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.expiryDate }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <nav aria-label="Page navigation example">
+  <div class="table-responsive">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-nowrap">순번</th>
+          <th scope="col" class="text-nowrap">이름</th>
+          <th scope="col" class="text-nowrap">제목</th>
+          <th scope="col" class="text-nowrap">마감일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in schedules.items" role="button">
+          <th scope="row">{{ item.seq }}</th>
+          <td>{{ item.userName }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.expiryDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Page navigation" class="py-3">
     <ul class="pagination justify-content-center">
       <li class="page-item disabled">
         <a class="page-link">이전</a>

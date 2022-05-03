@@ -7,7 +7,7 @@ let copyright = `Copyright ${yyyy} ${author} All rights reserved.`;
 </script>
 
 <template>
-  <div class="mt-5 border-top">
+  <div class="border-top">
     <p class="text-center text-muted mt-2">{{ copyright }}</p>
   </div>
 </template>
