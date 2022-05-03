@@ -1,4 +1,12 @@
-<script setup></script>
+<script setup>
+// vue lifecycle
+import { onMounted } from 'vue';
+
+// swal
+import swal from 'sweetalert2';
+
+onMounted(() => {});
+</script>
 
 <template>
   <h1 class="text-center">Schedule</h1>

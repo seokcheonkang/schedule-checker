@@ -1,15 +1,11 @@
 <script setup>
 // vue lifecycle
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
 // swal
 import swal from 'sweetalert2';
 
-const refEmail = ref(null);
-
-onMounted(() => {
-  refEmail.value.focus();
-});
+onMounted(() => {});
 </script>
 
 <template>

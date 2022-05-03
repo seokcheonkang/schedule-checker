@@ -1,10 +1,4 @@
-<script setup>
-import { onMounted } from 'vue';
-
-onMounted(() => {
-  document.querySelector('#floatingName').focus();
-});
-</script>
+<script setup></script>
 
 <template>
   <h1 class="text-center">Join</h1>

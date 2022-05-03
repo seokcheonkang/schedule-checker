@@ -1,10 +1,4 @@
-<script setup>
-import { onMounted } from 'vue';
-
-onMounted(() => {
-  document.querySelector('#floatingEmail').focus();
-});
-</script>
+<script setup></script>
 
 <template>
   <h1 class="text-center">Find</h1>
