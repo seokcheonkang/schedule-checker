@@ -10,23 +10,47 @@ onMounted(() => {
   refSearch.value.focus();
 });
 
-const members = reactive({
-  items: [
-    { seq: 3, userEmail: '3@bespinglobal.com', userName: '관리자', auth: 'normal', insDate: '2022-05-02 23:59:59' },
-    {
-      seq: 2,
-      userEmail: 'yunbeom.kim@bespinglobal.com',
-      userName: '김윤범',
-      auth: 'normal',
-      insDate: '2022-05-31 23:59:59',
-    },
-    { seq: 1, userEmail: 'admin@bespinglobal.com', userName: '관리자', auth: 'normal', insDate: '2022-05-03 23:59:59' },
-  ],
-});
+const members = [
+  { seq: 6, userEmail: 'daerim.jeong@bespinglobal.com', userName: '정*림', auth: 1, insDate: '2022-05-03 23:59:59' },
+  { seq: 5, userEmail: 'heejung.chae@bespinglobal.com', userName: '채*중', auth: 1, insDate: '2022-05-03 23:59:59' },
+  {
+    seq: 4,
+    userEmail: 'seokcheon.kang@bespinglobal.com',
+    userName: '강*천',
+    auth: 1,
+    insDate: '2022-05-03 23:59:59',
+  },
+  { seq: 3, userEmail: 'heeyeon.jeon@bespinglobal.com', userName: '전*연', auth: 98, insDate: '2022-05-03 23:59:59' },
+  {
+    seq: 2,
+    userEmail: 'yunbeom.kim@bespinglobal.com',
+    userName: '김*범',
+    auth: 98,
+    insDate: '2022-05-03 23:59:59',
+  },
+  { seq: 1, userEmail: 'sanghoon.yun@bespinglobal.com', userName: '윤*훈', auth: 99, insDate: '2022-05-03 23:59:59' },
+];
+
+const setAuth = (auth) => {
+  switch (auth) {
+    case 1:
+      return '일반';
+      break;
+    case 98:
+      return '운영자';
+      break;
+    case 99:
+      return '관리자';
+      break;
+    default:
+      return '손님';
+      break;
+  }
+};
 </script>
 
 <template>
-  <h1 class="text-center my-3">회원</h1>
+  <h1 class="text-center my-3">회원 목록</h1>
   <form class="d-flex justify-content-center my-3">
     <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
     <button class="btn btn-outline-dark" type="button">검색</button>
@@ -35,20 +59,20 @@ const members = reactive({
     <table class="table table-light table-hover">
       <thead>
         <tr>
-          <th scope="col" class="text-nowrap">순번</th>
-          <th scope="col" class="text-nowrap">이메일</th>
-          <th scope="col" class="text-nowrap">이름</th>
-          <th scope="col" class="text-nowrap">권한</th>
-          <th scope="col" class="text-nowrap">가입일시</th>
+          <th class="text-center text-nowrap">순번</th>
+          <th class="text-center text-nowrap">이메일</th>
+          <th class="text-center text-nowrap">이름</th>
+          <th class="text-center text-nowrap">권한</th>
+          <th class="text-center text-nowrap">가입일시</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in members.items" role="button">
-          <th scope="row">{{ item.seq }}</th>
-          <td>{{ item.userEmail }}</td>
-          <td>{{ item.userName }}</td>
-          <td>{{ item.auth }}</td>
-          <td>{{ item.insDate }}</td>
+        <tr v-for="member in members" role="button">
+          <td class="text-end">{{ member.seq }}&nbsp;</td>
+          <td class="text-center">{{ member.userEmail }}</td>
+          <td class="text-center">{{ member.userName }}</td>
+          <td class="text-center">{{ setAuth(member.auth) }}</td>
+          <td class="text-center">{{ member.insDate }}</td>
         </tr>
       </tbody>
     </table>

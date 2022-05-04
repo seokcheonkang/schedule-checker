@@ -5,6 +5,11 @@
   cursor: pointer;
 }
 
+.btn__td {
+  color: #212529;
+  text-decoration: none;
+}
+
 .w-5 {
   width: 5% !important;
 }
@@ -27,9 +32,4 @@
 
 .w-90 {
   width: 90% !important;
-}
-
-.text-truncate-w {
-  display: table-cell;
-  width: 80px;
 }

@@ -8,4 +8,6 @@ import 'bootstrap';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-createApp(App).use(router).use(VueSweetalert2).mount('#app');
+import Paginate from 'vuejs-paginate-next';
+
+createApp(App).use(router).use(VueSweetalert2).use(Paginate).mount('#app');

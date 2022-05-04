@@ -1,7 +1,4 @@
 <script setup>
-// ref
-import { ref } from 'vue';
-
 // swal
 import swal from 'sweetalert2';
 
@@ -35,8 +32,9 @@ const logout = () => {
       <div class="navbar-collapse collapse show" id="navBarsMobile">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/schedule">스케줄</router-link>
+            <router-link class="nav-link" aria-current="page" to="/scheduleList">스케줄</router-link>
           </li>
+          <!--
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="true"
               >관리</a
@@ -45,11 +43,9 @@ const logout = () => {
               <li>
                 <router-link class="dropdown-item" to="/admin/memberList">회원</router-link>
               </li>
-              <li>
-                <router-link class="dropdown-item" to="/admin/schedule">스케줄</router-link>
-              </li>
             </ul>
           </li>
+          -->
         </ul>
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">

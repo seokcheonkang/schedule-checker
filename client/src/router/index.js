@@ -8,7 +8,8 @@ import Profile from '../views/normal/Profile.vue';
 import Join from '../views/normal/Join.vue';
 import Find from '../views/normal/Find.vue';
 
-import Schedule from '../views/normal/Schedule.vue';
+import ScheduleList from '../views/normal/ScheduleList.vue';
+import ScheduleView from '../views/normal/ScheduleView.vue';
 
 // admin
 import MemberList from '../views/admin/MemberList.vue';
@@ -40,9 +41,14 @@ const routes = [
     component: Find,
   },
   {
-    path: '/schedule',
-    name: 'Schedule',
-    component: Schedule,
+    path: '/scheduleList',
+    name: 'ScheduleList',
+    component: ScheduleList,
+  },
+  {
+    path: '/scheduleView/:seq',
+    name: 'ScheduleView',
+    component: ScheduleView,
   },
   {
     path: '/admin/memberList',

@@ -60,3 +60,9 @@ $ npm i vue-router@next
 ```console
 $ npm i vue-sweetalert2
 ```
+
+### vuejs-paginate-next
+
+```console
+$ npm i vuejs-paginate-next
+```
