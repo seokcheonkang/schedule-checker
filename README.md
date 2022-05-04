@@ -35,6 +35,12 @@ $ npm i
 $ npm run dev
 ```
 
+### if local is changed or after git clone
+
+```
+$ npm i
+```
+
 ### run vue (alternative)
 
 ```

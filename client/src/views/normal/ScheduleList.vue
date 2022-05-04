@@ -5,6 +5,10 @@ import { onMounted, ref, reactive, computed } from 'vue';
 // Paginate
 import Paginate from 'vuejs-paginate-next';
 
+// route
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const refSearchKey = ref('');
 const refSearchValue = ref(null);
 onMounted(() => {
@@ -57,7 +61,7 @@ let paginatedData = computed(() => {
 });
 
 const goToPage = (numPage) => {
-  pageCnt.value = Math.floor(schedules.length / perPage.value) + 1;
+  pageCnt.value = Math.floor(schedules.value.length / perPage.value) + 1;
   curPage.value = numPage;
 };
 
@@ -67,7 +71,7 @@ const searchList = () => {
 
   if (!searchKey || !searchValue) {
     // TODO : 다시 목록 조회
-    return;
+    router.go();
   }
 
   schedules.value = schedules.value.filter((item) => {
