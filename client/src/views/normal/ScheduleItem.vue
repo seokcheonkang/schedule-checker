@@ -37,7 +37,9 @@ const item = { seq: 4, userName: '관리자', title: '테스트4', expiryDate: '
 const route = useRoute();
 const seq = Number(route.params.seq); // 전달받은 파라미터
 
-const confirm = (title, icon, text, footer) => {
+const confirm = (paramForParent) => {
+  const { title, icon, text, footer } = paramForParent;
+
   swal.fire({
     icon,
     title,

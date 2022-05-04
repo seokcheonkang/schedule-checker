@@ -28,7 +28,9 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
 // swal
 import swal from 'sweetalert2';
 
-const leave = (title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN) => {
+const leave = (paramForParent) => {
+  const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
+
   swal
     .fire({
       title,

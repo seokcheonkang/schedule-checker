@@ -31,29 +31,29 @@ const props = defineProps({
 const emit = defineEmits(['buttonClicked']);
 
 const handleButtonClicked = () => {
-  let title = '';
-
-  console.log(props.command);
+  let paramForParent = {};
 
   switch (props.command) {
     case 'scheduleConfirm':
-      title = '앗!';
-      const icon = 'warning';
-      const text = '아직 공사중 입니다.';
-      const footer = '<a href="/" class="btn btn-warning">홈으로</a>';
-
-      emit('buttonClicked', title, icon, text, footer);
+      paramForParent = {
+        title: '앗!',
+        icon: 'warning',
+        text: '아직 공사중 입니다.',
+        footer: '<a href="/" class="btn btn-warning">홈으로</a>',
+      };
       break;
     default:
-      title = `정말 ${props.text} 하시겠습니까?`;
-      const showDenyButton = true;
-      const confirmButtonText = '예';
-      const denyButtonText = '아니오';
-      const resultMessageY = '완료했습니다.';
-      const resultMessageN = '취소했습니다.';
-
-      emit('buttonClicked', title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN);
+      paramForParent = {
+        title: `정말 ${props.text} 하시겠습니까?`,
+        showDenyButton: true,
+        confirmButtonText: '예',
+        denyButtonText: '아니오',
+        resultMessageY: '완료했습니다.',
+        resultMessageN: '취소했습니다.',
+      };
       break;
   }
+
+  emit('buttonClicked', paramForParent);
 };
 </script>
