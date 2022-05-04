@@ -1,6 +1,47 @@
+<template>
+  <CustomPageHeader text="회원 목록" />
+  <form class="d-flex justify-content-center my-3">
+    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
+    <button class="btn btn-outline-dark" type="button">검색</button>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th class="text-center text-nowrap">순번</th>
+          <th class="text-center text-nowrap">이메일</th>
+          <th class="text-center text-nowrap">이름</th>
+          <th class="text-center text-nowrap">권한</th>
+          <th class="text-center text-nowrap">가입일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in paginatedData" role="button">
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.userEmail }}</td>
+          <td class="text-center">{{ item.userName }}</td>
+          <td class="text-center">{{ setAuth(item.auth) }}</td>
+          <td class="text-center">{{ item.insDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <paginate
+    :pageCount="pageCnt"
+    :clickHandler="goToPage"
+    :prevText="'이전'"
+    :nextText="'다음'"
+    :container-class="'pagination justify-content-center btn py-3 px-1'"
+    :initial-page="curPage"
+  >
+  </paginate>
+</template>
+
 <script setup>
-// vue lifecycle
 import { onMounted, ref, reactive, computed } from 'vue';
+
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
 
 // Paginate
 import Paginate from 'vuejs-paginate-next';
@@ -63,44 +104,3 @@ const goToPage = (numPage) => {
   curPage.value = numPage;
 };
 </script>
-
-<template>
-  <h1 class="text-center my-3">회원 목록</h1>
-  <form class="d-flex justify-content-center my-3">
-    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
-    <button class="btn btn-outline-dark" type="button">검색</button>
-  </form>
-  <div class="table-responsive">
-    <table class="table table-light table-hover">
-      <thead>
-        <tr>
-          <th class="text-center text-nowrap">순번</th>
-          <th class="text-center text-nowrap">이메일</th>
-          <th class="text-center text-nowrap">이름</th>
-          <th class="text-center text-nowrap">권한</th>
-          <th class="text-center text-nowrap">가입일시</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in paginatedData" role="button">
-          <td class="text-center">{{ item.seq }}&nbsp;</td>
-          <td class="text-center">{{ item.userEmail }}</td>
-          <td class="text-center">{{ item.userName }}</td>
-          <td class="text-center">{{ setAuth(item.auth) }}</td>
-          <td class="text-center">{{ item.insDate }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <paginate
-    :pageCount="pageCnt"
-    :clickHandler="goToPage"
-    :prevText="'이전'"
-    :nextText="'다음'"
-    :container-class="'pagination justify-content-center btn py-3 px-1'"
-    :initial-page="curPage"
-  >
-  </paginate>
-</template>
-
-<style scoped></style>

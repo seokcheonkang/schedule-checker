@@ -1,7 +1,5 @@
-<script setup></script>
-
 <template>
-  <h1 class="text-center my-3">비밀번호 찾기</h1>
+  <CustomPageHeader text="비밀번호 찾기" />
   <div class="container">
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
@@ -11,11 +9,15 @@
             <input type="email" class="form-control" id="floatingEmail" placeholder="you@example.com" />
             <label for="floatingEmail">이메일</label>
           </div>
-          <button class="w-100 btn btn-lg btn-dark" type="button">이메일 전송</button>
+          <CustomActionButton text="이메일 전송" />
         </form>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<script setup>
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
+import CustomActionButton from '@/components/CustomActionButton.vue';
+</script>

@@ -1,17 +1,3 @@
-<script setup>
-// swal
-import swal from 'sweetalert2';
-
-const logout = () => {
-  swal.fire({
-    icon: 'warning',
-    title: '앗!',
-    text: '아직 공사중 입니다.',
-    footer: '<a href="/" class="btn btn-warning">홈으로</a>',
-  });
-};
-</script>
-
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
     <div class="container-fluid">
@@ -78,4 +64,16 @@ const logout = () => {
   </nav>
 </template>
 
-<style scoped></style>
+<script setup>
+// swal
+import swal from 'sweetalert2';
+
+const logout = () => {
+  swal.fire({
+    icon: 'warning',
+    title: '앗!',
+    text: '아직 공사중 입니다.',
+    footer: '<a href="/" class="btn btn-warning">홈으로</a>',
+  });
+};
+</script>

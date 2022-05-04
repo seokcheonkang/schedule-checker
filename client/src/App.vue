@@ -1,8 +1,3 @@
-<script setup>
-import Menu from './components/Menu.vue';
-import Footer from './components/Footer.vue';
-</script>
-
 <template>
   <header>
     <Menu />
@@ -17,5 +12,10 @@ import Footer from './components/Footer.vue';
     </footer>
   </div>
 </template>
+
+<script setup>
+import Menu from './components/Menu.vue';
+import Footer from './components/Footer.vue';
+</script>
 
 <style scoped></style>

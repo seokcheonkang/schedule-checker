@@ -1,6 +1,54 @@
+<template>
+  <CustomPageHeader text="스케줄 목록" />
+  <form class="d-flex justify-content-center my-3">
+    <select class="form-select me-2 w-10" aria-label="searchOption" ref="refSearchKey">
+      <option value="">선택</option>
+      <option value="userName">이름</option>
+      <option value="title">제목</option>
+    </select>
+    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearchValue" />
+    <button class="btn btn-outline-dark" type="button" @click="searchList">검색</button>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th class="text-center text-nowrap">순번</th>
+          <th class="text-center text-nowrap">이름</th>
+          <th class="text-center text-nowrap">제목</th>
+          <th class="text-center text-nowrap">마감일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in paginatedData" role="button">
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.userName }}</td>
+          <td class="text-center">
+            <router-link :to="{ name: 'ScheduleItem', params: { seq: item.seq } }" class="btn__td">
+              {{ item.title }}
+            </router-link>
+          </td>
+          <td class="text-center">{{ item.expiryDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <paginate
+    :pageCount="pageCnt"
+    :clickHandler="goToPage"
+    :prevText="'이전'"
+    :nextText="'다음'"
+    :container-class="'pagination justify-content-center btn py-3 px-1'"
+    :initial-page="curPage"
+  >
+  </paginate>
+</template>
+
 <script setup>
-// vue lifecycle
 import { onMounted, ref, reactive, computed } from 'vue';
+
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
 
 // Paginate
 import Paginate from 'vuejs-paginate-next';
@@ -81,51 +129,3 @@ const searchList = () => {
   });
 };
 </script>
-
-<template>
-  <h1 class="text-center my-3">스케줄 목록</h1>
-  <form class="d-flex justify-content-center my-3">
-    <select class="form-select me-2 w-10" aria-label="searchOption" ref="refSearchKey">
-      <option value="">선택</option>
-      <option value="userName">이름</option>
-      <option value="title">제목</option>
-    </select>
-    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearchValue" />
-    <button class="btn btn-outline-dark" type="button" @click="searchList">검색</button>
-  </form>
-  <div class="table-responsive">
-    <table class="table table-light table-hover">
-      <thead>
-        <tr>
-          <th class="text-center text-nowrap">순번</th>
-          <th class="text-center text-nowrap">이름</th>
-          <th class="text-center text-nowrap">제목</th>
-          <th class="text-center text-nowrap">마감일시</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in paginatedData" role="button">
-          <td class="text-center">{{ item.seq }}&nbsp;</td>
-          <td class="text-center">{{ item.userName }}</td>
-          <td class="text-center">
-            <router-link :to="{ name: 'ScheduleView', params: { seq: item.seq } }" class="btn__td">
-              {{ item.title }}
-            </router-link>
-          </td>
-          <td class="text-center">{{ item.expiryDate }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <paginate
-    :pageCount="pageCnt"
-    :clickHandler="goToPage"
-    :prevText="'이전'"
-    :nextText="'다음'"
-    :container-class="'pagination justify-content-center btn py-3 px-1'"
-    :initial-page="curPage"
-  >
-  </paginate>
-</template>
-
-<style scoped></style>

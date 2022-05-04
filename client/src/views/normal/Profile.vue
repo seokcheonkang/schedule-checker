@@ -1,27 +1,5 @@
-<script setup>
-// swal
-import swal from 'sweetalert2';
-
-const leave = () => {
-  swal
-    .fire({
-      title: '정말 탈퇴하시겠습니까?',
-      showDenyButton: true,
-      confirmButtonText: '예',
-      denyButtonText: '아니오',
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        swal.fire('완료했습니다.', '', 'success');
-      } else if (result.isDenied) {
-        swal.fire('취소했습니다.', '', 'info');
-      }
-    });
-};
-</script>
-
 <template>
-  <h1 class="text-center my-3">프로필</h1>
+  <CustomPageHeader text="프로필" />
   <div class="container">
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
@@ -35,11 +13,35 @@ const leave = () => {
             <h5 class="text-muted">권한</h5>
             <div class="mb-3">일반</div>
           </div>
-          <button class="w-100 btn btn-lg btn-danger" type="button" @click="leave">회원탈퇴</button>
+          <CustomActionButton text="회원 탈퇴" option1="btn-danger" command="memberLeave" @buttonClicked="leave" />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<script setup>
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
+import CustomActionButton from '@/components/CustomActionButton.vue';
+
+// swal
+import swal from 'sweetalert2';
+
+const leave = (title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN) => {
+  swal
+    .fire({
+      title,
+      showDenyButton,
+      confirmButtonText,
+      denyButtonText,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        swal.fire(resultMessageY, '', 'success');
+      } else if (result.isDenied) {
+        swal.fire(resultMessageN, '', 'info');
+      }
+    });
+};
+</script>

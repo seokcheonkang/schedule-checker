@@ -9,7 +9,7 @@ import Join from '@/views/normal/Join.vue';
 import Find from '@/views/normal/Find.vue';
 
 import ScheduleList from '@/views/normal/ScheduleList.vue';
-import ScheduleView from '@/views/normal/ScheduleView.vue';
+import ScheduleItem from '@/views/normal/ScheduleItem.vue';
 
 // admin
 import MemberList from '@/views/admin/MemberList.vue';
@@ -46,9 +46,9 @@ const routes = [
     component: ScheduleList,
   },
   {
-    path: '/scheduleView/:seq',
-    name: 'ScheduleView',
-    component: ScheduleView,
+    path: '/scheduleItem/:seq',
+    name: 'ScheduleItem',
+    component: ScheduleItem,
   },
   {
     path: '/admin/memberList',

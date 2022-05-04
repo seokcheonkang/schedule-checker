@@ -47,7 +47,7 @@ $ npm i
 $ 1startup-client.bat
 ```
 
-### buld vue (alternative)
+### build vue (alternative)
 
 ```
 $ 2build-client.bat

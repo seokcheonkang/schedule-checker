@@ -1,7 +1,5 @@
-<script setup></script>
-
 <template>
-  <h1 class="text-center my-3">회원가입</h1>
+  <CustomPageHeader text="회원 가입" />
   <div class="container">
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
@@ -23,11 +21,15 @@
             <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Password" />
             <label for="floatingPasswordConfirm">비밀번호 확인</label>
           </div>
-          <button class="w-100 btn btn-lg btn-dark" type="button">가입 완료</button>
+          <CustomActionButton text="가입 완료" />
         </form>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<script setup>
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
+import CustomActionButton from '@/components/CustomActionButton.vue';
+</script>
