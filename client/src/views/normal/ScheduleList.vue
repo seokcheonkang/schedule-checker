@@ -5,16 +5,17 @@ import { onMounted, ref, reactive, computed } from 'vue';
 // Paginate
 import Paginate from 'vuejs-paginate-next';
 
-const refSearch = ref(null);
+const refSearchKey = ref('');
+const refSearchValue = ref(null);
 onMounted(() => {
-  refSearch.value.focus();
+  refSearchValue.value.focus();
   goToPage(1);
 });
 
 // Server Data
-const schedules = [
+const schedules = ref([
   { seq: 31, userName: '관리자', title: '테스트31', expiryDate: '9999-12-31 23:59:59' },
-  { seq: 30, userName: '관리자', title: '테스트30', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 30, userName: 'a', title: '테스트30', expiryDate: '9999-12-31 23:59:59' },
   { seq: 29, userName: '관리자', title: '테스트29', expiryDate: '9999-12-31 23:59:59' },
   { seq: 28, userName: '관리자', title: '테스트28', expiryDate: '9999-12-31 23:59:59' },
   { seq: 27, userName: '관리자', title: '테스트27', expiryDate: '9999-12-31 23:59:59' },
@@ -44,28 +45,49 @@ const schedules = [
   { seq: 3, userName: '관리자', title: '긴급 요청 사항입니다.', expiryDate: '2022-05-02 23:59:59' },
   { seq: 2, userName: '관리자', title: '자격증 업데이트 부탁드립니다.', expiryDate: '2022-05-31 23:59:59' },
   { seq: 1, userName: '관리자', title: '개인 영수증 정산 신청바랍니다.', expiryDate: '2022-05-03 23:59:59' },
-];
+]);
 
 // pagination
 let curPage = ref(1); // 현재 페이지
 let perPage = ref(10); // 페이지마다 출력할 게시물 수
 let pageCnt = ref(10); // 총 페이지 수
 
-const paginatedData = computed(() => {
-  return schedules.slice((curPage.value - 1) * perPage.value, curPage.value * perPage.value);
+let paginatedData = computed(() => {
+  return schedules.value.slice((curPage.value - 1) * perPage.value, curPage.value * perPage.value);
 });
 
 const goToPage = (numPage) => {
   pageCnt.value = Math.floor(schedules.length / perPage.value) + 1;
   curPage.value = numPage;
 };
+
+const searchList = () => {
+  const searchKey = refSearchKey.value.value;
+  const searchValue = refSearchValue.value.value;
+
+  if (!searchKey || !searchValue) {
+    // TODO : 다시 목록 조회
+    return;
+  }
+
+  schedules.value = schedules.value.filter((item) => {
+    if (item[searchKey].indexOf(searchValue) > -1) {
+      return item;
+    }
+  });
+};
 </script>
 
 <template>
   <h1 class="text-center my-3">스케줄 목록</h1>
   <form class="d-flex justify-content-center my-3">
-    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
-    <button class="btn btn-outline-dark" type="button">검색</button>
+    <select class="form-select me-2 w-10" aria-label="searchOption" ref="refSearchKey">
+      <option value="">선택</option>
+      <option value="userName">이름</option>
+      <option value="title">제목</option>
+    </select>
+    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearchValue" />
+    <button class="btn btn-outline-dark" type="button" @click="searchList">검색</button>
   </form>
   <div class="table-responsive">
     <table class="table table-light table-hover">
