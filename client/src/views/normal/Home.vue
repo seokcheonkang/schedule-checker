@@ -1,64 +1,105 @@
 <script setup>
+// vue lifecycle
+import { onMounted, ref, reactive, computed } from 'vue';
+
+// Paginate
+import Paginate from 'vuejs-paginate-next';
+
+const refSearch = ref(null);
+onMounted(() => {
+  refSearch.value.focus();
+  goToPage(1);
+});
+
 // Server Data
-let schedules = [
-  {
-    seq: 3,
-    userName: '관리자',
-    title: '긴급 요청 사항입니다.',
-    expiryDate: '2022-05-02 23:59:59',
-    userImg: 'http://picsum.photos/20',
-    isNew: true,
-  },
-  {
-    seq: 2,
-    userName: '관리자',
-    title: '자격증 업데이트 부탁드립니다.',
-    expiryDate: '2022-05-31 23:59:59',
-    userImg: 'http://picsum.photos/20',
-    isNew: false,
-  },
-  {
-    seq: 1,
-    userName: '관리자',
-    title: '개인 영수증 정산 신청바랍니다.',
-    expiryDate: '2022-05-03 23:59:59',
-    userImg: 'http://picsum.photos/20',
-    isNew: false,
-  },
+const schedules = [
+  { seq: 31, userName: '관리자', title: '테스트31', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 30, userName: '관리자', title: '테스트30', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 29, userName: '관리자', title: '테스트29', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 28, userName: '관리자', title: '테스트28', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 27, userName: '관리자', title: '테스트27', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 26, userName: '관리자', title: '테스트26', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 25, userName: '관리자', title: '테스트25', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 24, userName: '관리자', title: '테스트24', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 23, userName: '관리자', title: '테스트23', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 22, userName: '관리자', title: '테스트22', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 21, userName: '관리자', title: '테스트21', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 20, userName: '관리자', title: '테스트20', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 19, userName: '관리자', title: '테스트19', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 18, userName: '관리자', title: '테스트18', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 17, userName: '관리자', title: '테스트17', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 16, userName: '관리자', title: '테스트16', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 15, userName: '관리자', title: '테스트15', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 14, userName: '관리자', title: '테스트14', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 13, userName: '관리자', title: '테스트13', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 12, userName: '관리자', title: '테스트12', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 11, userName: '관리자', title: '테스트11', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 10, userName: '관리자', title: '테스트10', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 9, userName: '관리자', title: '테스트9', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 8, userName: '관리자', title: '테스트8', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 7, userName: '관리자', title: '테스트7', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 6, userName: '관리자', title: '테스트6', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 5, userName: '관리자', title: '테스트5', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 4, userName: '관리자', title: '테스트4', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 3, userName: '관리자', title: '긴급 요청 사항입니다.', expiryDate: '2022-05-02 23:59:59' },
+  { seq: 2, userName: '관리자', title: '자격증 업데이트 부탁드립니다.', expiryDate: '2022-05-31 23:59:59' },
+  { seq: 1, userName: '관리자', title: '개인 영수증 정산 신청바랍니다.', expiryDate: '2022-05-03 23:59:59' },
 ];
+
+// pagination
+let curPage = ref(1); // 현재 페이지
+let perPage = ref(10); // 페이지마다 출력할 게시물 수
+let pageCnt = ref(10); // 총 페이지 수
+
+const paginatedData = computed(() => {
+  return schedules.slice((curPage.value - 1) * perPage.value, curPage.value * perPage.value);
+});
+
+const goToPage = (numPage) => {
+  pageCnt.value = Math.floor(schedules.length / perPage.value) + 1;
+  curPage.value = numPage;
+};
 </script>
 
 <template>
-  <h1 class="text-center my-3">홈</h1>
-  <!-- list-group[ -->
-  <div class="list-group">
-    <router-link
-      :to="{ name: 'ScheduleView', params: { seq: schedule.seq } }"
-      class="list-group-item list-group-item-action d-flex gap-3 py-3"
-      aria-current="true"
-      v-for="schedule in schedules"
-    >
-      <img
-        :src="schedule.userImg"
-        alt="이미지"
-        width="30"
-        height="30"
-        class="rounded-circle flex-shrink-0 adjust__text1"
-      />
-      <div class="d-flex gap-2 w-100 justify-content-between">
-        <div>
-          <h6 class="mb-0">
-            {{ schedule.title }}
-          </h6>
-          <p class="mb-0 opacity-75">{{ schedule.expiryDate }}</p>
-        </div>
-        <small class="opacity-50 text-nowrap">
-          <span class="badge bg-warning text-dark">{{ schedule.isNew === true ? 'New' : '' }}</span>
-        </small>
-      </div>
-    </router-link>
+  <h1 class="text-center my-3">스케줄 목록</h1>
+  <form class="d-flex justify-content-center my-3">
+    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
+    <button class="btn btn-outline-dark" type="button">검색</button>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th class="text-center text-nowrap">순번</th>
+          <th class="text-center text-nowrap">이름</th>
+          <th class="text-center text-nowrap">제목</th>
+          <th class="text-center text-nowrap">마감일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in paginatedData" role="button">
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.userName }}</td>
+          <td class="text-center">
+            <router-link :to="{ name: 'ScheduleView', params: { seq: item.seq } }" class="btn__td">
+              {{ item.title }}
+            </router-link>
+          </td>
+          <td class="text-center">{{ item.expiryDate }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <!-- list-group] -->
+  <paginate
+    :pageCount="pageCnt"
+    :clickHandler="goToPage"
+    :prevText="'이전'"
+    :nextText="'다음'"
+    :container-class="'pagination justify-content-center btn py-3 px-1'"
+    :initial-page="curPage"
+  >
+  </paginate>
 </template>
 
 <style scoped></style>
