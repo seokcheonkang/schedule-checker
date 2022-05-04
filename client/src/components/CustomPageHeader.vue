@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+// props
 const props = defineProps({
   text: {
     type: String,

@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
