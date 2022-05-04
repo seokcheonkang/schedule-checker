@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // normal
-import Home from '../views/normal/Home.vue';
+import Home from '@/views/normal/Home.vue';
 
-import Login from '../views/normal/Login.vue';
-import Profile from '../views/normal/Profile.vue';
-import Join from '../views/normal/Join.vue';
-import Find from '../views/normal/Find.vue';
+import Login from '@/views/normal/Login.vue';
+import Profile from '@/views/normal/Profile.vue';
+import Join from '@/views/normal/Join.vue';
+import Find from '@/views/normal/Find.vue';
 
-import ScheduleList from '../views/normal/ScheduleList.vue';
-import ScheduleView from '../views/normal/ScheduleView.vue';
+import ScheduleList from '@/views/normal/ScheduleList.vue';
+import ScheduleView from '@/views/normal/ScheduleView.vue';
 
 // admin
-import MemberList from '../views/admin/MemberList.vue';
+import MemberList from '@/views/admin/MemberList.vue';
 
 const routes = [
   {
