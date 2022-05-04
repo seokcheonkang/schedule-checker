@@ -9,12 +9,7 @@ import swal from 'sweetalert2';
 onMounted(() => {});
 
 // Server Data
-const item = {
-  seq: 1,
-  userName: '관리자',
-  title: '개인 영수증 정산 신청바랍니다.',
-  expiryDate: '2022-05-03 23:59:59',
-};
+const item = { seq: 4, userName: '관리자', title: '테스트4', expiryDate: '9999-12-31 23:59:59' };
 
 const route = useRoute();
 const seq = Number(route.params.seq); // 전달받은 파라미터

@@ -2,9 +2,6 @@
 // vue lifecycle
 import { onMounted, ref, reactive, computed } from 'vue';
 
-// swal
-import swal from 'sweetalert2';
-
 // Paginate
 import Paginate from 'vuejs-paginate-next';
 
@@ -16,6 +13,16 @@ onMounted(() => {
 
 // Server Data
 const schedules = [
+  { seq: 31, userName: '관리자', title: '테스트31', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 30, userName: '관리자', title: '테스트30', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 29, userName: '관리자', title: '테스트29', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 28, userName: '관리자', title: '테스트28', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 27, userName: '관리자', title: '테스트27', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 26, userName: '관리자', title: '테스트26', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 25, userName: '관리자', title: '테스트25', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 24, userName: '관리자', title: '테스트24', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 23, userName: '관리자', title: '테스트23', expiryDate: '9999-12-31 23:59:59' },
+  { seq: 22, userName: '관리자', title: '테스트22', expiryDate: '9999-12-31 23:59:59' },
   { seq: 21, userName: '관리자', title: '테스트21', expiryDate: '9999-12-31 23:59:59' },
   { seq: 20, userName: '관리자', title: '테스트20', expiryDate: '9999-12-31 23:59:59' },
   { seq: 19, userName: '관리자', title: '테스트19', expiryDate: '9999-12-31 23:59:59' },
@@ -39,6 +46,7 @@ const schedules = [
   { seq: 1, userName: '관리자', title: '개인 영수증 정산 신청바랍니다.', expiryDate: '2022-05-03 23:59:59' },
 ];
 
+// pagination
 let curPage = ref(1); // 현재 페이지
 let perPage = ref(10); // 페이지마다 출력할 게시물 수
 let pageCnt = ref(10); // 총 페이지 수
@@ -50,7 +58,6 @@ const paginatedData = computed(() => {
 const goToPage = (numPage) => {
   pageCnt.value = Math.floor(schedules.length / perPage.value) + 1;
   curPage.value = numPage;
-  console.log(curPage.value, pageCnt.value);
 };
 </script>
 
@@ -72,7 +79,7 @@ const goToPage = (numPage) => {
       </thead>
       <tbody>
         <tr v-for="item in paginatedData" role="button">
-          <td class="text-end">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
           <td class="text-center">{{ item.userName }}</td>
           <td class="text-center">
             <router-link :to="{ name: 'ScheduleView', params: { seq: item.seq } }" class="btn__td">
@@ -93,25 +100,6 @@ const goToPage = (numPage) => {
     :initial-page="curPage"
   >
   </paginate>
-  <!-- <nav aria-label="Page navigation" class="py-3">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <a class="page-link">이전</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">다음</a>
-      </li>
-    </ul>
-  </nav> -->
 </template>
 
 <style scoped></style>

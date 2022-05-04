@@ -1,13 +1,14 @@
 <script setup>
 // vue lifecycle
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref, reactive, computed } from 'vue';
 
-// swal
-import swal from 'sweetalert2';
+// Paginate
+import Paginate from 'vuejs-paginate-next';
 
 const refSearch = ref(null);
 onMounted(() => {
   refSearch.value.focus();
+  goToPage(1);
 });
 
 const members = [
@@ -47,6 +48,20 @@ const setAuth = (auth) => {
       break;
   }
 };
+
+// pagination
+let curPage = ref(1); // 현재 페이지
+let perPage = ref(10); // 페이지마다 출력할 게시물 수
+let pageCnt = ref(10); // 총 페이지 수
+
+const paginatedData = computed(() => {
+  return members.slice((curPage.value - 1) * perPage.value, curPage.value * perPage.value);
+});
+
+const goToPage = (numPage) => {
+  pageCnt.value = Math.floor(members.length / perPage.value) + 1;
+  curPage.value = numPage;
+};
 </script>
 
 <template>
@@ -67,35 +82,25 @@ const setAuth = (auth) => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="member in members" role="button">
-          <td class="text-end">{{ member.seq }}&nbsp;</td>
-          <td class="text-center">{{ member.userEmail }}</td>
-          <td class="text-center">{{ member.userName }}</td>
-          <td class="text-center">{{ setAuth(member.auth) }}</td>
-          <td class="text-center">{{ member.insDate }}</td>
+        <tr v-for="item in paginatedData" role="button">
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.userEmail }}</td>
+          <td class="text-center">{{ item.userName }}</td>
+          <td class="text-center">{{ setAuth(item.auth) }}</td>
+          <td class="text-center">{{ item.insDate }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <nav aria-label="Page navigation" class="py-3">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <a class="page-link">이전</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">다음</a>
-      </li>
-    </ul>
-  </nav>
+  <paginate
+    :pageCount="pageCnt"
+    :clickHandler="goToPage"
+    :prevText="'이전'"
+    :nextText="'다음'"
+    :container-class="'pagination justify-content-center btn py-3 px-1'"
+    :initial-page="curPage"
+  >
+  </paginate>
 </template>
 
 <style scoped></style>
