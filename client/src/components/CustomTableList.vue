@@ -106,6 +106,7 @@ const pagination = reactive({
     const key = searchKey?.value;
     const val = searchValue?.value?.value?.toLowerCase();
     if (key && val) {
+      pagination.curPage = 1;
       pagination.list = pagination.oriList.filter((item) => {
         if (item[key].toString().includes(val)) {
           return item;
