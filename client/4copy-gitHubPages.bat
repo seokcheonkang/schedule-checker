@@ -1,3 +1,5 @@
+REM Need to build first
+
 REM move to target folder
 cd ../../
 cd KimYunBeom.github.io
@@ -11,8 +13,9 @@ xcopy /e /y "../schedule-checker/client/dist" .
 
 REM deployment
 git add .
+git reset --soft 48ad03016563024c6667e12b78f244db76765160
 git commit -m 'deploy'
-git push
+git push -f
 
 REM return current folder
 cd ../schedule-checker/client
