@@ -1,8 +1,19 @@
 <template>
   <CustomPageHeader text="회원 목록" />
   <form class="d-flex justify-content-center my-3">
-    <input class="form-control me-2 w-75" type="search" placeholder="검색어" aria-label="검색" ref="refSearch" />
-    <button class="btn btn-outline-dark" type="button">검색</button>
+    <select class="form-select me-2 w-20" aria-label="searchOption" ref="searchKey">
+      <option value="">선택</option>
+      <option value="userEmail">이메일</option>
+      <option value="userName">이름</option>
+    </select>
+    <input
+      class="form-control me-2 w-75"
+      type="search"
+      placeholder="검색어"
+      aria-label="검색"
+      ref="searchValue"
+      @input="pagination.getSearchList"
+    />
   </form>
   <div class="table-responsive">
     <table class="table table-light table-hover">
@@ -16,29 +27,44 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in paginatedData" role="button">
+        <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center">{{ item.seq }}&nbsp;</td>
           <td class="text-center">{{ item.userEmail }}</td>
-          <td class="text-center">{{ item.userName }}</td>
+          <td class="text-center">
+            <!-- <router-link :to="{ name: 'MemberItem', params: { seq: item.seq } }" class="btn__td">
+              {{ item.userName }}
+            </router-link> -->
+            {{ item.userName }}
+          </td>
           <td class="text-center">{{ setAuth(item.auth) }}</td>
           <td class="text-center">{{ item.insDate }}</td>
+        </tr>
+        <tr v-show="!pagination?.calculatedList?.length">
+          <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <paginate
-    :pageCount="pageCnt"
-    :clickHandler="goToPage"
-    :prevText="'이전'"
-    :nextText="'다음'"
-    :container-class="'pagination justify-content-center btn py-3 px-1'"
-    :initial-page="curPage"
-  >
-  </paginate>
+  <div v-show="pagination?.calculatedList?.length">
+    <paginate
+      v-model="pagination.curPage"
+      :pageCount="pagination.pageCnt"
+      :clickHandler="pagination.setPageCnt"
+      :pageRange="1"
+      :marginPages="1"
+      :prevText="'이전'"
+      :nextText="'다음'"
+      :firstLastButton="true"
+      :firstButtonText="'처음'"
+      :lastButtonText="'끝'"
+      :containerClass="'pagination justify-content-center btn py-3 px-1'"
+    >
+    </paginate>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, reactive, computed } from 'vue';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -46,32 +72,50 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 // Paginate
 import Paginate from 'vuejs-paginate-next';
 
-const refSearch = ref(null);
+import memberList from '@/sampleData/memberList.json';
+
+// search
+const searchKey = ref('');
+const searchValue = ref('');
+
 onMounted(() => {
-  refSearch.value.focus();
-  goToPage(1);
+  searchValue.value.focus();
 });
 
-const members = [
-  { seq: 6, userEmail: 'daerim.jeong@bespinglobal.com', userName: '정*림', auth: 1, insDate: '2022-05-03 23:59:59' },
-  { seq: 5, userEmail: 'heejung.chae@bespinglobal.com', userName: '채*중', auth: 1, insDate: '2022-05-03 23:59:59' },
-  {
-    seq: 4,
-    userEmail: 'seokcheon.kang@bespinglobal.com',
-    userName: '강*천',
-    auth: 1,
-    insDate: '2022-05-03 23:59:59',
+// list
+const pagination = reactive({
+  curPage: 1, // 현재 페이지. ex) 1, 2, ..., 10
+  perPage: 10, // 페이지마다 출력할 게시물 수. ex) 10, 9, ..., 1
+  pageCnt: 10, // 총 페이지 수. ex) 처음|이전|1|2, ..., 10|다음|끝
+  colspan: 4, // 표시할 칼럼 수
+  calculatedList: computed(() => {
+    return pagination.getSearchList();
+  }),
+  setPageCnt: () => {
+    pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
   },
-  { seq: 3, userEmail: 'heeyeon.jeon@bespinglobal.com', userName: '전*연', auth: 98, insDate: '2022-05-03 23:59:59' },
-  {
-    seq: 2,
-    userEmail: 'yunbeom.kim@bespinglobal.com',
-    userName: '김*범',
-    auth: 98,
-    insDate: '2022-05-03 23:59:59',
+  getSearchList: () => {
+    const key = searchKey?.value?.value;
+    const val = searchValue?.value?.value?.toLowerCase();
+
+    if (key && val) {
+      pagination.list = pagination.oriList.filter((item) => {
+        if (item[key]?.includes(val)) {
+          return item;
+        }
+      });
+    } else {
+      pagination.list = pagination.oriList;
+    }
+
+    pagination.setPageCnt();
+
+    return pagination?.list?.slice(
+      (pagination.curPage - 1) * pagination.perPage,
+      pagination.curPage * pagination.perPage
+    );
   },
-  { seq: 1, userEmail: 'sanghoon.yun@bespinglobal.com', userName: '윤*훈', auth: 99, insDate: '2022-05-03 23:59:59' },
-];
+});
 
 const setAuth = (auth) => {
   switch (auth) {
@@ -90,17 +134,8 @@ const setAuth = (auth) => {
   }
 };
 
-// pagination
-let curPage = ref(1); // 현재 페이지
-let perPage = ref(10); // 페이지마다 출력할 게시물 수
-let pageCnt = ref(10); // 총 페이지 수
+pagination.oriList = memberList;
+pagination.colspan = 5;
 
-const paginatedData = computed(() => {
-  return members.slice((curPage.value - 1) * perPage.value, curPage.value * perPage.value);
-});
-
-const goToPage = (numPage) => {
-  pageCnt.value = Math.floor(members.length / perPage.value) + 1;
-  curPage.value = numPage;
-};
+pagination.list = pagination.oriList;
 </script>

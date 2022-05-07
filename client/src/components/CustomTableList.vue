@@ -106,6 +106,8 @@ const pagination = reactive({
           return item;
         }
       });
+    } else {
+      pagination.list = pagination.oriList;
     }
 
     pagination.setPageCnt();
