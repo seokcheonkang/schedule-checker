@@ -8,12 +8,6 @@ import Profile from '@/views/normal/Profile.vue';
 import Join from '@/views/normal/Join.vue';
 import Find from '@/views/normal/Find.vue';
 
-import ScheduleList from '@/views/normal/ScheduleList.vue';
-import ScheduleItem from '@/views/normal/ScheduleItem.vue';
-
-// admin
-import MemberList from '@/views/admin/MemberList.vue';
-
 const routes = [
   {
     path: '/',
@@ -43,17 +37,19 @@ const routes = [
   {
     path: '/scheduleList',
     name: 'ScheduleList',
-    component: ScheduleList,
+    component: () =>
+      import(/* webpackChunkName: "ScheduleList", webpackPrefetch:true */ '@/views/normal/ScheduleList.vue'),
   },
   {
     path: '/scheduleItem/:seq',
     name: 'ScheduleItem',
-    component: ScheduleItem,
+    component: () =>
+      import(/* webpackChunkName: "ScheduleItem", webpackPrefetch:true */ '@/views/normal/ScheduleItem.vue'),
   },
   {
     path: '/admin/memberList',
     name: 'MemberList',
-    component: MemberList,
+    component: () => import(/* webpackChunkName: "MemberList", webpackPrefetch:true */ '@/views/admin/MemberList.vue'),
   },
 ];
 
