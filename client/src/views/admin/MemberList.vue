@@ -1,10 +1,10 @@
 <template>
   <CustomPageHeader text="회원 목록" />
-  <CustomTableList command="memberList" />
+  <CustomList command="memberList" />
 </template>
 
 <script setup>
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
-import CustomTableList from '@/components/CustomTableList.vue';
+import CustomList from '@/components/CustomList.vue';
 </script>
