@@ -5,8 +5,14 @@
       <option value="userName">이름</option>
       <option value="title">제목</option>
     </select>
-    <input class="form-control me-2 w-50" type="search" placeholder="검색어" aria-label="검색" ref="searchValue" />
-    <button class="btn btn-outline-dark" type="button" @click="searchList">검색</button>
+    <input
+      class="form-control me-2 w-50"
+      type="search"
+      placeholder="검색어"
+      aria-label="검색"
+      ref="searchValue"
+      @input="pagination.getSearchList"
+    />
   </form>
   <div class="table-responsive">
     <table class="table table-light table-hover">
@@ -19,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in paginatedList" role="button">
+        <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center">{{ item.seq }}&nbsp;</td>
           <td class="text-center">{{ item.userName }}</td>
           <td class="text-center">
@@ -29,23 +35,28 @@
           </td>
           <td class="text-center">{{ item.expiryDate }}</td>
         </tr>
+        <tr v-show="!pagination?.calculatedList?.length">
+          <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
+        </tr>
       </tbody>
     </table>
   </div>
-  <paginate
-    v-model="curPage"
-    :pageCount="pageCnt"
-    :clickHandler="setPageCnt"
-    :pageRange="1"
-    :marginPages="1"
-    :prevText="'이전'"
-    :nextText="'다음'"
-    :firstLastButton="true"
-    :firstButtonText="'처음'"
-    :lastButtonText="'끝'"
-    :containerClass="'pagination justify-content-center btn py-3 px-1'"
-  >
-  </paginate>
+  <div v-show="pagination?.calculatedList?.length">
+    <paginate
+      v-model="pagination.curPage"
+      :pageCount="pagination.pageCnt"
+      :clickHandler="pagination.setPageCnt"
+      :pageRange="1"
+      :marginPages="1"
+      :prevText="'이전'"
+      :nextText="'다음'"
+      :firstLastButton="true"
+      :firstButtonText="'처음'"
+      :lastButtonText="'끝'"
+      :containerClass="'pagination justify-content-center btn py-3 px-1'"
+    >
+    </paginate>
+  </div>
 </template>
 
 <script setup>
@@ -54,257 +65,67 @@ import { onMounted, ref, reactive, computed } from 'vue';
 // Paginate
 import Paginate from 'vuejs-paginate-next';
 
-// route
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import scheduleList from '@/sampleData/scheduleList.json';
+import memberList from '@/sampleData/memberList.json';
+
+// search
+let searchKey = ref('');
+let searchValue = ref('');
 
 onMounted(() => {
   searchValue.value.focus();
-  setPageCnt();
 });
 
 // props
 const props = defineProps({
   command: {
     type: String,
-    default: 'scheduleList',
+    default: '',
   },
 });
 
-// search
-let searchKey = ref('');
-let searchValue = ref('');
-
 // list
 const pagination = reactive({
-  list: [
-    { seq: 201, userName: '관리자', title: '테스트201', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 200, userName: '관리자', title: '테스트200', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 199, userName: '관리자', title: '테스트199', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 198, userName: '관리자', title: '테스트198', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 197, userName: '관리자', title: '테스트197', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 196, userName: '관리자', title: '테스트196', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 195, userName: '관리자', title: '테스트195', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 194, userName: '관리자', title: '테스트194', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 193, userName: '관리자', title: '테스트193', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 192, userName: '관리자', title: '테스트192', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 191, userName: '관리자', title: '테스트191', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 190, userName: '관리자', title: '테스트190', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 189, userName: '관리자', title: '테스트189', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 188, userName: '관리자', title: '테스트188', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 187, userName: '관리자', title: '테스트187', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 186, userName: '관리자', title: '테스트186', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 185, userName: '관리자', title: '테스트185', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 184, userName: '관리자', title: '테스트184', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 183, userName: '관리자', title: '테스트183', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 182, userName: '관리자', title: '테스트182', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 181, userName: '관리자', title: '테스트181', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 180, userName: '관리자', title: '테스트180', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 179, userName: '관리자', title: '테스트179', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 178, userName: '관리자', title: '테스트178', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 177, userName: '관리자', title: '테스트177', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 176, userName: '관리자', title: '테스트176', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 175, userName: '관리자', title: '테스트175', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 174, userName: '관리자', title: '테스트174', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 173, userName: '관리자', title: '테스트173', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 172, userName: '관리자', title: '테스트172', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 171, userName: '관리자', title: '테스트171', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 170, userName: '관리자', title: '테스트170', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 169, userName: '관리자', title: '테스트169', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 168, userName: '관리자', title: '테스트168', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 167, userName: '관리자', title: '테스트167', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 166, userName: '관리자', title: '테스트166', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 165, userName: '관리자', title: '테스트165', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 164, userName: '관리자', title: '테스트164', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 163, userName: '관리자', title: '테스트163', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 162, userName: '관리자', title: '테스트162', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 161, userName: '관리자', title: '테스트161', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 160, userName: '관리자', title: '테스트160', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 159, userName: '관리자', title: '테스트159', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 158, userName: '관리자', title: '테스트158', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 157, userName: '관리자', title: '테스트157', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 156, userName: '관리자', title: '테스트156', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 155, userName: '관리자', title: '테스트155', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 154, userName: '관리자', title: '테스트154', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 153, userName: '관리자', title: '테스트153', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 152, userName: '관리자', title: '테스트152', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 151, userName: '관리자', title: '테스트151', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 150, userName: '관리자', title: '테스트150', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 149, userName: '관리자', title: '테스트149', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 148, userName: '관리자', title: '테스트148', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 147, userName: '관리자', title: '테스트147', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 146, userName: '관리자', title: '테스트146', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 145, userName: '관리자', title: '테스트145', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 144, userName: '관리자', title: '테스트144', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 143, userName: '관리자', title: '테스트143', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 142, userName: '관리자', title: '테스트142', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 141, userName: '관리자', title: '테스트141', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 140, userName: '관리자', title: '테스트140', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 139, userName: '관리자', title: '테스트139', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 138, userName: '관리자', title: '테스트138', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 137, userName: '관리자', title: '테스트137', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 136, userName: '관리자', title: '테스트136', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 135, userName: '관리자', title: '테스트135', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 134, userName: '관리자', title: '테스트134', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 133, userName: '관리자', title: '테스트133', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 132, userName: '관리자', title: '테스트132', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 131, userName: '관리자', title: '테스트131', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 130, userName: '관리자', title: '테스트130', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 129, userName: '관리자', title: '테스트129', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 128, userName: '관리자', title: '테스트128', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 127, userName: '관리자', title: '테스트127', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 126, userName: '관리자', title: '테스트126', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 125, userName: '관리자', title: '테스트125', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 124, userName: '관리자', title: '테스트124', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 123, userName: '관리자', title: '테스트123', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 122, userName: '관리자', title: '테스트122', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 121, userName: '관리자', title: '테스트121', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 120, userName: '관리자', title: '테스트120', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 119, userName: '관리자', title: '테스트119', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 118, userName: '관리자', title: '테스트118', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 117, userName: '관리자', title: '테스트117', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 116, userName: '관리자', title: '테스트116', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 115, userName: '관리자', title: '테스트115', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 114, userName: '관리자', title: '테스트114', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 113, userName: '관리자', title: '테스트113', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 112, userName: '관리자', title: '테스트112', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 111, userName: '관리자', title: '테스트111', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 110, userName: '관리자', title: '테스트110', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 109, userName: '관리자', title: '테스트109', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 108, userName: '관리자', title: '테스트108', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 107, userName: '관리자', title: '테스트107', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 106, userName: '관리자', title: '테스트106', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 105, userName: '관리자', title: '테스트105', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 104, userName: '관리자', title: '테스트104', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 103, userName: '관리자', title: '테스트103', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 102, userName: '관리자', title: '테스트102', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 101, userName: '관리자', title: '테스트101', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 100, userName: '관리자', title: '테스트100', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 99, userName: '관리자', title: '테스트99', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 98, userName: '관리자', title: '테스트98', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 97, userName: '관리자', title: '테스트97', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 96, userName: '관리자', title: '테스트96', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 95, userName: '관리자', title: '테스트95', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 94, userName: '관리자', title: '테스트94', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 93, userName: '관리자', title: '테스트93', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 92, userName: '관리자', title: '테스트92', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 91, userName: '관리자', title: '테스트91', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 90, userName: '관리자', title: '테스트90', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 89, userName: '관리자', title: '테스트89', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 88, userName: '관리자', title: '테스트88', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 87, userName: '관리자', title: '테스트87', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 86, userName: '관리자', title: '테스트86', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 85, userName: '관리자', title: '테스트85', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 84, userName: '관리자', title: '테스트84', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 83, userName: '관리자', title: '테스트83', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 82, userName: '관리자', title: '테스트82', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 81, userName: '관리자', title: '테스트81', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 80, userName: '관리자', title: '테스트80', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 79, userName: '관리자', title: '테스트79', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 78, userName: '관리자', title: '테스트78', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 77, userName: '관리자', title: '테스트77', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 76, userName: '관리자', title: '테스트76', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 75, userName: '관리자', title: '테스트75', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 74, userName: '관리자', title: '테스트74', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 73, userName: '관리자', title: '테스트73', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 72, userName: '관리자', title: '테스트72', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 71, userName: '관리자', title: '테스트71', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 70, userName: '관리자', title: '테스트70', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 69, userName: '관리자', title: '테스트69', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 68, userName: '관리자', title: '테스트68', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 67, userName: '관리자', title: '테스트67', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 66, userName: '관리자', title: '테스트66', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 65, userName: '관리자', title: '테스트65', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 64, userName: '관리자', title: '테스트64', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 63, userName: '관리자', title: '테스트63', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 62, userName: '관리자', title: '테스트62', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 61, userName: '관리자', title: '테스트61', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 60, userName: '관리자', title: '테스트60', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 59, userName: '관리자', title: '테스트59', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 58, userName: '관리자', title: '테스트58', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 57, userName: '관리자', title: '테스트57', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 56, userName: '관리자', title: '테스트56', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 55, userName: '관리자', title: '테스트55', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 54, userName: '관리자', title: '테스트54', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 53, userName: '관리자', title: '테스트53', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 52, userName: '관리자', title: '테스트52', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 51, userName: '관리자', title: '테스트51', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 50, userName: '관리자', title: '테스트50', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 49, userName: '관리자', title: '테스트49', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 48, userName: '관리자', title: '테스트48', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 47, userName: '관리자', title: '테스트47', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 46, userName: '관리자', title: '테스트46', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 45, userName: '관리자', title: '테스트45', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 44, userName: '관리자', title: '테스트44', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 43, userName: '관리자', title: '테스트43', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 42, userName: '관리자', title: '테스트42', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 41, userName: '관리자', title: '테스트41', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 40, userName: '관리자', title: '테스트40', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 39, userName: '관리자', title: '테스트39', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 38, userName: '관리자', title: '테스트38', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 37, userName: '관리자', title: '테스트37', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 36, userName: '관리자', title: '테스트36', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 35, userName: '관리자', title: '테스트35', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 34, userName: '관리자', title: '테스트34', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 33, userName: '관리자', title: '테스트33', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 32, userName: '관리자', title: '테스트32', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 31, userName: '관리자', title: '테스트31', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 30, userName: '관리자', title: '테스트30', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 29, userName: '관리자', title: '테스트29', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 28, userName: '관리자', title: '테스트28', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 27, userName: '관리자', title: '테스트27', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 26, userName: '관리자', title: '테스트26', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 25, userName: '관리자', title: '테스트25', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 24, userName: '관리자', title: '테스트24', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 23, userName: '관리자', title: '테스트23', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 22, userName: '관리자', title: '테스트22', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 21, userName: '관리자', title: '테스트21', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 20, userName: '관리자', title: '테스트20', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 19, userName: '관리자', title: '테스트19', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 18, userName: '관리자', title: '테스트18', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 17, userName: '관리자', title: '테스트17', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 16, userName: '관리자', title: '테스트16', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 15, userName: '관리자', title: '테스트15', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 14, userName: '관리자', title: '테스트14', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 13, userName: '관리자', title: '테스트13', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 12, userName: '관리자', title: '테스트12', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 11, userName: '관리자', title: '테스트11', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 10, userName: '관리자', title: '테스트10', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 9, userName: '관리자', title: '테스트09', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 8, userName: '관리자', title: '테스트08', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 7, userName: '관리자', title: '테스트07', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 6, userName: '관리자', title: '테스트06', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 5, userName: '관리자', title: '테스트05', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 4, userName: '관리자', title: '테스트04', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 3, userName: '관리자', title: '테스트03', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 2, userName: '관리자', title: '테스트02', expiryDate: '9999-12-31 23:59:59' },
-    { seq: 1, userName: '관리자', title: '테스트01', expiryDate: '9999-12-31 23:59:59' },
-  ],
+  curPage: 1, // 현재 페이지. ex) 1, 2, ..., 10
+  perPage: 10, // 페이지마다 출력할 게시물 수. ex) 10, 9, ..., 1
+  pageCnt: 10, // 총 페이지 수. ex) 처음|이전|1|2, ..., 10|다음|끝
+  colspan: 4, // 표시할 칼럼 수
+  calculatedList: computed(() => {
+    return pagination.getSearchList();
+  }),
+  setPageCnt: () => {
+    pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
+  },
+  getSearchList: () => {
+    const key = searchKey?.value?.value;
+    const val = searchValue?.value?.value?.toLowerCase();
+
+    if (key && val) {
+      pagination.list = pagination.oriList.filter((item) => {
+        if (item[key]?.includes(val)) {
+          return item;
+        }
+      });
+    }
+
+    pagination.setPageCnt();
+
+    return pagination?.list?.slice(
+      (pagination.curPage - 1) * pagination.perPage,
+      pagination.curPage * pagination.perPage
+    );
+  },
 });
 
-// pagination
-let curPage = ref(1); // 현재 페이지
-let perPage = ref(10); // 페이지마다 출력할 게시물 수
-let pageCnt = ref(10); // 총 페이지 수
-let paginatedList = computed(() => {
-  return pagination.list.slice((curPage.value - 1) * perPage.value, curPage.value * perPage.value);
-});
-
-const setPageCnt = () => {
-  pageCnt.value = Math.ceil(pagination.list.length / perPage.value);
-};
-
-const searchList = () => {
-  if (!searchKey.value.value || !searchValue.value.value) {
-    return;
+(() => {
+  if (props.command === 'scheduleList') {
+    pagination.oriList = scheduleList;
+    pagination.colspan = 4;
+  } else if (props.command === 'memberList') {
+    pagination.oriList = memberList;
+    pagination.colspan = 5;
   }
 
-  pagination.list = pagination.list.filter((item) => {
-    if (item[searchKey.value.value].indexOf(searchValue.value.value) > -1) {
-      return item;
-    }
-  });
-
-  setPageCnt();
-};
+  pagination.list = pagination.oriList;
+})();
 </script>

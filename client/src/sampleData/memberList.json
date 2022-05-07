@@ -1,0 +1,44 @@
+[
+  {
+    "seq": 6,
+    "userEmail": "daerim.jeong@bespinglobal.com",
+    "userName": "정*림",
+    "auth": 1,
+    "insDate": "2022-05-03 23:59:59"
+  },
+  {
+    "seq": 5,
+    "userEmail": "heejung.chae@bespinglobal.com",
+    "userName": "채*중",
+    "auth": 1,
+    "insDate": "2022-05-03 23:59:59"
+  },
+  {
+    "seq": 4,
+    "userEmail": "seokcheon.kang@bespinglobal.com",
+    "userName": "강*천",
+    "auth": 1,
+    "insDate": "2022-05-03 23:59:59"
+  },
+  {
+    "seq": 3,
+    "userEmail": "heeyeon.jeon@bespinglobal.com",
+    "userName": "전*연",
+    "auth": 98,
+    "insDate": "2022-05-03 23:59:59"
+  },
+  {
+    "seq": 2,
+    "userEmail": "yunbeom.kim@bespinglobal.com",
+    "userName": "김*범",
+    "auth": 98,
+    "insDate": "2022-05-03 23:59:59"
+  },
+  {
+    "seq": 1,
+    "userEmail": "sanghoon.yun@bespinglobal.com",
+    "userName": "윤*훈",
+    "auth": 99,
+    "insDate": "2022-05-03 23:59:59"
+  }
+]
