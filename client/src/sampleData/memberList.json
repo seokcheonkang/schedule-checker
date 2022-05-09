@@ -2,17 +2,16 @@
   "columns": [
     {
       "key": "seq",
-      "value": "순번"
+      "val": "순번"
     },
     {
       "key": "userName",
-      "value": "이름"
+      "val": "이름"
     },
-    { "key": "userEmail", "value": "이메일" },
-    { "key": "auth", "value": "권한(키)" },
-    { "key": "authValue", "value": "권한" },
-
-    { "key": "insDate", "value": "입력일시" }
+    { "key": "userEmail", "val": "이메일" },
+    { "key": "auth", "val": "권한(키)" },
+    { "key": "authVal", "val": "권한" },
+    { "key": "insDate", "val": "입력일시" }
   ],
   "dataList": [
     {

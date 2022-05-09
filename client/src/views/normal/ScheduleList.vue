@@ -1,10 +1,122 @@
 <template>
   <CustomPageHeader text="스케줄 목록" />
-  <CustomList command="scheduleList" />
+  <form class="d-flex justify-content-center my-3">
+    <select class="form-select me-2 w-20" aria-label="searchOption" v-model="searchKey">
+      <option value="">선택</option>
+      <option :value="column.key" v-for="column in pagination.columns">
+        {{ column.val }}
+      </option>
+    </select>
+    <input
+      class="form-control me-2 w-50"
+      type="search"
+      placeholder="검색어"
+      aria-label="검색"
+      v-model="searchValue"
+      @input="pagination.getSearchList"
+      autofocus="autofocus"
+    />
+  </form>
+  <div class="table-responsive">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th class="text-center text-nowrap" v-for="column in pagination.columns">{{ column.val }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-show="!pagination?.calculatedList?.length">
+          <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
+        </tr>
+        <tr v-for="item in pagination.calculatedList" role="button">
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.userName }}</td>
+          <td class="text-center">
+            <router-link :to="{ name: 'ScheduleItem', params: { seq: item.seq } }" class="btn__td">
+              {{ item.title }}
+            </router-link>
+          </td>
+          <td class="text-center">{{ item.expiryDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-show="pagination?.calculatedList?.length">
+    <paginate
+      v-model="pagination.curPage"
+      :pageCount="pagination.pageCnt"
+      :clickHandler="pagination.setPageCnt"
+      :pageRange="1"
+      :marginPages="1"
+      :prevText="'이전'"
+      :nextText="'다음'"
+      :firstLastButton="true"
+      :firstButtonText="'처음'"
+      :lastButtonText="'끝'"
+      :containerClass="'pagination justify-content-center btn py-3'"
+    >
+    </paginate>
+  </div>
 </template>
 
 <script setup>
+import { onMounted, reactive, computed } from 'vue';
+
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
-import CustomList from '@/components/CustomList.vue';
+
+// vuejs-paginate
+import Paginate from 'vuejs-paginate-next';
+
+// list raw
+import scheduleList from '@/sampleData/scheduleList.json';
+
+// search
+const searchKey = $ref('');
+const searchValue = $ref('');
+
+// life cycle
+onMounted(() => {
+  pagination.columns = scheduleList.columns;
+  pagination.colspan = scheduleList.columns.length;
+
+  pagination.oriList = scheduleList.dataList;
+});
+
+// list for pagination
+const pagination = reactive({
+  curPage: 1, // 현재 페이지. ex) 1, 2, ..., 10
+  perPage: 10, // 페이지마다 출력할 게시물 수. ex) 10, 9, ..., 1
+  pageCnt: 10, // 총 페이지 수. ex) 처음|이전|1|2, ..., 10|다음|끝
+  colspan: 4, // 표시할 칼럼 수
+  oriList: [],
+  list: [],
+  calculatedList: computed(() => {
+    return pagination.getSearchList();
+  }),
+  setPageCnt: () => {
+    pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
+  },
+  getSearchList: () => {
+    const key = searchKey;
+    const val = searchValue?.toLowerCase();
+    if (key && val) {
+      pagination.curPage = 1;
+      pagination.list = pagination.oriList.filter((item) => {
+        if (item[key].toString().includes(val)) {
+          return item;
+        }
+      });
+    } else {
+      pagination.list = pagination.oriList;
+    }
+
+    pagination.setPageCnt();
+
+    return pagination?.list?.slice(
+      (pagination.curPage - 1) * pagination.perPage,
+      pagination.curPage * pagination.perPage
+    );
+  },
+});
 </script>

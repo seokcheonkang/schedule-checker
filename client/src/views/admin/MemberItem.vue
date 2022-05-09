@@ -1,5 +1,5 @@
 <template>
-  <CustomPageHeader text="스케줄 상세" />
+  <CustomPageHeader text="회원 상세" />
   <div class="container">
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">
@@ -10,10 +10,15 @@
             <div class="mb-3">{{ seq }}</div>
             <h5 class="text-muted">이름</h5>
             <div class="mb-3">{{ item.userName }}</div>
-            <h5 class="text-muted">마감일시</h5>
-            <div class="mb-3">{{ item.expiryDate }}</div>
+            <h5 class="text-muted">이메일</h5>
+            <div class="mb-3">{{ item.userEmail }}</div>
+            <h5 class="text-muted">권한(키)</h5>
+            <div class="mb-3">{{ item.auth }}</div>
+            <h5 class="text-muted">권한</h5>
+            <div class="mb-3">{{ item.authVal }}</div>
+            <h5 class="text-muted">입력일시</h5>
+            <div class="mb-3">{{ item.insDate }}</div>
           </div>
-
           <CustomActionButton text="확인" command="scheduleConfirm" @buttonClicked="confirm" />
         </div>
       </div>
@@ -32,7 +37,14 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
 import swal from 'sweetalert2';
 
 // Server Data
-const item = { seq: 4, userName: '관리자', title: '테스트4', expiryDate: '9999-12-31 23:59:59' };
+const item = {
+  seq: 2,
+  userName: '김*범',
+  userEmail: 'yunbeom.kim@bespinglobal.com',
+  auth: 98,
+  authValue: '운영자',
+  insDate: '2022-05-03 23:59:59',
+};
 
 // route
 const route = useRoute();

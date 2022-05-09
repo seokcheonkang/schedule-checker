@@ -2,14 +2,14 @@
   "columns": [
     {
       "key": "seq",
-      "value": "순번"
+      "val": "순번"
     },
     {
       "key": "userName",
-      "value": "이름"
+      "val": "이름"
     },
-    { "key": "title", "value": "제목" },
-    { "key": "expiryDate", "value": "마감일시" }
+    { "key": "title", "val": "제목" },
+    { "key": "expiryDate", "val": "마감일시" }
   ],
   "dataList": [
     { "seq": 201, "userName": "김*범", "title": "테스트201", "expiryDate": "2022-12-31 23:59:59" },

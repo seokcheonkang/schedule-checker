@@ -51,6 +51,11 @@ const routes = [
     name: 'MemberList',
     component: () => import(/* webpackChunkName: "MemberList", webpackPrefetch:true */ '@/views/admin/MemberList.vue'),
   },
+  {
+    path: '/admin/memberItem/:seq',
+    name: 'MemberItem',
+    component: () => import(/* webpackChunkName: "MemberItem", webpackPrefetch:true */ '@/views/admin/MemberItem.vue'),
+  },
 ];
 
 const router = createRouter({
