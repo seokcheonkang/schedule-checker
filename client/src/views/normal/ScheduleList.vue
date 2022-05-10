@@ -29,14 +29,16 @@
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center">{{ item.seq }}&nbsp;</td>
-          <td class="text-center">{{ item.userName }}</td>
-          <td class="text-center">
+          <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
+          <td class="text-center" title="제목">
             <router-link :to="{ name: 'ScheduleItem', params: { seq: item.seq } }" class="btn__td">
               {{ item.title }}
             </router-link>
           </td>
-          <td class="text-center">{{ item.expiryDate }}</td>
+          <td class="text-center" title="상태">{{ item.status }}</td>
+          <td class="text-center" title="미완료수">{{ item.uncompletedCount }}</td>
+          <td class="text-center" title="완료수">{{ item.completedCount }}</td>
+          <td class="text-center" title="등록일시">{{ item.insDate }}</td>
         </tr>
       </tbody>
     </table>
@@ -99,7 +101,7 @@ const pagination = reactive({
   },
   getSearchList: () => {
     const key = searchKey;
-    const val = searchValue?.toLowerCase();
+    const val = searchValue;
     if (key && val) {
       pagination.curPage = 1;
       pagination.list = pagination.oriList.filter((item) => {
