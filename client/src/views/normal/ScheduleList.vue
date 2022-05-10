@@ -1,6 +1,6 @@
 <template>
   <CustomPageHeader text="스케줄 목록" />
-  <form class="d-flex justify-content-center my-3">
+  <form class="d-flex justify-content-center my-3" @submit.prevent>
     <select class="form-select me-2 w-20" aria-label="searchOption" v-model="searchKey">
       <option value="">선택</option>
       <option :value="column.key" v-for="column in pagination.columns">
