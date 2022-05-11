@@ -15,46 +15,46 @@ const routes = [
     component: Home,
   },
   {
-    path: '/login',
+    path: '/Login',
     name: 'Login',
     component: Login,
   },
   {
-    path: '/profile',
+    path: '/Profile',
     name: 'Profile',
     component: Profile,
   },
   {
-    path: '/join',
+    path: '/Join',
     name: 'Join',
     component: Join,
   },
   {
-    path: '/find',
+    path: '/Find',
     name: 'Find',
     component: Find,
   },
   {
-    path: '/scheduleList',
-    name: 'ScheduleList',
+    path: '/Schedules',
+    name: 'Schedules',
+    component: () => import(/* webpackChunkName: "schedules", webpackPrefetch:true */ '@/views/normal/schedules.vue'),
+  },
+  {
+    path: '/Schedules/:seq',
+    name: 'SchedulesItem',
     component: () =>
-      import(/* webpackChunkName: "ScheduleList", webpackPrefetch:true */ '@/views/normal/ScheduleList.vue'),
+      import(/* webpackChunkName: "SchedulesItem", webpackPrefetch:true */ '@/views/normal/SchedulesItem.vue'),
   },
   {
-    path: '/scheduleItem/:seq',
-    name: 'ScheduleItem',
+    path: '/admin/Members',
+    name: 'Members',
+    component: () => import(/* webpackChunkName: "Members", webpackPrefetch:true */ '@/views/admin/Members.vue'),
+  },
+  {
+    path: '/admin/Members/:seq',
+    name: 'MembersItem',
     component: () =>
-      import(/* webpackChunkName: "ScheduleItem", webpackPrefetch:true */ '@/views/normal/ScheduleItem.vue'),
-  },
-  {
-    path: '/admin/memberList',
-    name: 'MemberList',
-    component: () => import(/* webpackChunkName: "MemberList", webpackPrefetch:true */ '@/views/admin/MemberList.vue'),
-  },
-  {
-    path: '/admin/memberItem/:seq',
-    name: 'MemberItem',
-    component: () => import(/* webpackChunkName: "MemberItem", webpackPrefetch:true */ '@/views/admin/MemberItem.vue'),
+      import(/* webpackChunkName: "MembersItem", webpackPrefetch:true */ '@/views/admin/MembersItem.vue'),
   },
 ];
 

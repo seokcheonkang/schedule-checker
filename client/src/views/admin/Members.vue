@@ -1,6 +1,6 @@
 <template>
-  <CustomPageHeader text="스케줄 목록" />
-  <form class="d-flex justify-content-center my-3" @submit.prevent>
+  <CustomPageHeader text="회원 목록" />
+  <form class="d-flex justify-content-center my-3">
     <select class="form-select me-2 w-20" aria-label="searchOption" v-model="searchKey">
       <option value="">선택</option>
       <option :value="column.key" v-for="column in pagination.columns">
@@ -29,16 +29,16 @@
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
-          <td class="text-center" title="제목">
-            <router-link :to="{ name: 'ScheduleItem', params: { seq: item.seq } }" class="btn__td">
-              {{ item.title }}
+          <td class="text-center">{{ item.seq }}&nbsp;</td>
+          <td class="text-center">{{ item.userEmail }}</td>
+          <td class="text-center">
+            <router-link :to="{ path: '/admin/members/' + item.seq }" class="btn__td">
+              {{ item.userName }}
             </router-link>
           </td>
-          <td class="text-center" title="상태">{{ item.status }}</td>
-          <td class="text-center" title="미완료수">{{ item.uncompletedCount }}</td>
-          <td class="text-center" title="완료수">{{ item.completedCount }}</td>
-          <td class="text-center" title="등록일시">{{ item.insDate }}</td>
+          <td class="text-center">{{ item.userGrade }}</td>
+          <td class="text-center">{{ item.registerDate }}</td>
+          <td class="text-center">{{ item.registerStatus }}</td>
         </tr>
       </tbody>
     </table>
@@ -71,7 +71,7 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import Paginate from 'vuejs-paginate-next';
 
 // list raw
-import scheduleList from '@/sampleData/scheduleList.json';
+import members from '@/sampleData/members.json';
 
 // search
 const searchKey = $ref('');
@@ -79,10 +79,10 @@ const searchValue = $ref('');
 
 // life cycle
 onMounted(() => {
-  pagination.columns = scheduleList.columns;
-  pagination.colspan = scheduleList.columns.length;
+  pagination.columns = members.columns;
+  pagination.colspan = members.columns.length;
 
-  pagination.oriList = scheduleList.dataList;
+  pagination.oriList = members.dataList;
 });
 
 // list for pagination
@@ -101,7 +101,7 @@ const pagination = reactive({
   },
   getSearchList: () => {
     const key = searchKey;
-    const val = searchValue;
+    const val = searchValue?.toLowerCase();
     if (key && val) {
       pagination.curPage = 1;
       pagination.list = pagination.oriList.filter((item) => {

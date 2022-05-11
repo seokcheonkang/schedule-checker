@@ -18,7 +18,7 @@
       <div class="navbar-collapse collapse show" id="navBarsMobile">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/scheduleList">스케줄</router-link>
+            <router-link class="nav-link" aria-current="page" to="/schedules">스케줄</router-link>
           </li>
           <!--
           <li class="nav-item dropdown">
@@ -27,7 +27,7 @@
             >
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown01">
               <li>
-                <router-link class="dropdown-item" to="/admin/memberList">회원</router-link>
+                <router-link class="dropdown-item" to="/admin/members">회원</router-link>
               </li>
             </ul>
           </li>
