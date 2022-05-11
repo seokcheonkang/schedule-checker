@@ -158,14 +158,13 @@ const submitForm = (paramForParent) => {
 }
 </script>
 
-
 <style scoped>
 .errorMessage {
-  background: yellow;
-  color: red;
+  color: #842029;
+  background-color: #f8d7da;
 }
 
 .errorMessage li {
-  list-style-type: decimal;
+  list-style-type: square;
 }
 </style>
