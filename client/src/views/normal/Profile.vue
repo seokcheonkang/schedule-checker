@@ -13,7 +13,7 @@
             <h5 class="text-muted">권한</h5>
             <div class="mb-3">일반</div>
           </div>
-          <CustomActionButton text="회원 탈퇴" option1="btn-danger" command="memberLeave" @buttonClicked="leave" />
+          <CustomActionButton text="회원 탈퇴" command="memberLeave" option1="btn-danger" @buttonClicked="leave" />
         </div>
       </div>
     </div>

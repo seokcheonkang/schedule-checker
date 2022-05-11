@@ -19,7 +19,7 @@
             <h5 class="text-muted">가입상태</h5>
             <div class="mb-3">{{ item.registerStatus }}</div>
           </div>
-          <CustomActionButton text="확인" command="scheduleConfirm" @buttonClicked="confirm" />
+          <CustomActionButton text="확인" command="memberConfirm" @buttonClicked="confirm" />
         </div>
       </div>
     </div>

@@ -34,6 +34,16 @@ const handleButtonClicked = () => {
   let paramForParent = {};
 
   switch (props.command) {
+    case 'memberJoin':
+      paramForParent = {
+        title: `정말 ${props.text} 하시겠습니까?`,
+        showDenyButton: true,
+        confirmButtonText: '예',
+        denyButtonText: '아니오',
+        resultMessageY: '완료했습니다.',
+        resultMessageN: '취소했습니다.',
+      };
+      break;
     case 'scheduleConfirm':
       paramForParent = {
         title: '앗!',
