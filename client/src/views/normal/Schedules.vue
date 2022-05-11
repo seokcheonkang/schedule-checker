@@ -31,7 +31,7 @@
         <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
           <td class="text-center" title="제목">
-            <router-link :to="{ path: '/schedules/' + item.seq }" class="btn__td">
+            <router-link :to="{ path: `/schedules/${item.seq}` }" class="btn__td">
               {{ item.title }}
             </router-link>
           </td>

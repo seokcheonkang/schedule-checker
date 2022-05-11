@@ -32,7 +32,7 @@
           <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
           <td class="text-center" title="이메일">{{ item.userEmail }}</td>
           <td class="text-center" title="이름">
-            <router-link :to="{ path: '/admin/members/' + item.seq }" class="btn__td">
+            <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn__td">
               {{ item.userName }}
             </router-link>
           </td>
