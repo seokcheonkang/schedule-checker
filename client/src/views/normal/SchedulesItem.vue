@@ -8,10 +8,16 @@
           <div class="form-floating mb-3">
             <h5 class="text-muted">순번</h5>
             <div class="mb-3">{{ seq }}</div>
-            <h5 class="text-muted">이름</h5>
-            <div class="mb-3">{{ item.userName }}</div>
-            <h5 class="text-muted">마감일시</h5>
-            <div class="mb-3">{{ item.expiryDate }}</div>
+            <h5 class="text-muted">제목</h5>
+            <div class="mb-3">{{ item.title }}</div>
+            <h5 class="text-muted">상태</h5>
+            <div class="mb-3">{{ item.status }}</div>
+            <h5 class="text-muted">미완료수</h5>
+            <div class="mb-3">{{ item.completedCount }}</div>
+            <h5 class="text-muted">완료수</h5>
+            <div class="mb-3">{{ item.uncompletedCount }}</div>
+            <h5 class="text-muted">등록일시</h5>
+            <div class="mb-3">{{ item.insertDate }}</div>
           </div>
 
           <CustomActionButton text="확인" command="scheduleConfirm" @buttonClicked="confirm" />
@@ -32,7 +38,14 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
 import swal from 'sweetalert2';
 
 // Server Data
-const item = { seq: 4, userName: '관리자', title: '테스트4', expiryDate: '9999-12-31 23:59:59' };
+const item = {
+  seq: 201,
+  title: '테스트201',
+  status: '진행중',
+  uncompletedCount: 11,
+  completedCount: 5,
+  insertDate: '2022-12-31 23:59:59',
+};
 
 // route
 const route = useRoute();

@@ -38,7 +38,7 @@
           <td class="text-center" title="상태">{{ item.status }}</td>
           <td class="text-center" title="미완료수">{{ item.uncompletedCount }}</td>
           <td class="text-center" title="완료수">{{ item.completedCount }}</td>
-          <td class="text-center" title="등록일시">{{ item.insDate }}</td>
+          <td class="text-center" title="등록일시">{{ item.insertDate }}</td>
         </tr>
       </tbody>
     </table>

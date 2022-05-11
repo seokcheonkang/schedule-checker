@@ -29,16 +29,16 @@
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center">{{ item.seq }}&nbsp;</td>
-          <td class="text-center">{{ item.userEmail }}</td>
-          <td class="text-center">
+          <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
+          <td class="text-center" title="이메일">{{ item.userEmail }}</td>
+          <td class="text-center" title="이름">
             <router-link :to="{ path: '/admin/members/' + item.seq }" class="btn__td">
               {{ item.userName }}
             </router-link>
           </td>
-          <td class="text-center">{{ item.userGrade }}</td>
-          <td class="text-center">{{ item.registerDate }}</td>
-          <td class="text-center">{{ item.registerStatus }}</td>
+          <td class="text-center" title="회원등급">{{ item.userGrade }}</td>
+          <td class="text-center" title="가입일시">{{ item.registerDate }}</td>
+          <td class="text-center" title="가입상태">{{ item.registerStatus }}</td>
         </tr>
       </tbody>
     </table>
