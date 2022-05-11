@@ -1,3 +1,65 @@
+<script setup>
+import { onMounted, reactive, computed } from 'vue';
+
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
+
+// vuejs-paginate
+import Paginate from 'vuejs-paginate-next';
+
+// list raw
+import schedules from '@/sampleData/schedules.json';
+
+// search
+const searchKey = $ref('');
+const searchValue = $ref('');
+
+// life cycle
+onMounted(() => {
+  pagination.columns = schedules.columns;
+  pagination.colspan = schedules.columns.length;
+
+  pagination.oriList = schedules.dataList;
+});
+
+// list for pagination
+const pagination = reactive({
+  curPage: 1, // 현재 페이지. ex) 1, 2, ..., 10
+  perPage: 10, // 페이지마다 출력할 게시물 수. ex) 10, 9, ..., 1
+  pageCnt: 10, // 총 페이지 수. ex) 처음|이전|1|2, ..., 10|다음|끝
+  colspan: 4, // 표시할 칼럼 수
+  oriList: [],
+  list: [],
+  calculatedList: computed(() => {
+    return pagination.getSearchList();
+  }),
+  setPageCnt: () => {
+    pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
+  },
+  getSearchList: () => {
+    const key = searchKey;
+    const val = searchValue;
+    if (key && val) {
+      pagination.curPage = 1;
+      pagination.list = pagination.oriList.filter((item) => {
+        if (item[key].toString().includes(val)) {
+          return item;
+        }
+      });
+    } else {
+      pagination.list = pagination.oriList;
+    }
+
+    pagination.setPageCnt();
+
+    return pagination?.list?.slice(
+      (pagination.curPage - 1) * pagination.perPage,
+      pagination.curPage * pagination.perPage
+    );
+  },
+});
+</script>
+
 <template>
   <CustomPageHeader text="스케줄 목록" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
@@ -60,65 +122,3 @@
     </paginate>
   </div>
 </template>
-
-<script setup>
-import { onMounted, reactive, computed } from 'vue';
-
-// custom
-import CustomPageHeader from '@/components/CustomPageHeader.vue';
-
-// vuejs-paginate
-import Paginate from 'vuejs-paginate-next';
-
-// list raw
-import schedules from '@/sampleData/schedules.json';
-
-// search
-const searchKey = $ref('');
-const searchValue = $ref('');
-
-// life cycle
-onMounted(() => {
-  pagination.columns = schedules.columns;
-  pagination.colspan = schedules.columns.length;
-
-  pagination.oriList = schedules.dataList;
-});
-
-// list for pagination
-const pagination = reactive({
-  curPage: 1, // 현재 페이지. ex) 1, 2, ..., 10
-  perPage: 10, // 페이지마다 출력할 게시물 수. ex) 10, 9, ..., 1
-  pageCnt: 10, // 총 페이지 수. ex) 처음|이전|1|2, ..., 10|다음|끝
-  colspan: 4, // 표시할 칼럼 수
-  oriList: [],
-  list: [],
-  calculatedList: computed(() => {
-    return pagination.getSearchList();
-  }),
-  setPageCnt: () => {
-    pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
-  },
-  getSearchList: () => {
-    const key = searchKey;
-    const val = searchValue;
-    if (key && val) {
-      pagination.curPage = 1;
-      pagination.list = pagination.oriList.filter((item) => {
-        if (item[key].toString().includes(val)) {
-          return item;
-        }
-      });
-    } else {
-      pagination.list = pagination.oriList;
-    }
-
-    pagination.setPageCnt();
-
-    return pagination?.list?.slice(
-      (pagination.curPage - 1) * pagination.perPage,
-      pagination.curPage * pagination.perPage
-    );
-  },
-});
-</script>

@@ -1,7 +1,3 @@
-<template>
-  <h1 class="text-center my-3">{{ text }}</h1>
-</template>
-
 <script setup>
 // props
 const props = defineProps({
@@ -11,3 +7,7 @@ const props = defineProps({
   },
 });
 </script>
+
+<template>
+  <h1 class="text-center my-3">{{ text }}</h1>
+</template>

@@ -1,3 +1,9 @@
+<script setup>
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
+import CustomActionButton from '@/components/CustomActionButton.vue';
+</script>
+
 <template>
   <CustomPageHeader text="비밀번호 찾기" />
   <div class="container">
@@ -15,9 +21,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-// custom
-import CustomPageHeader from '@/components/CustomPageHeader.vue';
-import CustomActionButton from '@/components/CustomActionButton.vue';
-</script>

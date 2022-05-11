@@ -1,7 +1,3 @@
-<template>
-  <button type="button" :class="[option1, option2, option3]" @click="handleButtonClicked">{{ text }}</button>
-</template>
-
 <script setup>
 // props
 const props = defineProps({
@@ -67,3 +63,7 @@ const handleButtonClicked = () => {
   emit('buttonClicked', paramForParent);
 };
 </script>
+
+<template>
+  <button type="button" :class="[option1, option2, option3]" @click="handleButtonClicked">{{ text }}</button>
+</template>

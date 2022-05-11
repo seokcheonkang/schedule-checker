@@ -1,8 +1,3 @@
-<template>
-  <CustomPageHeader text="홈" />
-  <h5 class="text-center">{{ message.underConstruction }}</h5>
-</template>
-
 <script setup>
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -52,3 +47,8 @@ onRenderTriggered(() => {
   console.log('onRenderTriggered');
 });
 </script>
+
+<template>
+  <CustomPageHeader text="홈" />
+  <h5 class="text-center">{{ message.underConstruction }}</h5>
+</template>

@@ -1,39 +1,3 @@
-<template>
-  <CustomPageHeader text="회원 가입" />
-  <div class="container">
-    <div class="row align-items-center py-1">
-      <div class="col-md-10 mx-auto col-lg-10">
-        <form class="p-4 p-md-4 border rounded-3 bg-light" @input="validateForm">
-          <h4 class="mb-3">회원 가입</h4>
-          <p v-if="errors.length">
-            <ul class="errorMessage">
-              <li v-for="error in errors">{{ error }}</li>
-            </ul>
-          </p>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="form.userName" autofocus="autofocus" />
-            <label for="userName">이름</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="userEmail" v-model="form.userEmail" placeholder="you@example.com" />
-            <label for="userEmail">이메일</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="userPassword" v-model="form.userPassword" placeholder="Password" />
-            <label for="userPassword">비밀번호</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="userPasswordConfirm" v-model="form.userPasswordConfirm" placeholder="Password" />
-            <label for="userPasswordConfirm">비밀번호 확인</label>
-          </div>
-          <CustomActionButton text="가입 완료" command="memberJoin" 
-          @buttonClicked="submitForm" />
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -157,6 +121,42 @@ const submitForm = (paramForParent) => {
   }
 }
 </script>
+
+<template>
+  <CustomPageHeader text="회원 가입" />
+  <div class="container">
+    <div class="row align-items-center py-1">
+      <div class="col-md-10 mx-auto col-lg-10">
+        <form class="p-4 p-md-4 border rounded-3 bg-light" @input="validateForm">
+          <h4 class="mb-3">회원 가입</h4>
+          <p v-if="errors.length">
+            <ul class="errorMessage">
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+          </p>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="form.userName" autofocus="autofocus" />
+            <label for="userName">이름</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="userEmail" v-model="form.userEmail" placeholder="you@example.com" />
+            <label for="userEmail">이메일</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="userPassword" v-model="form.userPassword" placeholder="Password" />
+            <label for="userPassword">비밀번호</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="userPasswordConfirm" v-model="form.userPasswordConfirm" placeholder="Password" />
+            <label for="userPasswordConfirm">비밀번호 확인</label>
+          </div>
+          <CustomActionButton text="가입 완료" command="memberJoin" 
+          @buttonClicked="submitForm" />
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .errorMessage {
