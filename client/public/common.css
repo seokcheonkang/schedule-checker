@@ -10,6 +10,18 @@
   text-decoration: none;
 }
 
+.dpin {
+  display: inline !important;
+}
+
+.dpib {
+  display: inline-block !important;
+}
+
+.dpbl {
+  display: block !important;
+}
+
 .w-5 {
   width: 5% !important;
 }

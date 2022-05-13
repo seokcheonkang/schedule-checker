@@ -57,30 +57,58 @@ onMounted(() => {});
         <div class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">{{ item.userName }}</h4>
           <div class="form-floating mb-3">
-            <h5 class="text-muted">순번</h5>
-            <div class="mb-3">{{ item.seq }}</div>
-            <h5 class="text-muted">이메일</h5>
-            <div class="mb-3">{{ item.userEmail }}</div>
-            <h5 class="text-muted">이름</h5>
-            <div class="mb-3">{{ item.userName }}</div>
-            <h5 class="text-muted">회원등급</h5>
-            <div class="mb-3">
-              <select class="form-select me-2 w-20" aria-label="searchOption" v-model="item.userGrade">
-                <option :value="column.key" v-for="column in MemberGrade">
-                  {{ column.val }}
-                </option>
-              </select>
-            </div>
-            <h5 class="text-muted">가입일시</h5>
-            <div class="mb-3">{{ item.registerDate }}</div>
-            <h5 class="text-muted">가입상태</h5>
-            <div class="mb-3">
-              <select class="form-select me-2 w-20" aria-label="searchOption" v-model="item.registerStatus">
-                <option :value="column.key" v-for="column in MemberRegisterStatus">
-                  {{ column.val }}
-                </option>
-              </select>
-            </div>
+            <h5 class="text-muted mb-3">
+              <span>순번</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ item.seq }}</span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>이메일</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ item.userEmail }}</span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>이름</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ item.userName }}</span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>회원등급</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ item.userGrade }}</span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>회원등급(값)</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>
+                <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="item.userGrade">
+                  <option :value="column.key" v-for="column in MemberGrade">
+                    {{ column.val }}
+                  </option>
+                </select>
+              </span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>가입일시</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ item.registerDate }}</span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>가입상태</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ item.registerStatus }}</span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>가입상태(값)</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>
+                <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="item.registerStatus">
+                  <option :value="column.key" v-for="column in MemberRegisterStatus">
+                    {{ column.val }}
+                  </option>
+                </select>
+              </span>
+            </h5>
           </div>
           <CustomActionButton text="회원 수정" command="memberConfirm" @buttonClicked="confirm" />
         </div>
