@@ -76,7 +76,6 @@ const pagination = reactive({
       aria-label="검색"
       v-model="searchValue"
       @input="pagination.getSearchList"
-      autofocus="autofocus"
     />
   </form>
   <div class="table-responsive">

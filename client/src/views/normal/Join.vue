@@ -127,14 +127,7 @@ const submitForm = (paramForParent) => {
             </ul>
           </div>
           <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="userName"
-              placeholder="홍길동"
-              v-model="form.userName"
-              autofocus="autofocus"
-            />
+            <input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="form.userName" />
             <label for="userName">이름</label>
           </div>
           <div class="form-floating mb-3">

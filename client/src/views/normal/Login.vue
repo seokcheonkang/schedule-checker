@@ -12,7 +12,14 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
         <form class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">로그인</h4>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="userEmail" placeholder="name@example.com" ref="refEmail" />
+            <input
+              type="email"
+              class="form-control"
+              id="userEmail"
+              placeholder="name@example.com"
+              ref="refEmail"
+              autofocus="autofocus"
+            />
             <label for="userEmail">이메일</label>
           </div>
           <div class="form-floating mb-3">
