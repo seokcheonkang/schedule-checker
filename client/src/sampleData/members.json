@@ -10,8 +10,10 @@
       "val": "이름"
     },
     { "key": "userGrade", "val": "회원등급" },
+    { "key": "userGradeVal", "val": "회원등급(값)" },
     { "key": "registerDate", "val": "가입일시" },
-    { "key": "registerStatus", "val": "가입상태" }
+    { "key": "registerStatus", "val": "가입상태" },
+    { "key": "registerStatusVal", "val": "가입상태(값)" }
   ],
   "dataList": [
     {
@@ -19,48 +21,60 @@
       "userEmail": "daerim.jeong@bespinglobal.com",
       "userName": "정*림",
       "userGrade": 1,
+      "userGradeVal": "일반",
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "1"
+      "registerStatus": "1",
+      "registerStatusVal": "정지"
     },
     {
       "seq": 5,
       "userEmail": "heejung.chae@bespinglobal.com",
       "userName": "채*중",
       "userGrade": 1,
+      "userGradeVal": "일반",
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "0"
+      "registerStatus": "0",
+      "registerStatusVal": "대기중"
     },
     {
       "seq": 4,
       "userEmail": "seokcheon.kang@bespinglobal.com",
       "userName": "강*천",
       "userGrade": 1,
+      "userGradeVal": "일반",
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "2"
+      "registerStatus": "2",
+      "registerStatusVal": "승인"
     },
     {
       "seq": 3,
       "userEmail": "heeyeon.jeon@bespinglobal.com",
       "userName": "전*연",
       "userGrade": 1,
+      "userGradeVal": "일반",
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "2"
+      "registerStatus": "2",
+      "registerStatusVal": "승인"
     },
     {
       "seq": 2,
       "userEmail": "yunbeom.kim@bespinglobal.com",
       "userName": "김*범",
       "userGrade": 99,
+      "userGradeVal": "관리자",
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "2"
+      "registerStatus": "2",
+      "registerStatusVal": "승인"
     },
     {
       "seq": 1,
       "userEmail": "sanghoon.yun@bespinglobal.com",
       "userName": "윤*훈",
       "userGrade": 99,
+      "userGradeVal": "관리자",
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "2"
+      "registerStatus": "2",
+      "registerStatusVal": "승인"
     }
   ]
 }

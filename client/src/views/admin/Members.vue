@@ -91,15 +91,21 @@ const pagination = reactive({
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
-          <td class="text-center" title="이메일">{{ item.userEmail }}</td>
+          <td class="text-center" title="이메일">
+            <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn__td">
+              {{ item.userEmail }}
+            </router-link>
+          </td>
           <td class="text-center" title="이름">
             <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn__td">
               {{ item.userName }}
             </router-link>
           </td>
           <td class="text-center" title="회원등급">{{ item.userGrade }}</td>
+          <td class="text-center" title="회원등급(값)">{{ item.userGradeVal }}</td>
           <td class="text-center" title="가입일시">{{ item.registerDate }}</td>
           <td class="text-center" title="가입상태">{{ item.registerStatus }}</td>
+          <td class="text-center" title="가입상태(값)">{{ item.registerStatusVal }}</td>
         </tr>
       </tbody>
     </table>
