@@ -47,14 +47,14 @@ const routes = [
   },
   {
     path: '/admin/Members',
-    name: 'Members',
-    component: () => import(/* webpackChunkName: "Members", webpackPrefetch:true */ '@/views/admin/Members.vue'),
+    name: 'AdminMembers',
+    component: () => import(/* webpackChunkName: "AdminMembers", webpackPrefetch:true */ '@/views/admin/Members.vue'),
   },
   {
     path: '/admin/Members/:seq',
-    name: 'MembersItem',
+    name: 'AdminMembersItem',
     component: () =>
-      import(/* webpackChunkName: "MembersItem", webpackPrefetch:true */ '@/views/admin/MembersItem.vue'),
+      import(/* webpackChunkName: "AdminMembersItem", webpackPrefetch:true */ '@/views/admin/MembersItem.vue'),
   },
 ];
 

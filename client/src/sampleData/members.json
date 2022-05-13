@@ -20,7 +20,7 @@
       "userName": "정*림",
       "userGrade": 1,
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "정지"
+      "registerStatus": "1"
     },
     {
       "seq": 5,
@@ -28,7 +28,7 @@
       "userName": "채*중",
       "userGrade": 1,
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "대기중"
+      "registerStatus": "0"
     },
     {
       "seq": 4,
@@ -36,23 +36,23 @@
       "userName": "강*천",
       "userGrade": 1,
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "승인"
+      "registerStatus": "2"
     },
     {
       "seq": 3,
       "userEmail": "heeyeon.jeon@bespinglobal.com",
       "userName": "전*연",
-      "userGrade": 98,
+      "userGrade": 1,
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "승인"
+      "registerStatus": "2"
     },
     {
       "seq": 2,
       "userEmail": "yunbeom.kim@bespinglobal.com",
       "userName": "김*범",
-      "userGrade": 98,
+      "userGrade": 99,
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "승인"
+      "registerStatus": "2"
     },
     {
       "seq": 1,
@@ -60,7 +60,7 @@
       "userName": "윤*훈",
       "userGrade": 99,
       "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "승인"
+      "registerStatus": "2"
     }
   ]
 }

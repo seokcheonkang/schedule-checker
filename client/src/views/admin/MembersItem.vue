@@ -1,9 +1,13 @@
 <script setup>
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
+
+import MemberGrade from '@/sampleData/memberGrade.json';
+import MemberRegisterStatus from '@/sampleData/MemberRegisterStatus.json';
 
 // swal
 import swal from 'sweetalert2';
@@ -13,9 +17,10 @@ const item = {
   seq: 2,
   userEmail: 'yunbeom.kim@bespinglobal.com',
   userName: '김*범',
-  userGrade: 98,
+  userGrade: 99,
+  userGradeVal: '관리자',
   registerDate: '2022-05-03 23:59:59',
-  registerStatus: '승인',
+  registerStatus: '2',
 };
 
 // route
@@ -23,15 +28,25 @@ const route = useRoute();
 const seq = Number(route.params.seq); // 전달받은 파라미터
 
 const confirm = (paramForParent) => {
-  const { title, icon, text, footer } = paramForParent;
+  const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
 
-  swal.fire({
-    icon,
-    title,
-    text,
-    footer,
-  });
+  swal
+    .fire({
+      title,
+      showDenyButton,
+      confirmButtonText,
+      denyButtonText,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        swal.fire(resultMessageY, '', 'success');
+      } else if (result.isDenied) {
+        swal.fire(resultMessageN, '', 'info');
+      }
+    });
 };
+
+onMounted(() => {});
 </script>
 
 <template>
@@ -49,13 +64,25 @@ const confirm = (paramForParent) => {
             <h5 class="text-muted">이름</h5>
             <div class="mb-3">{{ item.userName }}</div>
             <h5 class="text-muted">회원등급</h5>
-            <div class="mb-3">{{ item.userGrade }}</div>
+            <div class="mb-3">
+              <select class="form-select me-2 w-20" aria-label="searchOption" v-model="item.userGrade">
+                <option :value="column.key" v-for="column in MemberGrade">
+                  {{ column.val }}
+                </option>
+              </select>
+            </div>
             <h5 class="text-muted">가입일시</h5>
             <div class="mb-3">{{ item.registerDate }}</div>
             <h5 class="text-muted">가입상태</h5>
-            <div class="mb-3">{{ item.registerStatus }}</div>
+            <div class="mb-3">
+              <select class="form-select me-2 w-20" aria-label="searchOption" v-model="item.registerStatus">
+                <option :value="column.key" v-for="column in MemberRegisterStatus">
+                  {{ column.val }}
+                </option>
+              </select>
+            </div>
           </div>
-          <CustomActionButton text="확인" command="memberConfirm" @buttonClicked="confirm" />
+          <CustomActionButton text="회원 수정" command="memberConfirm" @buttonClicked="confirm" />
         </div>
       </div>
     </div>
