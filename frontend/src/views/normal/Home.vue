@@ -12,18 +12,22 @@ import {
   onErrorCaptured,
   onRenderTracked,
   onRenderTriggered,
-  reactive,
 } from 'vue';
 
-const message = reactive({
-  underConstruction: '공사중 입니다.',
-});
+// mixin
+import mixin from '@/mixin.js';
+
+const message = $ref({});
 
 onBeforeMount(() => {
   console.log('onBeforeMount');
 });
-onMounted(() => {
+onMounted(async () => {
   console.log('onMounted');
+
+  const data = await mixin.methods.$api(`${mixin.methods.$baseUrl()}/`, {}, 'get');
+  message.userAgent = data.userAgent;
+  message.hostname = data.hostname;
 });
 onBeforeUpdate(() => {
   console.log('onBeforeUpdate');
@@ -50,5 +54,12 @@ onRenderTriggered(() => {
 
 <template>
   <CustomPageHeader text="홈" />
-  <h5 class="text-center">{{ message.underConstruction }}</h5>
+  <h5 class="">
+    <span>User-Agent : </span>
+    <span> {{ message.userAgent }}</span>
+  </h5>
+  <h5 class="">
+    <span>hostname : </span>
+    <span>{{ message.hostname }} </span>
+  </h5>
 </template>

@@ -18,7 +18,7 @@ let schedules = null;
 
 // life cycle
 onMounted(async () => {
-  schedules = await mixin.methods.$api('http://localhost/schedules', {}, 'get');
+  schedules = await mixin.methods.$api(`${mixin.methods.$baseUrl()}/schedules`, {}, 'get');
 
   pagination.columns = schedules.columns;
   pagination.colspan = schedules.columns.length;
