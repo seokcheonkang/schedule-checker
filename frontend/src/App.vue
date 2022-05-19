@@ -4,18 +4,11 @@ import Footer from './components/Footer.vue';
 </script>
 
 <template>
-  <header>
-    <Menu />
-  </header>
-  <div class="container py-2">
-    <main class="my-3">
-      <router-view />
-    </main>
-    <aside></aside>
-    <footer>
-      <Footer />
-    </footer>
-  </div>
+  <Menu />
+  <main class="container py-2 my-3">
+    <router-view />
+  </main>
+  <Footer />
 </template>
 
 <style scoped></style>
