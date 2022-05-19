@@ -20,7 +20,7 @@ const setEnv = (nodeEnv) => {
 };
 
 const setCors = (res) => {
-  res.header('Access-Control-Allow-Origin', process.env.CONTEXT_PATH_FRONTEND);
+  res.header('Access-Control-Allow-Origin', process.env.BASE_URL_FRONTEND);
   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 };
@@ -30,7 +30,7 @@ app.listen(PORT, () => {
   setEnv(process.env.NODE_ENV);
 
   const URL =
-    PORT === 80 || PORT === 443 ? `${process.env.CONTEXT_PATH_BACKEND}` : `${process.env.CONTEXT_PATH_BACKEND}:${PORT}`;
+    PORT === 80 || PORT === 443 ? `${process.env.BASE_URL_BACKEND}` : `${process.env.BASE_URL_BACKEND}:${PORT}`;
 
   console.log(`Server listening : ${URL}`);
 });
