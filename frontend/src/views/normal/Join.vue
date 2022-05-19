@@ -6,7 +6,7 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
 // swal
 import swal from 'sweetalert2';
 
-const errors = $ref([]);
+let errors = $ref([]);
 
 const form = $ref({
   userName: '',
