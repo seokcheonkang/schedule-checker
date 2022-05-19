@@ -17,8 +17,5 @@ export default {
           })
       ).data;
     },
-    $baseUrl() {
-      return 'http://localhost';
-    },
   },
 };
