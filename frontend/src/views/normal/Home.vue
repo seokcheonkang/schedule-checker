@@ -17,6 +17,9 @@ import {
 // mixin
 import mixin from '@/mixin.js';
 
+// env
+const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
+
 const message = $ref({});
 
 onBeforeMount(() => {
@@ -25,7 +28,7 @@ onBeforeMount(() => {
 onMounted(async () => {
   console.log('onMounted');
 
-  const data = await mixin.methods.$api(`${mixin.methods.$baseUrl()}/`, {}, 'get');
+  const data = await mixin.methods.$api(`${backEndUrl}/`, {}, 'get');
   message.userAgent = data.userAgent;
   message.hostname = data.hostname;
 });

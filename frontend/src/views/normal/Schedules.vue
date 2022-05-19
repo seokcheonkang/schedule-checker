@@ -10,6 +10,9 @@ import Paginate from 'vuejs-paginate-next';
 // mixin
 import mixin from '@/mixin.js';
 
+// env
+const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
+
 // search
 const searchKey = $ref('');
 const searchValue = $ref('');
@@ -18,7 +21,7 @@ let schedules = null;
 
 // life cycle
 onMounted(async () => {
-  schedules = await mixin.methods.$api(`${mixin.methods.$baseUrl()}/schedules`, {}, 'get');
+  schedules = await mixin.methods.$api(`${backEndUrl}/schedules`, {}, 'get');
 
   pagination.columns = schedules.columns;
   pagination.colspan = schedules.columns.length;
