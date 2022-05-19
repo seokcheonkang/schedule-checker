@@ -56,3 +56,9 @@ $ npm i express
 ```console
 $ npm i nodemon -D
 ```
+
+#### dotenv, cross-env
+
+```console
+$ npm i dotenv, cross-env
+```

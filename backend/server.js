@@ -1,10 +1,10 @@
 const os = require('os');
 const express = require('express');
+const path = require('path');
+const dotenv = require('dotenv');
 
 const app = express();
 app.use(express.json());
-
-const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   const result = {
@@ -15,6 +15,17 @@ app.get('/', (req, res) => {
   res.send(result);
 });
 
+let PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
-  console.log(`Server listening on port : ${PORT}`);
+  if (process.env.NODE_ENV === 'production') {
+    dotenv.config({ path: path.join(__dirname, 'env/.env.production') });
+  } else if (process.env.NODE_ENV === 'development') {
+    dotenv.config({ path: path.join(__dirname, 'env/.env.development') });
+  } else {
+    throw new Error('process.env.NODE_ENV is not set.');
+  }
+
+  const URL = PORT === 80 || PORT === 443 ? `${process.env.CONTEXT_PATH}` : `${process.env.CONTEXT_PATH}:${PORT}`;
+
+  console.log(`Server listening : ${URL}`);
 });
