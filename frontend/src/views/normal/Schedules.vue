@@ -7,15 +7,19 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 // vuejs-paginate
 import Paginate from 'vuejs-paginate-next';
 
-// list raw
-import schedules from '@/sampleData/schedules.json';
+// mixin
+import mixin from '@/mixin.js';
 
 // search
 const searchKey = $ref('');
 const searchValue = $ref('');
 
+let schedules = null;
+
 // life cycle
-onMounted(() => {
+onMounted(async () => {
+  schedules = await mixin.methods.$api('http://localhost/schedules', {}, 'get');
+
   pagination.columns = schedules.columns;
   pagination.colspan = schedules.columns.length;
 

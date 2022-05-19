@@ -72,3 +72,9 @@ $ npm i vue-sweetalert2
 ```console
 $ npm i vuejs-paginate-next
 ```
+
+#### axios
+
+```console
+$ npm i axios
+```
