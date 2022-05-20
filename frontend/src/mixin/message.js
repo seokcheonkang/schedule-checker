@@ -1,0 +1,4 @@
+const RESULT_CODE_SUCCESS = 'A000';
+const RESULT_MESSAGE_SUCCESS = 'Success to fetch data';
+
+export { RESULT_CODE_SUCCESS, RESULT_MESSAGE_SUCCESS };

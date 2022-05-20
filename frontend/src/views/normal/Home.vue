@@ -15,7 +15,8 @@ import {
 } from 'vue';
 
 // mixin
-import mixin from '@/mixin.js';
+import $api from '@/mixin/api.js';
+import { logDebug, log } from '@/mixin/log.js';
 
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
@@ -28,9 +29,16 @@ onBeforeMount(() => {
 onMounted(async () => {
   console.log('onMounted');
 
-  const data = await mixin.methods.$api(`${backEndUrl}/`, {}, 'get');
-  message.userAgent = data.userAgent;
-  message.hostname = data.hostname;
+  const result = await $api(`${backEndUrl}/`, {}, 'get');
+
+  import.meta.env.DEV
+    ? logDebug(result.resultCode, result.resultMessage)
+    : log(result.resultCode, result.resultMessage);
+
+  if (result.resultCode === 'A000') {
+    message.userAgent = result.data.userAgent ? result.data.userAgent : '';
+    message.hostname = result.data.hostname ? result.data.hostname : '';
+  }
 });
 onBeforeUpdate(() => {
   console.log('onBeforeUpdate');

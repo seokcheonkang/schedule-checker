@@ -8,7 +8,11 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import Paginate from 'vuejs-paginate-next';
 
 // mixin
-import mixin from '@/mixin.js';
+import $api from '@/mixin/api.js';
+import { logDebug, log } from '@/mixin/log.js';
+
+// TODO : sample
+import sample from '@/sampleData/schedules.json';
 
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
@@ -21,12 +25,23 @@ let schedules = null;
 
 // life cycle
 onMounted(async () => {
-  schedules = await mixin.methods.$api(`${backEndUrl}/schedules`, {}, 'get');
-
+  // TODO : sample
+  schedules = sample;
   pagination.columns = schedules.columns;
   pagination.colspan = schedules.columns.length;
-
   pagination.oriList = schedules.dataList;
+
+  // schedules = await $api(`${backEndUrl}/schedules`, {}, 'get');
+
+  // import.meta.env.DEV
+  //   ? logDebug(schedules.resultCode, schedules.resultMessage)
+  //   : log(schedules.resultCode, schedules.resultMessage);
+
+  // if (schedules.resultCode === 'A000') {
+  //   pagination.columns = schedules.data.columns;
+  //   pagination.colspan = schedules.data.columns.length;
+  //   pagination.oriList = schedules.data.dataList;
+  // }
 });
 
 // list for pagination

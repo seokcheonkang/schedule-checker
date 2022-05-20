@@ -1,7 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import mixins from './mixin';
+import $api from './mixin/api';
+import { logDebug, log } from './mixin/log';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,5 +19,7 @@ const app = createApp(App);
 app.use(router);
 app.use(VueSweetalert2);
 app.use(Paginate);
-app.mixin(mixins);
+app.mixin($api);
+app.mixin(logDebug);
+app.mixin(log);
 app.mount('#app');
