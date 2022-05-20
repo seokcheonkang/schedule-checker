@@ -9,7 +9,7 @@ rmdir /s /q assets
 del /q *.*
 
 REM copy files
-xcopy /e /y "../schedule-checker/client/dist" .
+xcopy /e /y "../schedule-checker/frontend/dist" .
 
 REM deployment
 git add .
@@ -18,4 +18,4 @@ git commit -m 'deploy'
 git push -f
 
 REM return current folder
-cd ../schedule-checker/client
+cd ../schedule-checker/frontend
