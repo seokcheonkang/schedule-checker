@@ -16,12 +16,13 @@ import {
 
 // mixin
 import $api from '@/mixin/api.js';
+import message from '@/mixin/message';
 import { logDebug, log } from '@/mixin/log.js';
 
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
 
-const message = $ref({});
+const msg = $ref({});
 
 onBeforeMount(() => {
   console.log('onBeforeMount');
@@ -35,15 +36,15 @@ onMounted(async () => {
     ? logDebug(result.resultCode, result.resultMessage)
     : log(result.resultCode, result.resultMessage);
 
-  if (result.resultCode === 'ERR_NETWORK') {
-    message.userAgent = '서버와 연결되지 않았습니다.';
-    message.hostname = '서버와 연결되지 않았습니다.';
+  if (result.resultCode === message.RESULT_CODE_ERR_NETWORK) {
+    msg.userAgent = message.RESULT_MESSAGE_ERR_NETWORK;
+    msg.hostname = message.RESULT_MESSAGE_ERR_NETWORK;
     return;
   }
 
-  if (result.resultCode === 'A000') {
-    message.userAgent = result.data.userAgent;
-    message.hostname = result.data.hostname;
+  if (result.resultCode === message.RESULT_CODE_SUCCESS) {
+    msg.userAgent = result.data.userAgent;
+    msg.hostname = result.data.hostname;
   }
 });
 onBeforeUpdate(() => {
@@ -73,10 +74,10 @@ onRenderTriggered(() => {
   <CustomPageHeader text="홈" />
   <h5 class="">
     <span>User-Agent : </span>
-    <span> {{ message.userAgent }}</span>
+    <span> {{ msg.userAgent }}</span>
   </h5>
   <h5 class="">
     <span>hostname : </span>
-    <span>{{ message.hostname }} </span>
+    <span>{{ msg.hostname }} </span>
   </h5>
 </template>
