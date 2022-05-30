@@ -35,9 +35,15 @@ onMounted(async () => {
     ? logDebug(result.resultCode, result.resultMessage)
     : log(result.resultCode, result.resultMessage);
 
+  if (result.resultCode === 'ERR_NETWORK') {
+    message.userAgent = '서버와 연결되지 않았습니다.';
+    message.hostname = '서버와 연결되지 않았습니다.';
+    return;
+  }
+
   if (result.resultCode === 'A000') {
-    message.userAgent = result.data.userAgent ? result.data.userAgent : '';
-    message.hostname = result.data.hostname ? result.data.hostname : '';
+    message.userAgent = result.data.userAgent;
+    message.hostname = result.data.hostname;
   }
 });
 onBeforeUpdate(() => {
