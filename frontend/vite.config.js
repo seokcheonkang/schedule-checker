@@ -6,6 +6,7 @@ import { fileURLToPath, URL } from 'url';
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    host: true,
     port: 8000,
   },
   plugins: [
