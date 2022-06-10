@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -15,14 +16,15 @@ import { useLoginStore } from '@/store/login.js';
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
 
+const store = useLoginStore();
+const router = useRouter();
+
 const state = reactive({
   form: {
     userEmail: '',
     userPassword: '',
   },
 });
-
-const store = useLoginStore();
 
 const login = async () => {
   const args = {
@@ -37,8 +39,8 @@ const login = async () => {
   if (tokens.resultCode === 'A000') {
     const accessToken = tokens.data.accessToken;
     store.setAccessToken(accessToken);
-    LOGD(store.accessToken);
-    LOG(store.loginInfo);
+    store.setIsLogin(true);
+    router.push({ path: '/' });
   }
 };
 </script>

@@ -1,21 +1,34 @@
 <script setup>
-import { defineComponent, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+
+// mixin
+import { LOGD, LOG } from '@/mixin/log.js';
+
+// store
+import { useLoginStore } from '@/store/login.js';
 
 // swal
 import swal from 'sweetalert2';
 
-const logout = () => {
-  swal.fire({
-    icon: 'warning',
-    title: '앗!',
-    text: '아직 공사중 입니다.',
-    footer: '<a href="/" class="btn btn-warning">홈으로</a>',
-  });
-};
+const store = useLoginStore();
+const router = useRouter();
 
-const state = reactive({
-  isLogin: false,
-});
+const logout = () => {
+  swal
+    .fire({
+      title: '로그아웃',
+      text: '정말 로그아웃 하시겠습니까?',
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        store.setIsLogin(false);
+        router.push({ path: '/login' });
+      }
+    });
+};
 </script>
 
 <template>
@@ -57,7 +70,7 @@ const state = reactive({
               </ul>
             </li>
           </ul>
-          <div class="d-flex" v-if="state.isLogin">
+          <div class="d-flex" v-if="store.isLogin">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                 <a
@@ -80,7 +93,7 @@ const state = reactive({
               </li>
             </ul>
           </div>
-          <div class="d-flex" v-if="!state.isLogin">
+          <div class="d-flex" v-if="!store.isLogin">
             <router-link class="btn btn-outline-light" id="btnLogin" to="/login">로그인</router-link>
           </div>
         </div>
