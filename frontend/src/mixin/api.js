@@ -1,5 +1,5 @@
 import axios from 'axios';
-import message from './message';
+import MESSAGE from './message';
 
 export default async (url, data, method = 'get') => {
   return await axios({
@@ -9,8 +9,8 @@ export default async (url, data, method = 'get') => {
   })
     .then((response) => {
       return {
-        resultCode: message.RESULT_CODE_SUCCESS,
-        resultMessage: message.RESULT_MESSAGE_SUCCESS,
+        resultCode: MESSAGE.RESULT_CODE_SUCCESS,
+        resultMessage: MESSAGE.RESULT_MESSAGE_SUCCESS,
         data: response.data,
       };
     })

@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const SERVICE_PATH = '../service';
-const service = require(`${SERVICE_PATH}/schedules`);
+const { getSchedules } = require(`${SERVICE_PATH}/scheduleService`);
 
 router.get('/', (req, res) => {
-  const result = service();
-
+  const result = getSchedules();
   res.send(result);
 });
 

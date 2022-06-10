@@ -7,19 +7,41 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 // vuejs-paginate
 import Paginate from 'vuejs-paginate-next';
 
-// list raw
-import members from '@/sampleData/members.json';
+// mixin
+import API from '@/mixin/api.js';
+import { LOGD, LOG } from '@/mixin/log.js';
+
+// env
+const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
+
+// TODO : sample
+// import members from '@/sampleData/members.json';
 
 // search
 const searchKey = $ref('');
 const searchValue = $ref('');
 
-// life cycle
-onMounted(() => {
-  pagination.columns = members.columns;
-  pagination.colspan = members.columns.length;
+let members = null;
 
-  pagination.oriList = members.dataList;
+// life cycle
+onMounted(async () => {
+  // TODO : sample
+  // pagination.columns = members.columns;
+  // pagination.colspan = members.columns.length;
+  // pagination.oriList = members.dataList;
+
+  // TODO : sample
+  members = await API(`${backEndUrl}/members`, {}, 'get');
+
+  import.meta.env.DEV
+    ? LOGD(members.resultCode, members.resultMessage)
+    : LOG(members.resultCode, members.resultMessage);
+
+  if (members.resultCode === 'A000') {
+    pagination.columns = members.data.columns;
+    pagination.colspan = members.data.columns.length;
+    pagination.oriList = members.data.dataList;
+  }
 });
 
 // list for pagination

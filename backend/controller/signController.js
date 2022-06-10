@@ -5,7 +5,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const SERVICE_PATH = '../service';
-const { getMember } = require(`${SERVICE_PATH}/members.js`);
+const { getMember } = require(`${SERVICE_PATH}/memberService.js`);
 
 router.post('/in', (req, res) => {
   const userEmail = req.body.userEmail;
@@ -18,15 +18,22 @@ router.post('/in', (req, res) => {
   }
 
   const generateAccessToken = (member) => {
-    const result = { userEmail: member.userEmail, userName: member.userName, userGrade: member.userGrade };
+    let result = null;
 
-    return jwt.sign(result, process.env.JWT_ACCESS_TOKEN_SECRET, {
-      expiresIn: process.env.JWT_ACCESS_TOKEN_TIME,
-    });
+    if (member) {
+      result = jwt.sign(
+        { userEmail: member.userEmail, userName: member.userName, userGrade: member.userGrade },
+        process.env.JWT_ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: process.env.JWT_ACCESS_TOKEN_TIME,
+        }
+      );
+    }
+
+    return result;
   };
 
   const accessToken = generateAccessToken(member);
   res.json({ accessToken });
 });
-
 module.exports = router;

@@ -35,7 +35,7 @@ const login = async () => {
     userPassword: state.form.userPassword,
   };
 
-  const tokens = await API(`${backEndUrl}/members/login`, args, 'post');
+  const tokens = await API(`${backEndUrl}/sign/in`, args, 'post');
 
   import.meta.env.DEV ? LOGD(tokens.resultCode, tokens.resultMessage) : LOG(tokens.resultCode, tokens.resultMessage);
 

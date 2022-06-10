@@ -10,10 +10,6 @@ app.use(express.json());
 const CONTROLLER_PATH = './controller';
 const ENV_PATH = 'env';
 
-const routerRoot = require(`${CONTROLLER_PATH}/root`);
-const routerSchedules = require(`${CONTROLLER_PATH}/schedules`);
-const routerMembers = require(`${CONTROLLER_PATH}/members`);
-
 // --
 const setEnv = (nodeEnv) => {
   if (nodeEnv === 'production') {
@@ -48,6 +44,12 @@ app.all('/*', (req, res, next) => {
 });
 
 // ---
+const routerRoot = require(`${CONTROLLER_PATH}/root`);
+const routerScheduleController = require(`${CONTROLLER_PATH}/scheduleController`);
+const routerMemberController = require(`${CONTROLLER_PATH}/memberController`);
+const routerSignController = require(`${CONTROLLER_PATH}/signController`);
+
 app.use('/', routerRoot);
-app.use('/schedules', routerSchedules);
-app.use('/members', routerMembers);
+app.use('/schedules', routerScheduleController);
+app.use('/members', routerMemberController);
+app.use('/sign', routerSignController);
