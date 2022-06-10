@@ -1,4 +1,6 @@
 <script setup>
+import { reactive } from 'vue';
+
 // swal
 import swal from 'sweetalert2';
 
@@ -10,6 +12,10 @@ const logout = () => {
     footer: '<a href="/" class="btn btn-warning">홈으로</a>',
   });
 };
+
+const state = reactive({
+  isLogin: false,
+});
 </script>
 
 <template>
@@ -51,7 +57,7 @@ const logout = () => {
               </ul>
             </li>
           </ul>
-          <div class="d-flex">
+          <div class="d-flex" v-if="state.isLogin">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                 <a
@@ -74,7 +80,7 @@ const logout = () => {
               </li>
             </ul>
           </div>
-          <div class="d-flex">
+          <div class="d-flex" v-if="!state.isLogin">
             <router-link class="btn btn-outline-light" id="btnLogin" to="/login">로그인</router-link>
           </div>
         </div>

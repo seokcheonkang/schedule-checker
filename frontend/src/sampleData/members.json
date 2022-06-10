@@ -17,26 +17,6 @@
   ],
   "dataList": [
     {
-      "seq": 6,
-      "userEmail": "daerim.jeong@bespinglobal.com",
-      "userName": "정*림",
-      "userGrade": 1,
-      "userGradeVal": "일반",
-      "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "1",
-      "registerStatusVal": "정지"
-    },
-    {
-      "seq": 5,
-      "userEmail": "heejung.chae@bespinglobal.com",
-      "userName": "채*중",
-      "userGrade": 1,
-      "userGradeVal": "일반",
-      "registerDate": "2022-05-03 23:59:59",
-      "registerStatus": "0",
-      "registerStatusVal": "대기중"
-    },
-    {
       "seq": 4,
       "userEmail": "seokcheon.kang@bespinglobal.com",
       "userName": "강*천",

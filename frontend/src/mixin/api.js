@@ -1,11 +1,11 @@
 import axios from 'axios';
 import message from './message';
 
-export default async (url, payload, method = 'get') => {
+export default async (url, data, method = 'get') => {
   return await axios({
-    method,
     url,
-    payload,
+    data,
+    method,
   })
     .then((response) => {
       return {

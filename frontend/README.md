@@ -78,3 +78,9 @@ $ npm i vuejs-paginate-next
 ```console
 $ npm i axios
 ```
+
+#### jwt-decode
+
+```console
+$ npm i jwt-decode
+```
