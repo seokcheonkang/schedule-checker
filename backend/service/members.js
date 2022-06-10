@@ -1,9 +1,20 @@
 const members = [
   {
-    seq: 5,
-    userEmail: 'idealful@gmail.com',
-    userPassword: '5',
+    seq: 6,
+    userEmail: 'test2',
+    userPassword: 'test2',
     userName: '테스터',
+    userGrade: 1,
+    userGradeVal: '일반',
+    registerDate: '2022-06-08 23:59:59',
+    registerStatus: '2',
+    registerStatusVal: '승인',
+  },
+  {
+    seq: 5,
+    userEmail: 'test1',
+    userPassword: 'test1',
+    userName: '테스터1',
     userGrade: 1,
     userGradeVal: '일반',
     registerDate: '2022-06-08 23:59:59',

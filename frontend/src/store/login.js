@@ -29,4 +29,7 @@ export const useLoginStore = defineStore({
       this.loginInfo = { ...jwt_decode(val) };
     },
   },
+  persist: {
+    enabled: true, // It keeps you logged in even after updating your web browser.
+  },
 });

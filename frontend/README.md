@@ -88,5 +88,5 @@ $ npm i jwt-decode
 #### pinia
 
 ```console
-$ npm i pinia
+$ npm i pinia pinia-plugin-persist
 ```

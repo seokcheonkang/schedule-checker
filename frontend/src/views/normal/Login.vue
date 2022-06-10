@@ -16,6 +16,9 @@ import { useLoginStore } from '@/store/login.js';
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
 
+// swal
+import swal from 'sweetalert2';
+
 const store = useLoginStore();
 const router = useRouter();
 
@@ -41,6 +44,12 @@ const login = async () => {
     store.setAccessToken(accessToken);
     store.setIsLogin(true);
     router.push({ path: '/' });
+  } else {
+    swal.fire({
+      title: '로그인 실패',
+      text: '아이디와 비밀번호를 다시 확인해주세요.',
+      confirmButtonText: '확인',
+    });
   }
 };
 </script>
