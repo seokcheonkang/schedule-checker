@@ -1,9 +1,19 @@
-const logDebug = (value1 = '', value2 = '') => {
-  console.log('%c%s', 'color: yellowgreen', `[logDebug][${new Date().toISOString()}] ${value1} ${value2}`);
+const getLog = (val, color, type) => {
+  const datetime = new Date().toISOString();
+
+  if (typeof val === 'object') {
+    val = JSON.parse(JSON.stringify(val));
+  }
+
+  console.log('%c%s', `color: ${color}`, `[${type}][${datetime}]`, val);
 };
 
-const log = (value1 = '', value2 = '') => {
-  console.log('%c%s', 'color: tomato', `[log][${new Date().toISOString()}] ${value1} ${value2}`);
+const LOGD = (val = '') => {
+  getLog(val, 'yellowgreen', 'logDebug');
 };
 
-export { logDebug, log };
+const LOG = (val = '') => {
+  getLog(val, 'tomato', 'log');
+};
+
+export { LOGD, LOG };

@@ -15,9 +15,9 @@ import {
 } from 'vue';
 
 // mixin
-import $api from '@/mixin/api.js';
-import message from '@/mixin/message';
-import { logDebug, log } from '@/mixin/log.js';
+import API from '@/mixin/api.js';
+import MESSAGE from '@/mixin/message';
+import { LOGD, LOG } from '@/mixin/log.js';
 
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
@@ -30,19 +30,17 @@ onBeforeMount(() => {
 onMounted(async () => {
   console.log('onMounted');
 
-  const result = await $api(`${backEndUrl}/`, {}, 'get');
+  const result = await API(`${backEndUrl}/`, {}, 'get');
 
-  import.meta.env.DEV
-    ? logDebug(result.resultCode, result.resultMessage)
-    : log(result.resultCode, result.resultMessage);
+  import.meta.env.DEV ? LOGD(result.resultCode, result.resultMessage) : LOG(result.resultCode, result.resultMessage);
 
-  if (result.resultCode === message.RESULT_CODE_ERR_NETWORK) {
-    msg.userAgent = message.RESULT_MESSAGE_ERR_NETWORK;
-    msg.hostname = message.RESULT_MESSAGE_ERR_NETWORK;
+  if (result.resultCode === MESSAGE.RESULT_CODE_ERR_NETWORK) {
+    msg.userAgent = MESSAGE.RESULT_MESSAGE_ERR_NETWORK;
+    msg.hostname = MESSAGE.RESULT_MESSAGE_ERR_NETWORK;
     return;
   }
 
-  if (result.resultCode === message.RESULT_CODE_SUCCESS) {
+  if (result.resultCode === MESSAGE.RESULT_CODE_SUCCESS) {
     msg.userAgent = result.data.userAgent;
     msg.hostname = result.data.hostname;
   }

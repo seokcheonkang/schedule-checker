@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { defineComponent, reactive } from 'vue';
 
 // swal
 import swal from 'sweetalert2';

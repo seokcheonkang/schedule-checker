@@ -84,3 +84,9 @@ $ npm i axios
 ```console
 $ npm i jwt-decode
 ```
+
+#### pinia
+
+```console
+$ npm i pinia
+```

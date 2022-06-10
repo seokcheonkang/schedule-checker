@@ -8,8 +8,8 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import Paginate from 'vuejs-paginate-next';
 
 // mixin
-import $api from '@/mixin/api.js';
-import { logDebug, log } from '@/mixin/log.js';
+import API from '@/mixin/api.js';
+import { LOGD, LOG } from '@/mixin/log.js';
 
 // TODO : sample
 import sample from '@/sampleData/schedules.json';
@@ -31,11 +31,11 @@ onMounted(async () => {
   pagination.colspan = schedules.columns.length;
   pagination.oriList = schedules.dataList;
 
-  // schedules = await $api(`${backEndUrl}/schedules`, {}, 'get');
+  // schedules = await API(`${backEndUrl}/schedules`, {}, 'get');
 
   // import.meta.env.DEV
-  //   ? logDebug(schedules.resultCode, schedules.resultMessage)
-  //   : log(schedules.resultCode, schedules.resultMessage);
+  //   ? LOGD(schedules.resultCode, schedules.resultMessage)
+  //   : LOG(schedules.resultCode, schedules.resultMessage);
 
   // if (schedules.resultCode === 'A000') {
   //   pagination.columns = schedules.data.columns;

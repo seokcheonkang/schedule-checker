@@ -6,11 +6,11 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
 // mixin
-import $api from '@/mixin/api.js';
-import { logDebug, log } from '@/mixin/log.js';
+import API from '@/mixin/api.js';
+import { LOGD, LOG } from '@/mixin/log.js';
 
-// jwt
-import jwt_decode from 'jwt-decode';
+// store
+import { useLoginStore } from '@/store/login.js';
 
 // env
 const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND;
@@ -22,23 +22,23 @@ const state = reactive({
   },
 });
 
+const store = useLoginStore();
+
 const login = async () => {
   const args = {
     userEmail: state.form.userEmail,
     userPassword: state.form.userPassword,
   };
 
-  const tokens = await $api(`${backEndUrl}/members/login`, args, 'post');
+  const tokens = await API(`${backEndUrl}/members/login`, args, 'post');
 
-  import.meta.env.DEV
-    ? logDebug(tokens.resultCode, tokens.resultMessage)
-    : log(tokens.resultCode, tokens.resultMessage);
+  import.meta.env.DEV ? LOGD(tokens.resultCode, tokens.resultMessage) : LOG(tokens.resultCode, tokens.resultMessage);
 
   if (tokens.resultCode === 'A000') {
     const accessToken = tokens.data.accessToken;
-    const accessTokenDecoded = jwt_decode(accessToken);
-    logDebug(accessToken);
-    logDebug(JSON.stringify(accessTokenDecoded));
+    store.setAccessToken(accessToken);
+    LOGD(store.accessToken);
+    LOG(store.loginInfo);
   }
 };
 </script>
