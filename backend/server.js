@@ -2,18 +2,24 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 
-const routerRoot = require('./router/root');
-const routerSchedules = require('./router/schedules');
-
 // --
 const app = express();
 app.use(express.json());
+
+// --
+const CONTROLLER_PATH = './controller';
+const ENV_PATH = 'env';
+
+const routerRoot = require(`${CONTROLLER_PATH}/root`);
+const routerSchedules = require(`${CONTROLLER_PATH}/schedules`);
+const routerMembers = require(`${CONTROLLER_PATH}/members`);
+
 // --
 const setEnv = (nodeEnv) => {
   if (nodeEnv === 'production') {
-    dotenv.config({ path: path.join(__dirname, 'env/.env.production') });
+    dotenv.config({ path: path.join(__dirname, `${ENV_PATH}/.env.production`) });
   } else if (nodeEnv === 'development') {
-    dotenv.config({ path: path.join(__dirname, 'env/.env.development') });
+    dotenv.config({ path: path.join(__dirname, `${ENV_PATH}/.env.development`) });
   } else {
     throw new Error('process.env.NODE_ENV is not set.');
   }
@@ -21,7 +27,7 @@ const setEnv = (nodeEnv) => {
 
 const setCors = (res) => {
   res.header('Access-Control-Allow-Origin', process.env.BASE_URL_FRONTEND);
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 };
 // --
@@ -34,12 +40,14 @@ app.listen(PORT, () => {
 
   console.log(`Server listening : ${URL}`);
 });
+
 // ---
 app.all('/*', (req, res, next) => {
   setCors(res);
   next();
 });
 
+// ---
 app.use('/', routerRoot);
 app.use('/schedules', routerSchedules);
-// ---
+app.use('/members', routerMembers);

@@ -62,3 +62,9 @@ $ npm i nodemon -D
 ```console
 $ npm i dotenv, cross-env
 ```
+
+#### jsonwebtoken
+
+```console
+$ npm i jsonwebtoken
+```
