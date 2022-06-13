@@ -13,7 +13,6 @@ const service = {
     };
 
     req.headers.authorization = jwt.sign(args, key, options);
-    console.log('accessToken', req.headers.authorization);
 
     const result = {
       accessToken: req.headers.authorization,

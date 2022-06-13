@@ -40,7 +40,11 @@ const login = async () => {
   import.meta.env.DEV ? LOGD(tokens.resultCode, tokens.resultMessage) : LOG(tokens.resultCode, tokens.resultMessage);
 
   if (tokens.resultCode === 'A000') {
-    const accessToken = tokens.data.accessToken;
+    const {
+      data: {
+        result: { accessToken },
+      },
+    } = tokens; // const accessToken = tokens.data.result.accessToken;
     store.setAccessToken(accessToken);
     store.setIsLogin(true);
     router.push({ path: '/' });
