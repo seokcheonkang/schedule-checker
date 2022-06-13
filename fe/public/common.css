@@ -22,6 +22,10 @@
   display: block !important;
 }
 
+.lt-7 {
+  left: -7rem !important;
+}
+
 .w-5 {
   width: 5% !important;
 }

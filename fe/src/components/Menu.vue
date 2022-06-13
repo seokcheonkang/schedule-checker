@@ -82,7 +82,7 @@ const logout = () => {
                 >
                   <img id="profile_img" src="http://picsum.photos/20" class="rounded-circle" alt="사용자 이미지" />
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right" aria-labelledby="dropdown02">
+                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right lt-7" aria-labelledby="dropdown02">
                   <li>
                     <router-link class="dropdown-item" to="/profile">프로필</router-link>
                   </li>
