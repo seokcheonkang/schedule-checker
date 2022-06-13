@@ -58,5 +58,5 @@ $ npm i express dotenv cross-env
 #### jsonwebtoken
 
 ```console
-$ npm i jsonwebtoken
+$ npm i jsonwebtoken rand-token
 ```
