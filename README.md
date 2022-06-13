@@ -2,6 +2,12 @@
 
 ## installation
 
-### 1. frontend
+### 1. backend
 
-### 2. backend
+be-auth
+be-member
+be-schedule
+
+### 2. frontend
+
+fe
