@@ -12,14 +12,17 @@ import { LOGD, LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
+import { useJwtStore } from '@/store/jwt.js';
 
 // swal
 import swal from 'sweetalert2';
 
 // env
-const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
+const ENV_MODE = import.meta.env.VITE_APP_ENV_MODE;
+const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 
-const store = useLoginStore();
+const loginStore = useLoginStore();
+const jwtStore = useJwtStore();
 const router = useRouter();
 
 const state = reactive({
@@ -35,9 +38,11 @@ const login = async () => {
     userPassword: state.form.userPassword,
   };
 
-  const tokens = await API(`${backEndUrl}/sign/in`, args, 'post');
+  const tokens = await API(`${ENV_BACKEND_URL}/jwt/create`, args, 'post');
 
-  import.meta.env.DEV ? LOGD(tokens.resultCode, tokens.resultMessage) : LOG(tokens.resultCode, tokens.resultMessage);
+  import.meta.env.DEV
+    ? LOGD(ENV_MODE, tokens.resultCode, tokens.resultMessage)
+    : LOG(ENV_MODE, tokens.resultCode, tokens.resultMessage);
 
   if (tokens.resultCode === 'A000') {
     const {
@@ -45,8 +50,8 @@ const login = async () => {
         result: { accessToken },
       },
     } = tokens; // const accessToken = tokens.data.result.accessToken;
-    store.setAccessToken(accessToken);
-    store.setIsLogin(true);
+    jwtStore.setAccessToken(accessToken);
+    loginStore.setIsLogin(true);
     router.push({ path: '/' });
   } else {
     swal.fire({

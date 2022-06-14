@@ -12,7 +12,8 @@ import API from '@/mixin/api.js';
 import { LOGD, LOG } from '@/mixin/log.js';
 
 // env
-const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
+const ENV_MODE = import.meta.env.VITE_APP_MODE;
+const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // TODO : sample
 // import sample from '@/sampleData/schedules.json';
@@ -32,11 +33,11 @@ onMounted(async () => {
   // pagination.oriList = schedules.dataList;
 
   // TODO : sample
-  schedules = await API(`${backEndUrl}/schedules`, {}, 'get');
+  schedules = await API(`${ENV_BACKEND_URL}/schedules`, {}, 'get');
 
   import.meta.env.DEV
-    ? LOGD(schedules.resultCode, schedules.resultMessage)
-    : LOG(schedules.resultCode, schedules.resultMessage);
+    ? LOGD(ENV_MODE, schedules.resultCode, schedules.resultMessage)
+    : LOG(ENV_MODE, schedules.resultCode, schedules.resultMessage);
 
   if (schedules.resultCode === 'A000') {
     pagination.columns = schedules.data.columns;

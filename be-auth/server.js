@@ -43,6 +43,8 @@ app.all('/*', (req, res, next) => {
 });
 
 // ---
-const signJwtController = require(`${CONTROLLER_PATH}/signJwtController`);
+const signController = require(`${CONTROLLER_PATH}/signController`);
+const jwtController = require(`${CONTROLLER_PATH}/jwtController`);
 
-app.use('/sign', signJwtController);
+app.use('/sign', signController);
+app.use('/jwt', jwtController);

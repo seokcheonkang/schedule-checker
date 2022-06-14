@@ -12,7 +12,8 @@ import API from '@/mixin/api.js';
 import { LOGD, LOG } from '@/mixin/log.js';
 
 // env
-const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
+const ENV_MODE = import.meta.env.VITE_APP_ENV_MODE;
+const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // TODO : sample
 // import members from '@/sampleData/members.json';
@@ -31,11 +32,11 @@ onMounted(async () => {
   // pagination.oriList = members.dataList;
 
   // TODO : sample
-  members = await API(`${backEndUrl}/members`, {}, 'get');
+  members = await API(`${ENV_BACKEND_URL}/members`, {}, 'get');
 
   import.meta.env.DEV
-    ? LOGD(members.resultCode, members.resultMessage)
-    : LOG(members.resultCode, members.resultMessage);
+    ? LOGD(ENV_MODE, members.resultCode, members.resultMessage)
+    : LOG(ENV_MODE, members.resultCode, members.resultMessage);
 
   if (members.resultCode === 'A000') {
     pagination.columns = members.data.columns;

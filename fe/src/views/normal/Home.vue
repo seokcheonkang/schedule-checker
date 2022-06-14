@@ -20,19 +20,22 @@ import MESSAGE from '@/mixin/message';
 import { LOGD, LOG } from '@/mixin/log.js';
 
 // env
-const backEndUrl = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
+const ENV_MODE = import.meta.env.VITE_APP_ENV_MODE;
+const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 const msg = $ref({});
 
 onBeforeMount(() => {
-  console.log('onBeforeMount');
+  // LOGD(ENV_MODE, 'onBeforeMount');
 });
 onMounted(async () => {
-  console.log('onMounted');
+  LOGD(ENV_MODE, 'onMounted');
 
-  const result = await API(`${backEndUrl}/`, {}, 'get');
+  const result = await API(`${ENV_BACKEND_URL}/`, {}, 'get');
 
-  import.meta.env.DEV ? LOGD(result.resultCode, result.resultMessage) : LOG(result.resultCode, result.resultMessage);
+  import.meta.env.DEV
+    ? LOGD(ENV_MODE, result.resultCode, result.resultMessage)
+    : LOG(ENV_MODE, result.resultCode, result.resultMessage);
 
   if (result.resultCode === MESSAGE.RESULT_CODE_ERR_NETWORK) {
     msg.userAgent = MESSAGE.RESULT_MESSAGE_ERR_NETWORK;
@@ -46,25 +49,25 @@ onMounted(async () => {
   }
 });
 onBeforeUpdate(() => {
-  console.log('onBeforeUpdate');
+  // LOGD(ENV_MODE, 'onBeforeUpdate');
 });
 onUpdated(() => {
-  console.log('onUpdated');
+  // LOGD(ENV_MODE, 'onUpdated');
 });
 onBeforeUnmount(() => {
-  console.log('onBeforeUnmount');
+  // LOGD(ENV_MODE, 'onBeforeUnmount');
 });
 onUnmounted(() => {
-  console.log('onUnmounted');
+  // LOGD(ENV_MODE, 'onUnmounted');
 });
 onErrorCaptured(() => {
-  console.log('onErrorCaptured');
+  // LOGD(ENV_MODE, 'onErrorCaptured');
 });
 onRenderTracked(() => {
-  console.log('onRenderTracked');
+  // LOGD(ENV_MODE, 'onRenderTracked');
 });
 onRenderTriggered(() => {
-  console.log('onRenderTriggered');
+  // LOGD(ENV_MODE, 'onRenderTriggered');
 });
 </script>
 

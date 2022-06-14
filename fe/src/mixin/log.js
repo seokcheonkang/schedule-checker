@@ -8,12 +8,16 @@ const getLog = (val, color, type) => {
   console.log('%c%s', `color: ${color}`, `[${type}][${datetime}]`, val);
 };
 
-const LOGD = (val = '') => {
-  getLog(val, 'yellowgreen', 'logDebug');
+const LOGD = (mode, val = '') => {
+  if (mode === 'DEV') {
+    getLog(val, 'yellowgreen', 'LOG_DEBUG');
+  }
 };
 
-const LOG = (val = '') => {
-  getLog(val, 'tomato', 'log');
+const LOG = (mode, val = '') => {
+  if (mode !== 'DEV') {
+    getLog(val, 'tomato', 'LOG');
+  }
 };
 
 export { LOGD, LOG };
