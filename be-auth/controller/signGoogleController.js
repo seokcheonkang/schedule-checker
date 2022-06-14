@@ -2,39 +2,29 @@ const express = require('express');
 const router = express.Router();
 
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
 
-const SERVICE_PATH = '../service';
-const { getMember } = require(`${SERVICE_PATH}/memberService.js`);
+// ---
 
-router.post('/in', (req, res) => {
-  const userEmail = req.body.userEmail;
-  const userPassword = req.body.userPassword;
+const passport = require('../middleware/passport');
 
-  const member = getMember(userEmail, userPassword);
+const authSuccess = (req, res) => {
+  // res.redirect('/');
+  res.status(200).json({ code: 200, message: 'authSuccess 성공' });
+};
 
-  if (!member) {
-    res.sendStatus(500);
-  }
-
-  const generateAccessToken = (member) => {
-    let result = null;
-
-    if (member) {
-      result = jwt.sign(
-        { userEmail: member.userEmail, userName: member.userName, userGrade: member.userGrade },
-        process.env.JWT_ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: process.env.JWT_ACCESS_TOKEN_TIME,
-          issuer: process.env.JWT_ACCESS_TOKEN_ISSUER,
-        }
-      );
-    }
-
-    return result;
-  };
-
-  const accessToken = generateAccessToken(member);
-  res.json({ accessToken });
+router.get('/google/login', (req, res) => {
+  // res.render('auth/login');
+  res.status(200).json({ code: 200, message: '/login 성공' });
 });
+
+router.get('/google/logout', (req, res) => {
+  req.logout();
+  // res.redirect('/');
+  res.status(200).json({ code: 200, message: '/logout 성공' });
+});
+
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/google/callback', passport.authenticate('google'), authSuccess);
+
 module.exports = router;

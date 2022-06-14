@@ -2,9 +2,17 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 
+const passport = require('passport');
+const session = require('express-session');
+
 // --
 const app = express();
 app.use(express.json());
+
+// Passport setting
+app.use(session({ secret: 'MySecret', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // --
 const CONTROLLER_PATH = './controller';
@@ -43,8 +51,8 @@ app.all('/*', (req, res, next) => {
 });
 
 // ---
-const signController = require(`${CONTROLLER_PATH}/signController`);
 const jwtController = require(`${CONTROLLER_PATH}/jwtController`);
+const signGoogleController = require(`${CONTROLLER_PATH}/signGoogleController`);
 
-app.use('/sign', signController);
 app.use('/jwt', jwtController);
+app.use('/auth', signGoogleController);
