@@ -6,7 +6,8 @@ const { getSchedules } = require(`${SERVICE_PATH}/scheduleService`);
 
 router.get('/', (req, res) => {
   const result = getSchedules();
-  res.send(result);
+
+  res.status(200).json({ code: 200, message: '조회 성공', result });
 });
 
 module.exports = router;

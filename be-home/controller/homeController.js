@@ -6,7 +6,7 @@ const os = require('os');
 router.get('/', (req, res) => {
   const result = { userAgent: req.headers['user-agent'], hostname: os.hostname() };
 
-  res.send(result);
+  res.status(200).json({ code: 200, message: '조회 성공', result });
 });
 
 module.exports = router;

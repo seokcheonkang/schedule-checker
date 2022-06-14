@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router';
 
 // mixin
-import { LOGD, LOG } from '@/mixin/log.js';
+import { LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';

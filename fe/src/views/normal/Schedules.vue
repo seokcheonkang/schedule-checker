@@ -9,10 +9,11 @@ import Paginate from 'vuejs-paginate-next';
 
 // mixin
 import API from '@/mixin/api.js';
-import { LOGD, LOG } from '@/mixin/log.js';
+import MESSAGE from '@/mixin/message';
+import { LOG } from '@/mixin/log.js';
 
 // env
-const ENV_MODE = import.meta.env.VITE_APP_MODE;
+const ENV_MODE = import.meta.env.MODE;
 const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // TODO : sample
@@ -33,16 +34,20 @@ onMounted(async () => {
   // pagination.oriList = schedules.dataList;
 
   // TODO : sample
-  schedules = await API(`${ENV_BACKEND_URL}/schedules`, {}, 'get');
+  const url = `${ENV_BACKEND_URL}/schedules`;
+  const args = {};
+  const method = 'get';
 
-  import.meta.env.DEV
-    ? LOGD(ENV_MODE, schedules.resultCode, schedules.resultMessage)
-    : LOG(ENV_MODE, schedules.resultCode, schedules.resultMessage);
+  LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  if (schedules.resultCode === 'A000') {
-    pagination.columns = schedules.data.columns;
-    pagination.colspan = schedules.data.columns.length;
-    pagination.oriList = schedules.data.dataList;
+  const schedules = await API(url, args, method);
+
+  if (schedules.data?.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    LOG(ENV_MODE, schedules);
+
+    pagination.columns = schedules.data.result.columns;
+    pagination.colspan = schedules.data.result.columns.length;
+    pagination.oriList = schedules.data.result.dataList;
   }
 });
 

@@ -8,7 +8,8 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
 
 // mixin
 import API from '@/mixin/api.js';
-import { LOGD, LOG } from '@/mixin/log.js';
+import MESSAGE from '@/mixin/message';
+import { LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -18,7 +19,7 @@ import { useJwtStore } from '@/store/jwt.js';
 import swal from 'sweetalert2';
 
 // env
-const ENV_MODE = import.meta.env.VITE_APP_ENV_MODE;
+const ENV_MODE = import.meta.env.MODE;
 const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 
 const loginStore = useLoginStore();
@@ -33,18 +34,20 @@ const state = reactive({
 });
 
 const login = async () => {
+  const url = `${ENV_BACKEND_URL}/jwt/create`;
   const args = {
     userEmail: state.form.userEmail,
     userPassword: state.form.userPassword,
   };
+  const method = 'post';
 
-  const tokens = await API(`${ENV_BACKEND_URL}/jwt/create`, args, 'post');
+  LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  import.meta.env.DEV
-    ? LOGD(ENV_MODE, tokens.resultCode, tokens.resultMessage)
-    : LOG(ENV_MODE, tokens.resultCode, tokens.resultMessage);
+  const tokens = await API(url, args, method);
 
-  if (tokens.resultCode === 'A000') {
+  if (tokens.data?.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    LOG(ENV_MODE, tokens);
+
     const {
       data: {
         result: { accessToken },

@@ -17,57 +17,58 @@ import {
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
-import { LOGD, LOG } from '@/mixin/log.js';
+import { LOG } from '@/mixin/log.js';
 
 // env
-const ENV_MODE = import.meta.env.VITE_APP_ENV_MODE;
+const ENV_MODE = import.meta.env.MODE;
 const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 const msg = $ref({});
 
 onBeforeMount(() => {
-  // LOGD(ENV_MODE, 'onBeforeMount');
+  // LOG(ENV_MODE, 'onBeforeMount');
 });
 onMounted(async () => {
-  LOGD(ENV_MODE, 'onMounted');
+  // LOG(ENV_MODE, 'onMounted');
 
-  const result = await API(`${ENV_BACKEND_URL}/`, {}, 'get');
+  const url = `${ENV_BACKEND_URL}/`;
+  const args = {};
+  const method = 'get';
 
-  import.meta.env.DEV
-    ? LOGD(ENV_MODE, result.resultCode, result.resultMessage)
-    : LOG(ENV_MODE, result.resultCode, result.resultMessage);
+  LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  if (result.resultCode === MESSAGE.RESULT_CODE_ERR_NETWORK) {
-    msg.userAgent = MESSAGE.RESULT_MESSAGE_ERR_NETWORK;
-    msg.hostname = MESSAGE.RESULT_MESSAGE_ERR_NETWORK;
-    return;
-  }
+  const result = await API(url, args, method);
 
-  if (result.resultCode === MESSAGE.RESULT_CODE_SUCCESS) {
-    msg.userAgent = result.data.userAgent;
-    msg.hostname = result.data.hostname;
+  if (result.data?.code === 200) {
+    LOG(ENV_MODE, result);
+
+    msg.userAgent = result.data.result.userAgent;
+    msg.hostname = result.data.result.hostname;
+  } else {
+    msg.userAgent = MESSAGE.CODE_HTTP_STATUS_500;
+    msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;
   }
 });
 onBeforeUpdate(() => {
-  // LOGD(ENV_MODE, 'onBeforeUpdate');
+  // LOG(ENV_MODE, 'onBeforeUpdate');
 });
 onUpdated(() => {
-  // LOGD(ENV_MODE, 'onUpdated');
+  // LOG(ENV_MODE, 'onUpdated');
 });
 onBeforeUnmount(() => {
-  // LOGD(ENV_MODE, 'onBeforeUnmount');
+  // LOG(ENV_MODE, 'onBeforeUnmount');
 });
 onUnmounted(() => {
-  // LOGD(ENV_MODE, 'onUnmounted');
+  // LOG(ENV_MODE, 'onUnmounted');
 });
 onErrorCaptured(() => {
-  // LOGD(ENV_MODE, 'onErrorCaptured');
+  // LOG(ENV_MODE, 'onErrorCaptured');
 });
 onRenderTracked(() => {
-  // LOGD(ENV_MODE, 'onRenderTracked');
+  // LOG(ENV_MODE, 'onRenderTracked');
 });
 onRenderTriggered(() => {
-  // LOGD(ENV_MODE, 'onRenderTriggered');
+  // LOG(ENV_MODE, 'onRenderTriggered');
 });
 </script>
 

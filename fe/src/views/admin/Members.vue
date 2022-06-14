@@ -9,10 +9,11 @@ import Paginate from 'vuejs-paginate-next';
 
 // mixin
 import API from '@/mixin/api.js';
-import { LOGD, LOG } from '@/mixin/log.js';
+import MESSAGE from '@/mixin/message';
+import { LOG } from '@/mixin/log.js';
 
 // env
-const ENV_MODE = import.meta.env.VITE_APP_ENV_MODE;
+const ENV_MODE = import.meta.env.MODE;
 const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // TODO : sample
@@ -32,16 +33,20 @@ onMounted(async () => {
   // pagination.oriList = members.dataList;
 
   // TODO : sample
-  members = await API(`${ENV_BACKEND_URL}/members`, {}, 'get');
+  const url = `${ENV_BACKEND_URL}/members`;
+  const args = {};
+  const method = 'get';
 
-  import.meta.env.DEV
-    ? LOGD(ENV_MODE, members.resultCode, members.resultMessage)
-    : LOG(ENV_MODE, members.resultCode, members.resultMessage);
+  LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  if (members.resultCode === 'A000') {
-    pagination.columns = members.data.columns;
-    pagination.colspan = members.data.columns.length;
-    pagination.oriList = members.data.dataList;
+  const members = await API(url, args, method);
+
+  if (members.data?.code === 200) {
+    LOG(ENV_MODE, members);
+
+    pagination.columns = members.data.result.columns;
+    pagination.colspan = members.data.result.columns.length;
+    pagination.oriList = members.data.result.dataList;
   }
 });
 
