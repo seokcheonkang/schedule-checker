@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, reactive, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -11,6 +12,9 @@ import Paginate from 'vuejs-paginate-next';
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import { LOG } from '@/mixin/log.js';
+
+// route
+const route = useRoute();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
@@ -27,6 +31,8 @@ let schedules = null;
 
 // life cycle
 onMounted(async () => {
+  LOG(ENV_MODE, route.name);
+
   // TODO : sample
   // schedules = sample;
   // pagination.columns = schedules.columns;
@@ -40,14 +46,14 @@ onMounted(async () => {
 
   LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  const schedules = await API(url, args, method);
+  schedules = await API(url, args, method);
 
-  if (schedules.data?.code === MESSAGE.CODE_HTTP_STATUS_200) {
+  if (schedules.code === MESSAGE.CODE_HTTP_STATUS_200) {
     LOG(ENV_MODE, schedules);
 
-    pagination.columns = schedules.data.result.columns;
-    pagination.colspan = schedules.data.result.columns.length;
-    pagination.oriList = schedules.data.result.dataList;
+    pagination.columns = schedules.result.columns;
+    pagination.colspan = schedules.result.columns.length;
+    pagination.oriList = schedules.result.dataList;
   }
 });
 
@@ -90,7 +96,7 @@ const pagination = reactive({
 </script>
 
 <template>
-  <CustomPageHeader text="스케줄 목록" />
+  <CustomPageHeader :text="route.name" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
     <select class="form-select me-2 w-20" aria-label="searchOption" v-model="searchKey">
       <option value="">선택</option>

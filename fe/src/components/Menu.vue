@@ -95,6 +95,7 @@ const logout = () => {
           </div>
           <div class="d-flex" v-if="!store.isLogin">
             <router-link class="btn btn-outline-light" id="btnLogin" to="/login">로그인</router-link>
+            <router-link class="btn btn-outline-light" id="btnLogin" to="/googlelogin">구글 로그인</router-link>
           </div>
         </div>
       </div>

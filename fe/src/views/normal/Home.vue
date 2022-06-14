@@ -1,6 +1,5 @@
 <script setup>
-// custom
-import CustomPageHeader from '@/components/CustomPageHeader.vue';
+import { useRoute } from 'vue-router';
 
 import {
   onBeforeMount,
@@ -14,6 +13,9 @@ import {
   onRenderTriggered,
 } from 'vue';
 
+// custom
+import CustomPageHeader from '@/components/CustomPageHeader.vue';
+
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
@@ -23,13 +25,16 @@ import { LOG } from '@/mixin/log.js';
 const ENV_MODE = import.meta.env.MODE;
 const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
+// route
+const route = useRoute();
+
 const msg = $ref({});
 
 onBeforeMount(() => {
   // LOG(ENV_MODE, 'onBeforeMount');
 });
 onMounted(async () => {
-  // LOG(ENV_MODE, 'onMounted');
+  LOG(ENV_MODE, route.name);
 
   const url = `${ENV_BACKEND_URL}/`;
   const args = {};
@@ -37,15 +42,15 @@ onMounted(async () => {
 
   LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  const result = await API(url, args, method);
+  const data = await API(url, args, method);
 
-  if (result.data?.code === 200) {
-    LOG(ENV_MODE, result);
+  if (data.code === 200) {
+    LOG(ENV_MODE, data);
 
-    msg.userAgent = result.data.result.userAgent;
-    msg.hostname = result.data.result.hostname;
+    msg.userAgent = data.result.userAgent;
+    msg.hostname = data.result.hostname;
   } else {
-    msg.userAgent = MESSAGE.CODE_HTTP_STATUS_500;
+    msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
     msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;
   }
 });

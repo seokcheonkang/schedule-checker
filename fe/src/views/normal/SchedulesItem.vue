@@ -1,12 +1,27 @@
 <script setup>
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
+// mixin
+import { LOG } from '@/mixin/log.js';
+
 // swal
 import swal from 'sweetalert2';
+
+// env
+const ENV_MODE = import.meta.env.MODE;
+
+// route
+const route = useRoute();
+const seq = Number(route.params.seq); // 전달받은 파라미터
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+});
 
 // Server Data
 const item = {
@@ -17,10 +32,6 @@ const item = {
   completedCount: 5,
   insertDate: '2022-12-31 23:59:59',
 };
-
-// route
-const route = useRoute();
-const seq = Number(route.params.seq); // 전달받은 파라미터
 
 const confirm = (paramForParent) => {
   const { title, icon, text, footer } = paramForParent;
@@ -35,7 +46,7 @@ const confirm = (paramForParent) => {
 </script>
 
 <template>
-  <CustomPageHeader text="스케줄 상세" />
+  <CustomPageHeader :text="route.name" />
   <div class="container">
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">

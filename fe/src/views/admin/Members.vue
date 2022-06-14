@@ -41,12 +41,12 @@ onMounted(async () => {
 
   const members = await API(url, args, method);
 
-  if (members.data?.code === 200) {
+  if (members.code === 200) {
     LOG(ENV_MODE, members);
 
-    pagination.columns = members.data.result.columns;
-    pagination.colspan = members.data.result.columns.length;
-    pagination.oriList = members.data.result.dataList;
+    pagination.columns = members.result.columns;
+    pagination.colspan = members.result.columns.length;
+    pagination.oriList = members.result.dataList;
   }
 });
 

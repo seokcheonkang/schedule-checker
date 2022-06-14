@@ -1,5 +1,4 @@
 import axios from 'axios';
-import MESSAGE from './message';
 
 export default async (url, data, method = 'get') => {
   return await axios({
@@ -8,11 +7,9 @@ export default async (url, data, method = 'get') => {
     method,
   })
     .then((response) => {
-      return {
-        data: response.data,
-      };
+      return response.data;
     })
     .catch((e) => {
-      return { resultCode: e.code, resultMessage: e.message };
+      return { code: e.code, message: e.message, result: null };
     });
 };

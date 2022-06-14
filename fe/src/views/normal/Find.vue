@@ -1,7 +1,23 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
+
+// mixin
+import { LOG } from '@/mixin/log.js';
+
+// env
+const ENV_MODE = import.meta.env.MODE;
+
+// route
+const route = useRoute();
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+});
 </script>
 
 <template>

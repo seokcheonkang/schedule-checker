@@ -18,20 +18,20 @@ import { useJwtStore } from '@/store/jwt.js';
 // swal
 import swal from 'sweetalert2';
 
-// env
-const ENV_MODE = import.meta.env.MODE;
-const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
-
 // route
 const route = useRoute();
-const router = useRouter();
 
 onMounted(() => {
   LOG(ENV_MODE, route.name);
 });
 
+// env
+const ENV_MODE = import.meta.env.MODE;
+const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
+
 const loginStore = useLoginStore();
 const jwtStore = useJwtStore();
+const router = useRouter();
 
 const state = reactive({
   form: {
@@ -41,40 +41,45 @@ const state = reactive({
 });
 
 const login = async () => {
-  const url = `${ENV_BACKEND_URL}/jwt/create`;
+  const url = `${ENV_BACKEND_URL}/auth/google`;
   const args = {
-    userEmail: state.form.userEmail,
-    userPassword: state.form.userPassword,
+    // userEmail: state.form.userEmail,
+    // userPassword: state.form.userPassword,
   };
-  const method = 'post';
+  const method = 'get';
 
   LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  const tokens = await API(url, args, method);
+  const result = await API(url, args, method);
 
-  if (tokens.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOG(ENV_MODE, tokens);
+  console.log(result);
 
-    const {
-      result: { accessToken },
-    } = tokens; // const accessToken = tokens.result.accessToken;
-    jwtStore.setAccessToken(accessToken);
-    loginStore.setIsLogin(true);
-    router.push({ path: '/' });
-  } else {
-    swal.fire({
-      title: '로그인 실패',
-      text: '아이디와 비밀번호를 다시 확인해주세요.',
-      confirmButtonText: '확인',
-    });
-  }
+  // if (result.data?.code === MESSAGE.CODE_HTTP_STATUS_200) {
+  //   LOG(ENV_MODE, result);
+
+  //   const {
+  //     data: {
+  //       result: { accessToken },
+  //     },
+  //   } = result; // const accessToken = result.data.result.accessToken;
+  //   jwtStore.setAccessToken(accessToken);
+  //   loginStore.setIsLogin(true);
+  //   router.push({ path: '/' });
+  // } else {
+  //   swal.fire({
+  //     title: '로그인 실패',
+  //     text: '아이디와 비밀번호를 다시 확인해주세요.',
+  //     confirmButtonText: '확인',
+  //   });
+  // }
 };
 </script>
 
 <template>
-  <CustomPageHeader text="로그인" />
+  <CustomPageHeader text="구글 로그인" />
   <div class="container">
-    <div class="row align-items-center py-1">
+    <CustomActionButton text="구글 로그인" @click="login" />
+    <!-- <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
         <form class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">로그인</h4>
@@ -113,6 +118,6 @@ const login = async () => {
           </div>
         </form>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>

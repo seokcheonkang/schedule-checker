@@ -3,11 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 // normal
 import Home from '@/views/normal/Home.vue';
 
-import Login from '@/views/normal/Login.vue';
-import Profile from '@/views/normal/Profile.vue';
-import Join from '@/views/normal/Join.vue';
-import Find from '@/views/normal/Find.vue';
-
 const routes = [
   {
     path: '/',
@@ -17,44 +12,47 @@ const routes = [
   {
     path: '/Login',
     name: 'Login',
-    component: Login,
+    component: () => import('@/views/normal/Login.vue'),
+  },
+  {
+    path: '/GoogleLogin',
+    name: 'GoogleLogin',
+    component: () => import('@/views/normal/GoogleLogin.vue'),
   },
   {
     path: '/Profile',
     name: 'Profile',
-    component: Profile,
+    component: () => import('@/views/normal/Profile.vue'),
   },
   {
     path: '/Join',
     name: 'Join',
-    component: Join,
+    component: () => import('@/views/normal/Join.vue'),
   },
   {
     path: '/Find',
     name: 'Find',
-    component: Find,
+    component: () => import('@/views/normal/Find.vue'),
   },
   {
     path: '/Schedules',
     name: 'Schedules',
-    component: () => import(/* webpackChunkName: "schedules", webpackPrefetch:true */ '@/views/normal/schedules.vue'),
+    component: () => import('@/views/normal/schedules.vue'),
   },
   {
     path: '/Schedules/:seq',
     name: 'SchedulesItem',
-    component: () =>
-      import(/* webpackChunkName: "SchedulesItem", webpackPrefetch:true */ '@/views/normal/SchedulesItem.vue'),
+    component: () => import('@/views/normal/SchedulesItem.vue'),
   },
   {
     path: '/admin/Members',
     name: 'AdminMembers',
-    component: () => import(/* webpackChunkName: "AdminMembers", webpackPrefetch:true */ '@/views/admin/Members.vue'),
+    component: () => import('@/views/admin/Members.vue'),
   },
   {
     path: '/admin/Members/:seq',
     name: 'AdminMembersItem',
-    component: () =>
-      import(/* webpackChunkName: "AdminMembersItem", webpackPrefetch:true */ '@/views/admin/MembersItem.vue'),
+    component: () => import('@/views/admin/MembersItem.vue'),
   },
 ];
 
