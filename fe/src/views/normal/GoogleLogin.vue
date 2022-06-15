@@ -97,15 +97,6 @@ const handleClickDisconnect = () => {
 </script>
 
 <template>
-  <!-- <button
-    class="router-link-active router-link-exact-active btn btn-outline-light color-google img-google"
-    id="btnLogin"
-    aria-current="page"
-    @click="handleClickSignIn"
-    v-if="Vue3GoogleOauth.isInit"
-  >
-    Log in with Google
-  </button> -->
   <div class="google-btn" aria-current="page" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
     <div class="google-icon-wrapper">
       <img class="google-icon" src="../../../public/google-logo.svg" />

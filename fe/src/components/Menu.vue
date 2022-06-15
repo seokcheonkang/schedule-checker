@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, inject } from 'vue';
+import { inject } from 'vue';
 import GoogleLogin from '../views/normal/GoogleLogin.vue';
 
 // mixin
@@ -53,10 +53,7 @@ const setProfileImage = () => {
     profileImageUrl = loginStore.loginInfo.imageUrl;
   }
 };
-
-(async () => {
-  await setProfileImage();
-})();
+setProfileImage();
 </script>
 
 <template>
