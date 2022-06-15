@@ -57,7 +57,6 @@ const handleClickSignIn = async () => {
       LOG(ENV_MODE, JSON.stringify(response));
 
       jwtStore.setAccessToken(response.result.accessToken);
-      console.log(jwtStore.accessToken);
     };
     setAccessTokenByServer();
 
@@ -102,7 +101,7 @@ const handleClickDisconnect = () => {
       <img class="google-icon" src="../../../public/google-logo.svg" />
     </div>
     <p class="btn-text">
-      <b>&nbsp;&nbsp;&nbsp;Sign in with google</b>
+      <b>구글 로그인</b>
     </p>
   </div>
 </template>

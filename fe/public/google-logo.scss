@@ -26,12 +26,9 @@ $button-active-blue: #1669f2;
     height: 18px;
   }
   .btn-text {
-    float: right;
-    margin: 11px 11px 0 0;
+    margin: 11px 0 0 70px;
     color: $white;
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    font-family: 'Roboto';
+    font-size: 14px;
   }
   &:hover {
     box-shadow: 0 0 6px $google-blue;
