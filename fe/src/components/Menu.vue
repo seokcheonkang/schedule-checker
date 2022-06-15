@@ -15,10 +15,18 @@ import swal from 'sweetalert2';
 const ENV_MODE = import.meta.env.MODE;
 
 // store
-const store = useLoginStore();
+const loginStore = useLoginStore();
 
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
+
+const handleClickSignOut = async () => {
+  try {
+    await Vue3GoogleOauth.instance.signOut();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const logout = () => {
   swal
@@ -31,9 +39,9 @@ const logout = () => {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        Vue3GoogleOauth.instance.signOut();
-        store.setIsLogin(false);
-        store.setLoginInfo({});
+        handleClickSignOut();
+        loginStore.setIsLogin(false);
+        loginStore.setLoginInfo({});
         LOG(ENV_MODE, 'logout');
       }
     });
@@ -41,9 +49,8 @@ const logout = () => {
 
 let profileImageUrl = $ref('http://picsum.photos/20');
 const setProfileImage = () => {
-  if (store.isLogin) {
-    profileImageUrl = store.loginInfo.imageUrl;
-    console.log('profileImageUrl', profileImageUrl);
+  if (loginStore.isLogin) {
+    profileImageUrl = loginStore.loginInfo.imageUrl;
   }
 };
 
@@ -56,7 +63,6 @@ const setProfileImage = () => {
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
       <div class="container-fluid">
-        <!-- <a class="navbar-brand" href="./index.html">Schedule Checker</a> -->
         <router-link class="navbar-brand" to="/">Schedule Checker</router-link>
         <button
           class="navbar-toggler p-0 border-0"
@@ -91,7 +97,7 @@ const setProfileImage = () => {
               </ul>
             </li>
           </ul>
-          <div class="d-flex" v-if="store.isLogin">
+          <div class="d-flex" v-if="loginStore.isLogin">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                 <a
@@ -120,8 +126,8 @@ const setProfileImage = () => {
               </li>
             </ul>
           </div>
-          <div class="d-flex" v-if="!store.isLogin">
-            <router-link class="btn btn-outline-light" id="btnLogin" to="/login">JWT 로그인</router-link>
+          <div class="d-flex" v-if="!loginStore.isLogin">
+            <!-- <router-link class="btn btn-outline-light" id="btnLogin" to="/login">JWT 로그인</router-link> -->
             <GoogleLogin />
           </div>
         </div>

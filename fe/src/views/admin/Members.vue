@@ -14,7 +14,7 @@ import { LOG } from '@/mixin/log.js';
 
 // env
 const ENV_MODE = import.meta.env.MODE;
-const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
+const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // TODO : sample
 // import members from '@/sampleData/members.json';
@@ -33,7 +33,7 @@ onMounted(async () => {
   // pagination.oriList = members.dataList;
 
   // TODO : sample
-  const url = `${ENV_BACKEND_URL}/members`;
+  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
   const args = {};
   const method = 'get';
 

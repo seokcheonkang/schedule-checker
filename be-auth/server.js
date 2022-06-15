@@ -52,7 +52,7 @@ app.all('/*', (req, res, next) => {
 
 // ---
 const jwtController = require(`${CONTROLLER_PATH}/jwtController`);
-const signGoogleController = require(`${CONTROLLER_PATH}/signGoogleController`);
+const authGoogleController = require(`${CONTROLLER_PATH}/authGoogleController`);
 
 app.use('/jwt', jwtController);
-app.use('/auth', signGoogleController);
+app.use('/auth/google', authGoogleController);

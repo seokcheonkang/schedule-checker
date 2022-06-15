@@ -23,7 +23,7 @@ import { LOG } from '@/mixin/log.js';
 
 // env
 const ENV_MODE = import.meta.env.MODE;
-const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
+const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // route
 const route = useRoute();
@@ -36,7 +36,7 @@ onBeforeMount(() => {
 onMounted(async () => {
   LOG(ENV_MODE, route.name);
 
-  const url = `${ENV_BACKEND_URL}/`;
+  const url = `${ENV_URL_BACKEND_HOME}/`;
   const args = {};
   const method = 'get';
 

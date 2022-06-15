@@ -32,7 +32,6 @@ app.use(Paginate);
 
 app.use(gAuthPlugin, {
   clientId: gauthClientId,
-  scope: 'profile email',
   prompt: 'consent',
   fetch_basic_profile: true,
 });

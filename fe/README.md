@@ -96,3 +96,9 @@ $ npm i pinia pinia-plugin-persist
 ```console
 $ npm i vue3-google-oauth2
 ```
+
+#### sass, scss
+
+```console
+$ npm i sass scss
+```

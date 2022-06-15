@@ -18,7 +18,7 @@ const route = useRoute();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
-const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
+const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // TODO : sample
 // import sample from '@/sampleData/schedules.json';
@@ -40,7 +40,7 @@ onMounted(async () => {
   // pagination.oriList = schedules.dataList;
 
   // TODO : sample
-  const url = `${ENV_BACKEND_URL}/schedules`;
+  const url = `${ENV_URL_BACKEND_HOME}/schedules`;
   const args = {};
   const method = 'get';
 

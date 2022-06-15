@@ -20,7 +20,7 @@ import swal from 'sweetalert2';
 
 // env
 const ENV_MODE = import.meta.env.MODE;
-const ENV_BACKEND_URL = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
+const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 
 // route
 const route = useRoute();
@@ -41,7 +41,7 @@ const state = reactive({
 });
 
 const login = async () => {
-  const url = `${ENV_BACKEND_URL}/jwt/create`;
+  const url = `${ENV_URL_BACKEND_AUTH}/jwt/create`;
   const args = {
     userEmail: state.form.userEmail,
     userPassword: state.form.userPassword,

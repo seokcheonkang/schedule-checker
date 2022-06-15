@@ -3,16 +3,20 @@ import { onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
 
 // mixin
+import API from '@/mixin/api.js';
 import { LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
+import { useJwtStore } from '@/store/jwt.js';
 
 // store
-const store = useLoginStore();
+const loginStore = useLoginStore();
+const jwtStore = useJwtStore();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
+const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 
 // route
 const route = useRoute();
@@ -33,14 +37,29 @@ const handleClickSignIn = async () => {
     }
 
     const profile = {
-      basicProfile: googleUser.getBasicProfile(),
+      // access_token: googleUser.getAuthResponse().access_token,
       email: googleUser.getBasicProfile().getEmail(),
       id: googleUser.getBasicProfile().getId(),
       imageUrl: googleUser.getBasicProfile().getImageUrl(),
     };
 
-    store.setIsLogin(true);
-    store.setLoginInfo(profile);
+    loginStore.setIsLogin(true);
+    loginStore.setLoginInfo(profile);
+
+    const setAccessTokenByServer = async () => {
+      const url = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
+      const args = { userEmail: profile.email };
+      const method = 'post';
+
+      LOG(ENV_MODE, url, JSON.stringify(args), method);
+
+      const response = await API(url, args, method);
+      LOG(ENV_MODE, JSON.stringify(response));
+
+      jwtStore.setAccessToken(response.result.accessToken);
+      console.log(jwtStore.accessToken);
+    };
+    setAccessTokenByServer();
 
     LOG(ENV_MODE, 'Profile', JSON.stringify(profile));
   } catch (error) {
@@ -65,8 +84,8 @@ const handleClickSignOut = async () => {
   try {
     await Vue3GoogleOauth.instance.signOut();
     console.log('handleClickSignOut isAuthorized', Vue3GoogleOauth.isAuthorized);
-    store.setIsLogin(false);
-    store.setLoginInfo({});
+    loginStore.setIsLogin(false);
+    loginStore.setLoginInfo({});
   } catch (error) {
     console.error(error);
   }
@@ -78,26 +97,25 @@ const handleClickDisconnect = () => {
 </script>
 
 <template>
-  <button
-    class="router-link-active router-link-exact-active btn btn-outline-light"
+  <!-- <button
+    class="router-link-active router-link-exact-active btn btn-outline-light color-google img-google"
     id="btnLogin"
     aria-current="page"
     @click="handleClickSignIn"
     v-if="Vue3GoogleOauth.isInit"
   >
-    구글 로그인
-  </button>
-  <!-- 
-  <div>
-    <h1>IsInit: {{ Vue3GoogleOauth.isInit }}</h1>
-    <h1>IsAuthorized: {{ Vue3GoogleOauth.isAuthorized }}</h1>
-    <h2 v-if="user">signed user: {{ user }}</h2>
-    <button @click="handleClickSignIn" :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized">
-      sign in
-    </button>
-    <button @click="handleClickGetAuthCode" :disabled="!Vue3GoogleOauth.isInit">get authCode</button>
-    <button @click="handleClickSignOut" :disabled="!Vue3GoogleOauth.isAuthorized">sign out</button>
-    <button @click="handleClickDisconnect" :disabled="!Vue3GoogleOauth.isAuthorized">disconnect</button>
+    Log in with Google
+  </button> -->
+  <div class="google-btn" aria-current="page" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
+    <div class="google-icon-wrapper">
+      <img class="google-icon" src="../../../public/google-logo.svg" />
+    </div>
+    <p class="btn-text">
+      <b>&nbsp;&nbsp;&nbsp;Sign in with google</b>
+    </p>
   </div>
-  -->
 </template>
+
+<style lang="scss">
+@import '../../../public/google-logo.scss';
+</style>
