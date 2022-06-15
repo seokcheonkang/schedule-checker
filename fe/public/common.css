@@ -61,3 +61,14 @@
 .w-90 {
   width: 90% !important;
 }
+
+.p-center-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 1.25rem;
+  height: 1.25rem;
+}

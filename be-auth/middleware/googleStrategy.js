@@ -5,11 +5,11 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 dotenv.config({ path: path.join(__dirname, `../env/.env.development`) });
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
@@ -19,9 +19,9 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/callback',
-      passReqToCallback: true,
+      // passReqToCallback: true,
     },
-    (request, accessToken, refreshToken, profile, done) => {
+    async (request, accessToken, refreshToken, profile, done) => {
       console.log('profile: ', profile);
 
       const user = profile;

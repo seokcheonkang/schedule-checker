@@ -12,16 +12,19 @@ export const useLoginStore = defineStore({
     getIsLogin: (state) => {
       return state.isLogin;
     },
-    getAccessToken: (state) => {
-      return state.accessToken;
-    },
     getLoginInfo: (state) => {
       return state.loginInfo;
+    },
+    getAccessToken: (state) => {
+      return state.accessToken;
     },
   },
   actions: {
     setIsLogin(val) {
       this.isLogin = val;
+    },
+    setLoginInfo(val) {
+      this.loginInfo = val;
     },
     setAccessToken(val) {
       this.accessToken = val;

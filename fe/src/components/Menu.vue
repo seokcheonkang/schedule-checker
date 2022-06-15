@@ -1,5 +1,6 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import { reactive, inject } from 'vue';
+import GoogleLogin from '../views/normal/GoogleLogin.vue';
 
 // mixin
 import { LOG } from '@/mixin/log.js';
@@ -10,8 +11,14 @@ import { useLoginStore } from '@/store/login.js';
 // swal
 import swal from 'sweetalert2';
 
+// env
+const ENV_MODE = import.meta.env.MODE;
+
+// store
 const store = useLoginStore();
-const router = useRouter();
+
+// google oauth
+const Vue3GoogleOauth = inject('Vue3GoogleOauth');
 
 const logout = () => {
   swal
@@ -24,11 +31,25 @@ const logout = () => {
     })
     .then((result) => {
       if (result.isConfirmed) {
+        Vue3GoogleOauth.instance.signOut();
         store.setIsLogin(false);
-        router.push({ path: '/login' });
+        store.setLoginInfo({});
+        LOG(ENV_MODE, 'logout');
       }
     });
 };
+
+let profileImageUrl = $ref('http://picsum.photos/20');
+const setProfileImage = () => {
+  if (store.isLogin) {
+    profileImageUrl = store.loginInfo.imageUrl;
+    console.log('profileImageUrl', profileImageUrl);
+  }
+};
+
+(async () => {
+  await setProfileImage();
+})();
 </script>
 
 <template>
@@ -80,7 +101,13 @@ const logout = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="true"
                 >
-                  <img id="profile_img" src="http://picsum.photos/20" class="rounded-circle" alt="사용자 이미지" />
+                  <img
+                    id="profile_img"
+                    :src="profileImageUrl"
+                    class="rounded-circle profile-image"
+                    alt="사용자 이미지"
+                    referrerpolicy="no-referrer"
+                  />
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right lt-7" aria-labelledby="dropdown02">
                   <li>
@@ -94,8 +121,8 @@ const logout = () => {
             </ul>
           </div>
           <div class="d-flex" v-if="!store.isLogin">
-            <router-link class="btn btn-outline-light" id="btnLogin" to="/login">로그인</router-link>
-            <router-link class="btn btn-outline-light" id="btnLogin" to="/googlelogin">구글 로그인</router-link>
+            <router-link class="btn btn-outline-light" id="btnLogin" to="/login">JWT 로그인</router-link>
+            <GoogleLogin />
           </div>
         </div>
       </div>

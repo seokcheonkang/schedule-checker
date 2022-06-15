@@ -45,7 +45,7 @@ onMounted(async () => {
   const data = await API(url, args, method);
 
   if (data.code === 200) {
-    LOG(ENV_MODE, data);
+    LOG(ENV_MODE, JSON.stringify(data));
 
     msg.userAgent = data.result.userAgent;
     msg.hostname = data.result.hostname;

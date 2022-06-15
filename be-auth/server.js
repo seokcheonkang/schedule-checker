@@ -31,7 +31,7 @@ const setEnv = (nodeEnv) => {
 
 const setCors = (res) => {
   res.header('Access-Control-Allow-Origin', process.env.BASE_URL_FRONTEND);
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 };
 // --

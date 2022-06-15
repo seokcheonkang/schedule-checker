@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --mode development --host",
+    "dev": "vite --mode development",
     "prd": "vite --mode production --host",
     "build": "vite build --mode development",
     "preview": "vite preview"
@@ -17,6 +17,7 @@
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
     "vue-sweetalert2": "^5.0.2",
+    "vue3-google-oauth2": "^1.0.6",
     "vuejs-paginate-next": "^1.0.2"
   },
   "devDependencies": {

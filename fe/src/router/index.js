@@ -15,11 +15,6 @@ const routes = [
     component: () => import('@/views/normal/Login.vue'),
   },
   {
-    path: '/GoogleLogin',
-    name: 'GoogleLogin',
-    component: () => import('@/views/normal/GoogleLogin.vue'),
-  },
-  {
     path: '/Profile',
     name: 'Profile',
     component: () => import('@/views/normal/Profile.vue'),

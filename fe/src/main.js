@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import { createPinia } from 'pinia';
 import piniaPersist from 'pinia-plugin-persist';
+import gAuthPlugin from 'vue3-google-oauth2';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,9 +20,21 @@ import Paginate from 'vuejs-paginate-next';
 const pinia = createPinia();
 pinia.use(piniaPersist);
 
+// gAuth
+const gauthClientId = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID;
+
 const app = createApp(App);
+
 app.use(router);
 app.use(pinia);
 app.use(VueSweetalert2);
 app.use(Paginate);
+
+app.use(gAuthPlugin, {
+  clientId: gauthClientId,
+  scope: 'profile email',
+  prompt: 'consent',
+  fetch_basic_profile: true,
+});
+
 app.mount('#app');

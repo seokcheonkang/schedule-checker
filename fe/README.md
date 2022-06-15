@@ -90,3 +90,9 @@ $ npm i jwt-decode
 ```console
 $ npm i pinia pinia-plugin-persist
 ```
+
+#### vue3-google-oauth2
+
+```console
+$ npm i vue3-google-oauth2
+```
