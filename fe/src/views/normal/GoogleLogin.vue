@@ -106,7 +106,7 @@ onMounted(() => {
 <template>
   <div class="google-btn" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
     <div class="google-icon-wrapper">
-      <img class="google-icon" src="/google-logo.svg" />
+      <img class="google-icon" src="/assets/image/google-logo.svg" />
     </div>
     <p class="btn-text">
       <b>구글로 계속하기</b>
@@ -115,5 +115,5 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import '../../../public/google-logo.scss';
+@import '../../../public/assets/css/google-logo.scss';
 </style>

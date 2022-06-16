@@ -138,12 +138,12 @@ onMounted(() => {
         <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
           <td class="text-center" title="이메일">
-            <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn__td">
+            <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn-td">
               {{ item.userEmail }}
             </router-link>
           </td>
           <td class="text-center" title="이름">
-            <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn__td">
+            <router-link :to="{ path: `/admin/members/${item.seq}` }" class="btn-td">
               {{ item.userName }}
             </router-link>
           </td>
