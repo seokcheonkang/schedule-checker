@@ -9,13 +9,7 @@ export default defineConfig({
     host: true,
     port: 9000,
   },
-  plugins: [
-    vue({
-      script: {
-        refSugar: true,
-      },
-    }),
-  ],
+  plugins: [vue()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
