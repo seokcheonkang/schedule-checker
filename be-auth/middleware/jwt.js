@@ -26,23 +26,19 @@ const service = {
 
     const key = process.env.JWT_ACCESS_TOKEN_SECRET;
 
+    let result = '';
+
     try {
-      req.decode = jwt.verify(token, key);
-      return req.decode;
+      result = jwt.verify(token, key);
+      return res.status(200).json({ code: 200, message: '토큰이 생성되었습니다.', result });
     } catch (error) {
       // 유효시간 초과
       if (error.name === 'TokenExpiredError') {
-        return res.status(419).json({
-          code: 419,
-          message: '토큰이 만료되었습니다.',
-        });
+        return res.status(419).json({ code: 419, message: '토큰이 만료되었습니다.' });
       }
       // 토큰의 비밀키 불일치
       if (error.name === 'JsonWebTokenError') {
-        return res.status(401).json({
-          code: 401,
-          message: '유효하지 않은 토큰입니다.',
-        });
+        return res.status(401).json({ code: 401, message: '유효하지 않은 토큰입니다.' });
       }
     }
   },

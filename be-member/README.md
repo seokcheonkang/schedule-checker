@@ -49,3 +49,9 @@ $ npm i nodemon -D
 ```console
 $ npm i express dotenv cross-env
 ```
+
+#### request
+
+```console
+$ npm i request
+```

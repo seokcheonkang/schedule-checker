@@ -15,6 +15,8 @@ export default {
   MESSAGE_HTTP_STATUS_405: 'Method Not Allowed',
   CODE_HTTP_STATUS_408: 408,
   MESSAGE_HTTP_STATUS_408: 'Request Timeout',
+  CODE_HTTP_STATUS_419: 419,
+  MESSAGE_HTTP_STATUS_419: 'Authentication Timeout',
   CODE_HTTP_STATUS_500: 500,
   MESSAGE_HTTP_STATUS_500: 'Internal Server Error',
   CODE_HTTP_STATUS_502: 502,

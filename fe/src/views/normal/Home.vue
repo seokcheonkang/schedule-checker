@@ -35,7 +35,7 @@ onMounted(async () => {
 
   LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  const data = await API(url, args, method);
+  const data = await API(method, url, args);
 
   if (data.code === 200) {
     LOG(ENV_MODE, JSON.stringify(data));

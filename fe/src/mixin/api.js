@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export default async (url, data, method = 'get', headers) => {
+export default async (method = 'get', url, data, headers) => {
   return await axios({
+    method,
     url,
     data,
-    method,
     headers,
   })
     .then((response) => {

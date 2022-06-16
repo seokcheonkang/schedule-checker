@@ -39,7 +39,7 @@ const PORT = process.env.PORT || 8002;
 app.listen(PORT, () => {
   setEnv(process.env.NODE_ENV);
 
-  const URL = `${process.env.BASE_URL_BACKEND}`;
+  const URL = `${process.env.BASE_URL_THIS}`;
 
   console.log(`Server listening : ${URL}`);
 });
@@ -51,8 +51,8 @@ app.all('/*', (req, res, next) => {
 });
 
 // ---
-const jwtController = require(`${CONTROLLER_PATH}/jwtController`);
 const authGoogleController = require(`${CONTROLLER_PATH}/authGoogleController`);
+const jwtController = require(`${CONTROLLER_PATH}/jwtController`);
 
-app.use('/jwt', jwtController);
 app.use('/auth/google', authGoogleController);
+app.use('/jwt', jwtController);

@@ -11,7 +11,9 @@ import Paginate from 'vuejs-paginate-next';
 // mixin
 import API from '@/mixin/api.js';
 import { LOG } from '@/mixin/log.js';
-import { HAS_AUTH } from '@/mixin/auth.js';
+
+// store
+import { useLoginStore } from '@/store/login.js';
 
 // swal
 import swal from 'sweetalert2';
@@ -24,21 +26,14 @@ const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 const route = useRoute();
 const router = useRouter();
 
+// store
+const loginStore = useLoginStore();
+
 // state
 const state = reactive({
   searchKey: '',
   searchValue: '',
 });
-
-if (!HAS_AUTH()) {
-  router.push('/');
-
-  swal.fire({
-    title: '권한 없음',
-    text: '해당 메뉴를 접근할 권한이 없습니다.',
-    confirmButtonText: '확인',
-  });
-}
 
 // list for pagination
 const pagination = reactive({
@@ -78,19 +73,16 @@ const pagination = reactive({
 });
 
 const getMembers = async () => {
-  // TODO : sample
-  // pagination.columns = response.columns;
-  // pagination.colspan = response.columns.length;
-  // pagination.oriList = response.dataList;
-
-  // TODO : sample
   const url = `${ENV_URL_BACKEND_MEMBER}/members`;
   const args = {};
   const method = 'get';
+  const header = {
+    Authorization: loginStore.accessToken,
+  };
 
   LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  const response = await API(url, args, method);
+  const response = await API(method, url, args, header);
 
   if (response.code === 200) {
     LOG(ENV_MODE, response);
@@ -98,6 +90,8 @@ const getMembers = async () => {
     pagination.columns = response.result.columns;
     pagination.colspan = response.result.columns.length;
     pagination.oriList = response.result.dataList;
+  } else {
+    LOG(ENV_MODE, response.code);
   }
 };
 

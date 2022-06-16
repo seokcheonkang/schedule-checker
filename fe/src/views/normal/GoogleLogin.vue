@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, inject } from 'vue';
-import { useRoute } from 'vue-router';
 
 // mixin
 import API from '@/mixin/api.js';
+import CONSTANT from '@/mixin/constant';
 import { LOG } from '@/mixin/log.js';
 
 // store
@@ -15,9 +15,6 @@ const loginStore = useLoginStore();
 // env
 const ENV_MODE = import.meta.env.MODE;
 const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
-
-// route
-const route = useRoute();
 
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
@@ -41,32 +38,35 @@ const handleClickSignIn = async () => {
     loginStore.setLoginInfo(profile);
 
     const setAccessTokenByServer = async () => {
-      const url = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
-      const args = { userEmail: profile.email };
-      const method = 'post';
+      const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
+      const argsCreate = { userEmail: profile.email };
+      const methodCreate = 'post';
 
-      LOG(ENV_MODE, url, JSON.stringify(args), method);
-
-      const responseCreate = await API(url, args, method);
-      LOG(ENV_MODE, JSON.stringify(responseCreate));
+      LOG(ENV_MODE, CONSTANT.REQ, methodCreate, urlCreate, JSON.stringify(argsCreate));
+      const responseCreate = await API(methodCreate, urlCreate, argsCreate);
+      LOG(ENV_MODE, CONSTANT.RES, methodCreate, urlCreate, JSON.stringify(responseCreate));
 
       // ---
 
-      const Authorization = 'Bearer ' + responseCreate.result.accessToken;
-      const responseVerify = await API(`${ENV_URL_BACKEND_AUTH}/auth/google/verify`, {}, method, {
-        Authorization,
-      });
-      LOG(ENV_MODE, JSON.stringify(responseVerify));
+      const authorization = CONSTANT.BEARER + responseCreate.result.accessToken;
+
+      const urlVerify = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
+      const argsVerify = {};
+      const methodVerify = 'post';
+      const headerVerify = { authorization };
+
+      LOG(ENV_MODE, CONSTANT.REQ, methodVerify, urlVerify, JSON.stringify(argsVerify));
+      const responseVerify = await API(methodVerify, urlVerify, argsVerify, headerVerify);
+      LOG(ENV_MODE, CONSTANT.RES, methodVerify, urlVerify, JSON.stringify(responseVerify));
 
       if (responseVerify.code === 200) {
-        loginStore.setAccessToken(Authorization);
+        loginStore.setAccessToken(authorization);
         loginStore.setRefreshToken(responseCreate.result.refreshToken);
-        loginStore.setRole(responseVerify.userGrade);
+        loginStore.setRole(responseVerify.result.userGrade);
       }
     };
-    setAccessTokenByServer();
 
-    LOG(ENV_MODE, 'Profile', JSON.stringify(profile));
+    await setAccessTokenByServer();
   } catch (error) {
     //on fail do something
     console.error(error);

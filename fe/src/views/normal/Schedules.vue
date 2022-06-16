@@ -11,8 +11,8 @@ import Paginate from 'vuejs-paginate-next';
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
+import CONSTANT from '@/mixin/constant';
 import { LOG } from '@/mixin/log.js';
-import { HAS_AUTH } from '@/mixin/auth.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -22,14 +22,12 @@ import swal from 'sweetalert2';
 
 // route
 const route = useRoute();
-const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
-const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // state
@@ -40,38 +38,17 @@ const state = reactive({
 
 let schedules = null;
 
-const getAuth = async () => {
-  // Auth
-  if (loginStore.isLogin) {
-    const urlAuth = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
-    const argsAuth = {};
-    const methodAuth = 'post';
-    const headerAuth = {
-      Authorization: loginStore.accessToken,
-    };
-
-    console.log('abc', loginStore.accessToken);
-
-    // const response = await API(urlAuth, argsAuth, methodAuth, headerAuth);
-    // LOG(ENV_MODE, JSON.stringify(response));
-  }
-};
-
 const getSchedules = async () => {
-  // TODO : sample
-  // schedules = sample;
-  // pagination.columns = schedules.columns;
-  // pagination.colspan = schedules.columns.length;
-  // pagination.oriList = schedules.dataList;
-
-  // TODO : sample
   const url = `${ENV_URL_BACKEND_HOME}/schedules`;
   const args = {};
   const method = 'get';
+  const header = {
+    Authorization: loginStore.accessToken,
+  };
 
   LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-  schedules = await API(url, args, method);
+  schedules = await API(method, url, args, header);
 
   if (schedules.code === MESSAGE.CODE_HTTP_STATUS_200) {
     LOG(ENV_MODE, schedules);
@@ -79,6 +56,22 @@ const getSchedules = async () => {
     pagination.columns = schedules.result.columns;
     pagination.colspan = schedules.result.columns.length;
     pagination.oriList = schedules.result.dataList;
+  } else if (schedules.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    LOG(ENV_MODE, schedules.code);
+
+    loginStore.setIsLogin(false);
+    loginStore.setLoginInfo(null);
+    loginStore.setRole(null);
+    loginStore.setAccessToken(null);
+    loginStore.setRefreshToken(null);
+
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+  } else {
+    LOG(ENV_MODE, schedules.code);
   }
 };
 
@@ -124,8 +117,6 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  getAuth();
-
   getSchedules();
 });
 </script>
