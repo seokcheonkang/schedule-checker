@@ -40,11 +40,10 @@ const handleClickSignIn = async () => {
     const setAccessTokenByServer = async () => {
       const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
       const argsCreate = { userEmail: profile.email };
-      const methodCreate = 'post';
 
-      LOG(ENV_MODE, CONSTANT.REQ, methodCreate, urlCreate, JSON.stringify(argsCreate));
-      const responseCreate = await API(methodCreate, urlCreate, argsCreate);
-      LOG(ENV_MODE, CONSTANT.RES, methodCreate, urlCreate, JSON.stringify(responseCreate));
+      LOG(ENV_MODE, CONSTANT.REQ, CONSTANT.POST, urlCreate, JSON.stringify(argsCreate));
+      const responseCreate = await API(CONSTANT.POST, urlCreate, argsCreate);
+      LOG(ENV_MODE, CONSTANT.RES, CONSTANT.POST, urlCreate, JSON.stringify(responseCreate));
 
       // ---
 
@@ -52,12 +51,11 @@ const handleClickSignIn = async () => {
 
       const urlVerify = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
       const argsVerify = {};
-      const methodVerify = 'post';
       const headerVerify = { authorization };
 
-      LOG(ENV_MODE, CONSTANT.REQ, methodVerify, urlVerify, JSON.stringify(argsVerify));
-      const responseVerify = await API(methodVerify, urlVerify, argsVerify, headerVerify);
-      LOG(ENV_MODE, CONSTANT.RES, methodVerify, urlVerify, JSON.stringify(responseVerify));
+      LOG(ENV_MODE, CONSTANT.REQ, CONSTANT.POST, urlVerify, JSON.stringify(argsVerify));
+      const responseVerify = await API(CONSTANT.POST, urlVerify, argsVerify, headerVerify);
+      LOG(ENV_MODE, CONSTANT.RES, CONSTANT.POST, urlVerify, JSON.stringify(responseVerify));
 
       if (responseVerify.code === 200) {
         loginStore.setAccessToken(authorization);
@@ -106,13 +104,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="google-btn" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
-    <div class="google-icon-wrapper">
-      <img class="google-icon" src="/assets/image/google-logo.svg" />
+  <div class="google-area">
+    <div class="google-btn" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
+      <div class="google-icon-wrapper">
+        <img class="google-icon" src="/assets/image/google-logo.svg" />
+      </div>
+      <p class="btn-text">
+        <b>구글로 계속하기</b>
+      </p>
     </div>
-    <p class="btn-text">
-      <b>구글로 계속하기</b>
-    </p>
   </div>
 </template>
 

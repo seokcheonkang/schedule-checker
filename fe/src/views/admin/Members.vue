@@ -77,14 +77,13 @@ const pagination = reactive({
 const getMembers = async () => {
   const url = `${ENV_URL_BACKEND_MEMBER}/members`;
   const args = {};
-  const method = 'get';
   const header = {
     Authorization: loginStore.accessToken,
   };
 
-  LOG(ENV_MODE, url, JSON.stringify(args), method);
+  LOG(ENV_MODE, CONSTANT.GET, url, JSON.stringify(args));
 
-  const response = await API(method, url, args, header);
+  const response = await API(CONSTANT.GET, url, args, header);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     LOG(ENV_MODE, JSON.stringify(response));

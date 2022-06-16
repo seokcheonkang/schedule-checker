@@ -42,14 +42,13 @@ let schedules = null;
 const getSchedules = async () => {
   const url = `${ENV_URL_BACKEND_HOME}/schedules`;
   const args = {};
-  const method = 'get';
   const header = {
     Authorization: loginStore.accessToken,
   };
 
-  LOG(ENV_MODE, url, JSON.stringify(args), method);
+  LOG(ENV_MODE, CONSTANT.GET, url, JSON.stringify(args));
 
-  schedules = await API(method, url, args, header);
+  schedules = await API(CONSTANT.GET, url, args, header);
 
   if (schedules.code === MESSAGE.CODE_HTTP_STATUS_200) {
     LOG(ENV_MODE, JSON.stringify(schedules));

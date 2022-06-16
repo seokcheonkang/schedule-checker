@@ -10,6 +10,7 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
+import CONSTANT from '@/mixin/constant';
 import { LOG } from '@/mixin/log.js';
 
 // env
@@ -31,11 +32,10 @@ onBeforeMount(() => {
 onMounted(async () => {
   const url = `${ENV_URL_BACKEND_HOME}/`;
   const args = {};
-  const method = 'get';
 
-  LOG(ENV_MODE, url, JSON.stringify(args), method);
+  LOG(ENV_MODE, CONSTANT.GET, url, JSON.stringify(args));
 
-  const data = await API(method, url, args);
+  const data = await API(CONSTANT.GET, url, args);
 
   if (data.code === 200) {
     LOG(ENV_MODE, JSON.stringify(data));
