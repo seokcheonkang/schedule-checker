@@ -22,6 +22,7 @@ import swal from 'sweetalert2';
 
 // route
 const route = useRoute();
+const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
@@ -56,9 +57,7 @@ const getSchedules = async () => {
     pagination.columns = schedules.result.columns;
     pagination.colspan = schedules.result.columns.length;
     pagination.oriList = schedules.result.dataList;
-  } else if (schedules.code === MESSAGE.CODE_HTTP_STATUS_419) {
-    LOG(ENV_MODE, schedules.code);
-
+  } else if (schedules.code === MESSAGE.CODE_ERR_BAD_REQUEST || schedules.code === MESSAGE.CODE_HTTP_STATUS_419) {
     loginStore.setIsLogin(false);
     loginStore.setLoginInfo(null);
     loginStore.setRole(null);
@@ -70,6 +69,8 @@ const getSchedules = async () => {
       title: '에러',
       text: MESSAGE.MESSAGE_HTTP_STATUS_419,
     });
+
+    router.push('/');
   } else {
     LOG(ENV_MODE, schedules.code);
   }

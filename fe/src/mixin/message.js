@@ -21,6 +21,8 @@ export default {
   MESSAGE_HTTP_STATUS_500: 'Internal Server Error',
   CODE_HTTP_STATUS_502: 502,
   MESSAGE_HTTP_STATUS_502: 'Bad Gateway',
+  CODE_ERR_BAD_REQUEST: 'ERR_BAD_REQUEST',
+  MESSAGE_ERR_BAD_REQUEST: 'Request failed with status code 419',
   CODE_ERR_BAD_RESPONSE: 'ERR_BAD_RESPONSE',
   MESSAGE_ERR_BAD_RESPONSE: 'Request failed with status code 500',
 };

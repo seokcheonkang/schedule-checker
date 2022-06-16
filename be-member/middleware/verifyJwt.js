@@ -18,6 +18,7 @@ const verifyJwt = (req, res, next) => {
     { url: `${process.env.BASE_URL_BACKEND_AUTH}/auth/google/verify`, headers: { authorization }, form: req.body },
     (err, httpResponse, body) => {
       LOG(body);
+
       const code = JSON.parse(body).code;
 
       if (err) {

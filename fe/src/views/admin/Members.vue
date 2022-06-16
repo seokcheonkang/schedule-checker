@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, computed } from 'vue';
+import { onBeforeMount, onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 // custom
@@ -16,6 +16,13 @@ import { LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
+
+// swal
+import swal from 'sweetalert2';
+
+// route
+const route = useRoute();
+const router = useRouter();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
@@ -85,10 +92,28 @@ const getMembers = async () => {
     pagination.columns = response.result.columns;
     pagination.colspan = response.result.columns.length;
     pagination.oriList = response.result.dataList;
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    loginStore.setIsLogin(false);
+    loginStore.setLoginInfo(null);
+    loginStore.setRole(null);
+    loginStore.setAccessToken(null);
+    loginStore.setRefreshToken(null);
+
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    router.push('/');
   } else {
     LOG(ENV_MODE, response.code);
   }
 };
+
+onBeforeMount(() => {
+  LOG(ENV_MODE, route.name);
+});
 
 onMounted(() => {
   getMembers();
