@@ -19,6 +19,7 @@ const ENV_MODE = import.meta.env.MODE;
 // route
 const route = useRoute();
 
+// store
 const loginStore = useLoginStore();
 
 onMounted(() => {

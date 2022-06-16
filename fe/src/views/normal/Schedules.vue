@@ -51,7 +51,7 @@ const getSchedules = async () => {
   schedules = await API(method, url, args, header);
 
   if (schedules.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOG(ENV_MODE, schedules);
+    LOG(ENV_MODE, JSON.stringify(schedules));
 
     pagination.columns = schedules.result.columns;
     pagination.colspan = schedules.result.columns.length;

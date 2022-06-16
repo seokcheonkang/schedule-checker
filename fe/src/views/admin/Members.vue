@@ -10,21 +10,16 @@ import Paginate from 'vuejs-paginate-next';
 
 // mixin
 import API from '@/mixin/api.js';
+import MESSAGE from '@/mixin/message';
+import CONSTANT from '@/mixin/constant';
 import { LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
 
-// swal
-import swal from 'sweetalert2';
-
 // env
 const ENV_MODE = import.meta.env.MODE;
 const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
-
-// route
-const route = useRoute();
-const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
@@ -84,8 +79,8 @@ const getMembers = async () => {
 
   const response = await API(method, url, args, header);
 
-  if (response.code === 200) {
-    LOG(ENV_MODE, response);
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    LOG(ENV_MODE, JSON.stringify(response));
 
     pagination.columns = response.result.columns;
     pagination.colspan = response.result.columns.length;

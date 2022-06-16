@@ -19,8 +19,7 @@ router.get('/', verifyJwt, (req, res) => {
 
   const response = { code: 200, message: '조회 성공', result };
 
-  // TODO
-  // LOG(JSON.stringify(response));
+  LOG(JSON.stringify(response));
 
   res.status(200).json(response);
 });
