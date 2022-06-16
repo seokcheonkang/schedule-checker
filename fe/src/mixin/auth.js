@@ -1,5 +1,10 @@
+import { useRouter } from 'vue-router';
+
 // store
 import { useLoginStore } from '@/store/login.js';
+
+// route
+const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
@@ -9,6 +14,10 @@ const HAS_AUTH = () => {
 
   if (loginStore.isLogin) {
     return true;
+  }
+
+  if (!loginStore.isLogin) {
+    router.push('/');
   }
 
   return false;

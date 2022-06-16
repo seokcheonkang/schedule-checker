@@ -8,11 +8,9 @@ import { LOG } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
-import { useJwtStore } from '@/store/jwt.js';
 
 // store
 const loginStore = useLoginStore();
-const jwtStore = useJwtStore();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
@@ -49,18 +47,22 @@ const handleClickSignIn = async () => {
 
       LOG(ENV_MODE, url, JSON.stringify(args), method);
 
-      const response = await API(url, args, method);
-      LOG(ENV_MODE, JSON.stringify(response));
+      const responseCreate = await API(url, args, method);
+      LOG(ENV_MODE, JSON.stringify(responseCreate));
 
       // ---
 
-      const Authorization = 'Bearer ' + response.result.accessToken;
-      const response2 = await API(`${ENV_URL_BACKEND_AUTH}/auth/google/verify`, {}, method, {
+      const Authorization = 'Bearer ' + responseCreate.result.accessToken;
+      const responseVerify = await API(`${ENV_URL_BACKEND_AUTH}/auth/google/verify`, {}, method, {
         Authorization,
       });
-      LOG(ENV_MODE, JSON.stringify(response2));
+      LOG(ENV_MODE, JSON.stringify(responseVerify));
 
-      jwtStore.setAccessToken(Authorization);
+      if (responseVerify.code === 200) {
+        loginStore.setAccessToken(Authorization);
+        loginStore.setRefreshToken(responseCreate.result.refreshToken);
+        loginStore.setRole(responseVerify.userGrade);
+      }
     };
     setAccessTokenByServer();
 
@@ -99,7 +101,7 @@ const handleClickDisconnect = () => {
 };
 
 onMounted(() => {
-  LOG(ENV_MODE, route.name);
+  LOG(ENV_MODE, 'GoogleLogin');
 });
 </script>
 

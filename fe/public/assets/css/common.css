@@ -1,14 +1,4 @@
-.chkWithText {
-  position: relative;
-  top: 0.0625rem !important;
-  margin-right: 0.25rem !important;
-  cursor: pointer;
-}
-
-.btn__td {
-  color: #212529;
-  text-decoration: none;
-}
+/* all */
 
 .dpin {
   display: inline !important;
@@ -60,6 +50,20 @@
 
 .w-90 {
   width: 90% !important;
+}
+
+/* individual */
+
+.chkWithText {
+  position: relative;
+  top: 0.0625rem !important;
+  margin-right: 0.25rem !important;
+  cursor: pointer;
+}
+
+.btn-td {
+  color: #212529;
+  text-decoration: none;
 }
 
 .p-center-child {

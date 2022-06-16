@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, computed } from 'vue';
+import { onBeforeMount, onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 // custom
@@ -16,7 +16,6 @@ import { HAS_AUTH } from '@/mixin/auth.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
-import { useJwtStore } from '@/store/jwt.js';
 
 // swal
 import swal from 'sweetalert2';
@@ -27,7 +26,6 @@ const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
-const jwtStore = useJwtStore();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
@@ -40,16 +38,6 @@ const state = reactive({
   searchValue: '',
 });
 
-if (!HAS_AUTH()) {
-  router.push('/');
-
-  swal.fire({
-    title: '권한 없음',
-    text: '해당 메뉴를 접근할 권한이 없습니다.',
-    confirmButtonText: '확인',
-  });
-}
-
 let schedules = null;
 
 const getAuth = async () => {
@@ -59,10 +47,10 @@ const getAuth = async () => {
     const argsAuth = {};
     const methodAuth = 'post';
     const headerAuth = {
-      Authorization: jwtStore.accessToken,
+      Authorization: loginStore.accessToken,
     };
 
-    console.log('abc', jwtStore.accessToken);
+    console.log('abc', loginStore.accessToken);
 
     // const response = await API(urlAuth, argsAuth, methodAuth, headerAuth);
     // LOG(ENV_MODE, JSON.stringify(response));
@@ -131,9 +119,11 @@ const pagination = reactive({
   },
 });
 
-onMounted(() => {
+onBeforeMount(() => {
   LOG(ENV_MODE, route.name);
+});
 
+onMounted(() => {
   getAuth();
 
   getSchedules();

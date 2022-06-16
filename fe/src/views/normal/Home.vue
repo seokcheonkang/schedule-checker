@@ -2,17 +2,7 @@
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
-import {
-  onBeforeMount,
-  onMounted,
-  onBeforeUpdate,
-  onUpdated,
-  onBeforeUnmount,
-  onUnmounted,
-  onErrorCaptured,
-  onRenderTracked,
-  onRenderTriggered,
-} from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -35,11 +25,10 @@ const state = reactive({
 });
 
 onBeforeMount(() => {
-  // LOG(ENV_MODE, 'onBeforeMount');
-});
-onMounted(async () => {
   LOG(ENV_MODE, route.name);
+});
 
+onMounted(async () => {
   const url = `${ENV_URL_BACKEND_HOME}/`;
   const args = {};
   const method = 'get';
@@ -57,27 +46,6 @@ onMounted(async () => {
     state.msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
     state.msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;
   }
-});
-onBeforeUpdate(() => {
-  // LOG(ENV_MODE, 'onBeforeUpdate');
-});
-onUpdated(() => {
-  // LOG(ENV_MODE, 'onUpdated');
-});
-onBeforeUnmount(() => {
-  // LOG(ENV_MODE, 'onBeforeUnmount');
-});
-onUnmounted(() => {
-  // LOG(ENV_MODE, 'onUnmounted');
-});
-onErrorCaptured(() => {
-  // LOG(ENV_MODE, 'onErrorCaptured');
-});
-onRenderTracked(() => {
-  // LOG(ENV_MODE, 'onRenderTracked');
-});
-onRenderTriggered(() => {
-  // LOG(ENV_MODE, 'onRenderTriggered');
 });
 </script>
 
