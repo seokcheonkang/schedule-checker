@@ -1,6 +1,5 @@
 <script setup>
-import { inject } from 'vue';
-import GoogleLogin from '../views/normal/GoogleLogin.vue';
+import { reactive, inject } from 'vue';
 
 // mixin
 import { LOG } from '@/mixin/log.js';
@@ -47,10 +46,14 @@ const logout = () => {
     });
 };
 
-let profileImageUrl = $ref('http://picsum.photos/20');
+// state
+const state = reactive({
+  profileImageUrl: 'http://picsum.photos/20',
+});
+
 const setProfileImage = () => {
   if (loginStore.isLogin) {
-    profileImageUrl = loginStore.loginInfo.imageUrl;
+    state.profileImageUrl = loginStore.loginInfo.imageUrl;
   }
 };
 setProfileImage();
@@ -75,10 +78,10 @@ setProfileImage();
         </button>
         <div class="navbar-collapse collapse show" id="navBarsMobile">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <li class="nav-item" v-if="loginStore.isLogin">
               <router-link class="nav-link" aria-current="page" to="/schedules">스케줄</router-link>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" v-if="loginStore.isLogin">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -106,7 +109,7 @@ setProfileImage();
                 >
                   <img
                     id="profile_img"
-                    :src="profileImageUrl"
+                    :src="state.profileImageUrl"
                     class="rounded-circle profile-image"
                     alt="사용자 이미지"
                     referrerpolicy="no-referrer"
@@ -124,8 +127,7 @@ setProfileImage();
             </ul>
           </div>
           <div class="d-flex" v-if="!loginStore.isLogin">
-            <!-- <router-link class="btn btn-outline-light" id="btnLogin" to="/login">JWT 로그인</router-link> -->
-            <GoogleLogin />
+            <router-link class="btn btn-outline-light" id="btnLogin" to="/login">로그인</router-link>
           </div>
         </div>
       </div>

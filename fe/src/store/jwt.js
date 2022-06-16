@@ -23,6 +23,6 @@ export const useJwtStore = defineStore({
     },
   },
   persist: {
-    enabled: false, // It keeps you logged in even after updating your web browser.
+    enabled: true, // It keeps you logged in even after updating your web browser.
   },
 });

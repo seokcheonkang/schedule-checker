@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
@@ -18,17 +18,15 @@ const ENV_MODE = import.meta.env.MODE;
 // route
 const route = useRoute();
 
-onMounted(() => {
-  LOG(ENV_MODE, route.name);
-});
-
-let errors = $ref([]);
-
-const form = $ref({
-  userName: '',
-  userEmail: '',
-  userPassword: '',
-  userPasswordConfirm: '',
+// state
+const state = reactive({
+  errors: [],
+  form: {
+    userName: '',
+    userEmail: '',
+    userPassword: '',
+    userPasswordConfirm: '',
+  },
 });
 
 const validation = {
@@ -37,12 +35,12 @@ const validation = {
 
     if (!name) {
       isValidate = false;
-      errors.push('이름은 반드시 입력해야 합니다.');
+      state.errors.push('이름은 반드시 입력해야 합니다.');
     }
 
     if (name.length > limitLength) {
       isValidate = false;
-      errors.push(`이름은 ${limitLength} 글자로 제한됩니다.`);
+      state.errors.push(`이름은 ${limitLength} 글자로 제한됩니다.`);
     }
 
     return isValidate;
@@ -55,12 +53,12 @@ const validation = {
 
     if (!regEx.test(email)) {
       isValidate = false;
-      errors.push('이메일 형식이 맞지 않습니다.');
+      state.errors.push('이메일 형식이 맞지 않습니다.');
     }
 
     if (email.length > limitLength) {
       isValidate = false;
-      errors.push(`이메일은 ${limitLength} 글자로 제한됩니다.`);
+      state.errors.push(`이메일은 ${limitLength} 글자로 제한됩니다.`);
     }
 
     return isValidate;
@@ -75,32 +73,32 @@ const validation = {
 
     if (!regEx.test(password)) {
       isValidate = false;
-      errors.push(
+      state.errors.push(
         `비밀번호는 최소 ${minLength}자, 최대 ${maxLength}자 그리고 하나 이상의 대문자, 소문자, 숫자, 특수 문자를 반드시 입력해야 합니다.`
       );
     }
 
     if (password !== passwordConfirm) {
       isValidate = false;
-      errors.push('비밀번호와 비밀번호 확인의 값은 반드시 서로 같아야 합니다.');
+      state.errors.push('비밀번호와 비밀번호 확인의 값은 반드시 서로 같아야 합니다.');
     }
 
     return isValidate;
   },
   validateAll: () => {
-    errors = [];
+    state.errors = [];
 
     const limitLength = 30;
 
-    if (!validation.validateUserName(limitLength, form.userName)) {
+    if (!validation.validateUserName(limitLength, state.form.userName)) {
       return;
     }
 
-    if (!validation.validateUserEmail(limitLength, form.userEmail)) {
+    if (!validation.validateUserEmail(limitLength, state.form.userEmail)) {
       return;
     }
 
-    if (!validation.validateUserPassword(limitLength + 20, form.userPassword, form.userPasswordConfirm)) {
+    if (!validation.validateUserPassword(limitLength + 20, state.form.userPassword, state.form.userPasswordConfirm)) {
       return;
     }
   },
@@ -109,7 +107,7 @@ const validation = {
 const submitForm = (paramForParent) => {
   validation.validateAll();
 
-  if (errors.length === 0) {
+  if (state.errors.length === 0) {
     const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
 
     swal
@@ -128,6 +126,10 @@ const submitForm = (paramForParent) => {
       });
   }
 };
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+});
 </script>
 
 <template>
@@ -137,13 +139,13 @@ const submitForm = (paramForParent) => {
       <div class="col-md-10 mx-auto col-lg-10">
         <form class="p-4 p-md-4 border rounded-3 bg-light" @input="validation.validateAll">
           <h4 class="mb-3">회원 가입</h4>
-          <div v-if="errors.length">
+          <div v-if="state.errors.length">
             <ul class="errorMessage">
-              <li v-for="error in errors">{{ error }}</li>
+              <li v-for="error in state.errors">{{ error }}</li>
             </ul>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="form.userName" />
+            <input type="text" class="form-control" id="userName" placeholder="홍길동" v-model="state.form.userName" />
             <label for="userName">이름</label>
           </div>
           <div class="form-floating mb-3">
@@ -151,7 +153,7 @@ const submitForm = (paramForParent) => {
               type="email"
               class="form-control"
               id="userEmail"
-              v-model="form.userEmail"
+              v-model="state.form.userEmail"
               placeholder="you@example.com"
             />
             <label for="userEmail">이메일</label>
@@ -161,7 +163,7 @@ const submitForm = (paramForParent) => {
               type="password"
               class="form-control"
               id="userPassword"
-              v-model="form.userPassword"
+              v-model="state.form.userPassword"
               placeholder="Password"
             />
             <label for="userPassword">비밀번호</label>
@@ -171,7 +173,7 @@ const submitForm = (paramForParent) => {
               type="password"
               class="form-control"
               id="userPasswordConfirm"
-              v-model="form.userPasswordConfirm"
+              v-model="state.form.userPasswordConfirm"
               placeholder="Password"
             />
             <label for="userPasswordConfirm">비밀번호 확인</label>

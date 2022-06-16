@@ -18,10 +18,6 @@ const ENV_MODE = import.meta.env.MODE;
 // route
 const route = useRoute();
 
-onMounted(() => {
-  LOG(ENV_MODE, route.name);
-});
-
 const leave = (paramForParent) => {
   const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
 
@@ -40,6 +36,10 @@ const leave = (paramForParent) => {
       }
     });
 };
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+});
 </script>
 
 <template>

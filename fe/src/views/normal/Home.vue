@@ -1,4 +1,5 @@
 <script setup>
+import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 import {
@@ -28,7 +29,10 @@ const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 // route
 const route = useRoute();
 
-const msg = $ref({});
+// state
+const state = reactive({
+  msg: {},
+});
 
 onBeforeMount(() => {
   // LOG(ENV_MODE, 'onBeforeMount');
@@ -47,11 +51,11 @@ onMounted(async () => {
   if (data.code === 200) {
     LOG(ENV_MODE, JSON.stringify(data));
 
-    msg.userAgent = data.result.userAgent;
-    msg.hostname = data.result.hostname;
+    state.msg.userAgent = data.result.userAgent;
+    state.msg.hostname = data.result.hostname;
   } else {
-    msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
-    msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;
+    state.msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
+    state.msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;
   }
 });
 onBeforeUpdate(() => {
@@ -81,10 +85,10 @@ onRenderTriggered(() => {
   <CustomPageHeader text="홈" />
   <h5 class="">
     <span>User-Agent : </span>
-    <span> {{ msg.userAgent }}</span>
+    <span> {{ state.msg.userAgent }}</span>
   </h5>
   <h5 class="">
     <span>hostname : </span>
-    <span>{{ msg.hostname }} </span>
+    <span>{{ state.msg.hostname }} </span>
   </h5>
 </template>

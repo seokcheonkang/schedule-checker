@@ -24,10 +24,6 @@ const route = useRoute();
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
 
-onMounted(() => {
-  LOG(ENV_MODE, route.name);
-});
-
 const handleClickSignIn = async () => {
   try {
     const googleUser = await Vue3GoogleOauth.instance.signIn();
@@ -56,7 +52,15 @@ const handleClickSignIn = async () => {
       const response = await API(url, args, method);
       LOG(ENV_MODE, JSON.stringify(response));
 
-      jwtStore.setAccessToken(response.result.accessToken);
+      // ---
+
+      const Authorization = 'Bearer ' + response.result.accessToken;
+      const response2 = await API(`${ENV_URL_BACKEND_AUTH}/auth/google/verify`, {}, method, {
+        Authorization,
+      });
+      LOG(ENV_MODE, JSON.stringify(response2));
+
+      jwtStore.setAccessToken(Authorization);
     };
     setAccessTokenByServer();
 
@@ -93,15 +97,19 @@ const handleClickSignOut = async () => {
 const handleClickDisconnect = () => {
   window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`;
 };
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+});
 </script>
 
 <template>
-  <div class="google-btn" aria-current="page" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
+  <div class="google-btn" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
     <div class="google-icon-wrapper">
-      <img class="google-icon" src="../../../public/google-logo.svg" />
+      <img class="google-icon" src="/google-logo.svg" />
     </div>
     <p class="btn-text">
-      <b>구글 로그인</b>
+      <b>구글로 계속하기</b>
     </p>
   </div>
 </template>

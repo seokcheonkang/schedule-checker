@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, reactive, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -9,46 +10,35 @@ import Paginate from 'vuejs-paginate-next';
 
 // mixin
 import API from '@/mixin/api.js';
-import MESSAGE from '@/mixin/message';
 import { LOG } from '@/mixin/log.js';
+import { HAS_AUTH } from '@/mixin/auth.js';
+
+// swal
+import swal from 'sweetalert2';
 
 // env
 const ENV_MODE = import.meta.env.MODE;
 const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
-// TODO : sample
-// import members from '@/sampleData/members.json';
+// route
+const route = useRoute();
+const router = useRouter();
 
-// search
-const searchKey = $ref('');
-const searchValue = $ref('');
-
-let members = null;
-
-// life cycle
-onMounted(async () => {
-  // TODO : sample
-  // pagination.columns = members.columns;
-  // pagination.colspan = members.columns.length;
-  // pagination.oriList = members.dataList;
-
-  // TODO : sample
-  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
-  const args = {};
-  const method = 'get';
-
-  LOG(ENV_MODE, url, JSON.stringify(args), method);
-
-  const members = await API(url, args, method);
-
-  if (members.code === 200) {
-    LOG(ENV_MODE, members);
-
-    pagination.columns = members.result.columns;
-    pagination.colspan = members.result.columns.length;
-    pagination.oriList = members.result.dataList;
-  }
+// state
+const state = reactive({
+  searchKey: '',
+  searchValue: '',
 });
+
+if (!HAS_AUTH()) {
+  router.push('/');
+
+  swal.fire({
+    title: '권한 없음',
+    text: '해당 메뉴를 접근할 권한이 없습니다.',
+    confirmButtonText: '확인',
+  });
+}
 
 // list for pagination
 const pagination = reactive({
@@ -65,8 +55,8 @@ const pagination = reactive({
     pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
   },
   getSearchList: () => {
-    const key = searchKey;
-    const val = searchValue?.toLowerCase();
+    const key = state.searchKey;
+    const val = state.searchValue?.toLowerCase();
     if (key && val) {
       pagination.curPage = 1;
       pagination.list = pagination.oriList.filter((item) => {
@@ -86,12 +76,40 @@ const pagination = reactive({
     );
   },
 });
+
+const getMembers = async () => {
+  // TODO : sample
+  // pagination.columns = response.columns;
+  // pagination.colspan = response.columns.length;
+  // pagination.oriList = response.dataList;
+
+  // TODO : sample
+  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
+  const args = {};
+  const method = 'get';
+
+  LOG(ENV_MODE, url, JSON.stringify(args), method);
+
+  const response = await API(url, args, method);
+
+  if (response.code === 200) {
+    LOG(ENV_MODE, response);
+
+    pagination.columns = response.result.columns;
+    pagination.colspan = response.result.columns.length;
+    pagination.oriList = response.result.dataList;
+  }
+};
+
+onMounted(() => {
+  getMembers();
+});
 </script>
 
 <template>
   <CustomPageHeader text="회원 목록" />
-  <form class="d-flex justify-content-center my-3">
-    <select class="form-select me-2 w-20" aria-label="searchOption" v-model="searchKey">
+  <form class="d-flex justify-content-center my-3" @submit.prevent>
+    <select class="form-select me-2 w-20" aria-label="searchOption" v-model="state.searchKey">
       <option value="">선택</option>
       <option :value="column.key" v-for="column in pagination.columns">
         {{ column.val }}
@@ -102,7 +120,7 @@ const pagination = reactive({
       type="search"
       placeholder="검색어"
       aria-label="검색"
-      v-model="searchValue"
+      v-model="state.searchValue"
       @input="pagination.getSearchList"
     />
   </form>

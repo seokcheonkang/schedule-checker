@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, reactive, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -12,27 +12,64 @@ import Paginate from 'vuejs-paginate-next';
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import { LOG } from '@/mixin/log.js';
+import { HAS_AUTH } from '@/mixin/auth.js';
+
+// store
+import { useLoginStore } from '@/store/login.js';
+import { useJwtStore } from '@/store/jwt.js';
+
+// swal
+import swal from 'sweetalert2';
 
 // route
 const route = useRoute();
+const router = useRouter();
+
+// store
+const loginStore = useLoginStore();
+const jwtStore = useJwtStore();
 
 // env
 const ENV_MODE = import.meta.env.MODE;
+const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
-// TODO : sample
-// import sample from '@/sampleData/schedules.json';
+// state
+const state = reactive({
+  searchKey: '',
+  searchValue: '',
+});
 
-// search
-const searchKey = $ref('');
-const searchValue = $ref('');
+if (!HAS_AUTH()) {
+  router.push('/');
+
+  swal.fire({
+    title: '권한 없음',
+    text: '해당 메뉴를 접근할 권한이 없습니다.',
+    confirmButtonText: '확인',
+  });
+}
 
 let schedules = null;
 
-// life cycle
-onMounted(async () => {
-  LOG(ENV_MODE, route.name);
+const getAuth = async () => {
+  // Auth
+  if (loginStore.isLogin) {
+    const urlAuth = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
+    const argsAuth = {};
+    const methodAuth = 'post';
+    const headerAuth = {
+      Authorization: jwtStore.accessToken,
+    };
 
+    console.log('abc', jwtStore.accessToken);
+
+    // const response = await API(urlAuth, argsAuth, methodAuth, headerAuth);
+    // LOG(ENV_MODE, JSON.stringify(response));
+  }
+};
+
+const getSchedules = async () => {
   // TODO : sample
   // schedules = sample;
   // pagination.columns = schedules.columns;
@@ -55,7 +92,7 @@ onMounted(async () => {
     pagination.colspan = schedules.result.columns.length;
     pagination.oriList = schedules.result.dataList;
   }
-});
+};
 
 // list for pagination
 const pagination = reactive({
@@ -72,8 +109,8 @@ const pagination = reactive({
     pagination.pageCnt = Math.ceil(pagination?.list?.length / pagination.perPage);
   },
   getSearchList: () => {
-    const key = searchKey;
-    const val = searchValue;
+    const key = state.searchKey;
+    const val = state.searchValue;
     if (key && val) {
       pagination.curPage = 1;
       pagination.list = pagination.oriList.filter((item) => {
@@ -93,12 +130,20 @@ const pagination = reactive({
     );
   },
 });
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+
+  getAuth();
+
+  getSchedules();
+});
 </script>
 
 <template>
   <CustomPageHeader :text="route.name" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
-    <select class="form-select me-2 w-20" aria-label="searchOption" v-model="searchKey">
+    <select class="form-select me-2 w-20" aria-label="searchOption" v-model="state.searchKey">
       <option value="">선택</option>
       <option :value="column.key" v-for="column in pagination.columns">
         {{ column.val }}
@@ -109,7 +154,7 @@ const pagination = reactive({
       type="search"
       placeholder="검색어"
       aria-label="검색"
-      v-model="searchValue"
+      v-model="state.searchValue"
       @input="pagination.getSearchList"
     />
   </form>

@@ -19,10 +19,6 @@ const ENV_MODE = import.meta.env.MODE;
 const route = useRoute();
 const seq = Number(route.params.seq); // 전달받은 파라미터
 
-onMounted(() => {
-  LOG(ENV_MODE, route.name);
-});
-
 // Server Data
 const item = {
   seq: 201,
@@ -43,6 +39,10 @@ const confirm = (paramForParent) => {
     footer,
   });
 };
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
+});
 </script>
 
 <template>

@@ -2,6 +2,8 @@
 import { onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+import GoogleLogin from './GoogleLogin.vue';
+
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
@@ -26,49 +28,50 @@ const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 const route = useRoute();
 const router = useRouter();
 
-onMounted(() => {
-  LOG(ENV_MODE, route.name);
-});
-
 const loginStore = useLoginStore();
 const jwtStore = useJwtStore();
 
-const state = reactive({
-  form: {
-    userEmail: '',
-    userPassword: '',
-  },
+// state
+// const state = reactive({
+//   form: {
+//     userEmail: '',
+//     userPassword: '',
+//   },
+// });
+
+// const login = async () => {
+//   const url = `${ENV_URL_BACKEND_AUTH}/jwt/create`;
+//   const args = {
+//     userEmail: state.form.userEmail,
+//     userPassword: state.form.userPassword,
+//   };
+//   const method = 'post';
+
+//   LOG(ENV_MODE, url, JSON.stringify(args), method);
+
+//   const tokens = await API(url, args, method);
+
+//   if (tokens.code === MESSAGE.CODE_HTTP_STATUS_200) {
+//     LOG(ENV_MODE, tokens);
+
+//     const {
+//       result: { accessToken },
+//     } = tokens; // const accessToken = tokens.result.accessToken;
+//     jwtStore.setAccessToken(accessToken);
+//     loginStore.setIsLogin(true);
+//     router.push({ path: '/' });
+//   } else {
+//     swal.fire({
+//       title: '로그인 실패',
+//       text: '아이디와 비밀번호를 다시 확인해주세요.',
+//       confirmButtonText: '확인',
+//     });
+//   }
+// };
+
+onMounted(() => {
+  LOG(ENV_MODE, route.name);
 });
-
-const login = async () => {
-  const url = `${ENV_URL_BACKEND_AUTH}/jwt/create`;
-  const args = {
-    userEmail: state.form.userEmail,
-    userPassword: state.form.userPassword,
-  };
-  const method = 'post';
-
-  LOG(ENV_MODE, url, JSON.stringify(args), method);
-
-  const tokens = await API(url, args, method);
-
-  if (tokens.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOG(ENV_MODE, tokens);
-
-    const {
-      result: { accessToken },
-    } = tokens; // const accessToken = tokens.result.accessToken;
-    jwtStore.setAccessToken(accessToken);
-    loginStore.setIsLogin(true);
-    router.push({ path: '/' });
-  } else {
-    swal.fire({
-      title: '로그인 실패',
-      text: '아이디와 비밀번호를 다시 확인해주세요.',
-      confirmButtonText: '확인',
-    });
-  }
-};
 </script>
 
 <template>
@@ -77,6 +80,7 @@ const login = async () => {
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
         <form class="p-4 p-md-4 border rounded-3 bg-light">
+          <!-- 
           <h4 class="mb-3">로그인</h4>
           <div class="form-floating mb-3">
             <input
@@ -98,19 +102,22 @@ const login = async () => {
               placeholder="Password"
             />
             <label for="userPassword">비밀번호</label>
+          </div> -->
+          <!-- <CustomActionButton text="로그인" @click="login" /> -->
+          <div v-if="!loginStore.isLogin">
+            <GoogleLogin />
+            <hr class="my-4" />
           </div>
-          <CustomActionButton text="로그인" @click="login" />
-          <hr class="my-4" />
           <div class="mb-1">
             <small class="text-muted"
               >아이디나 비밀번호를 잃어버리셨나요? <router-link to="/find" class="text-reset">찾기</router-link></small
             >
           </div>
-          <div class="mb-1">
+          <!-- <div class="mb-1">
             <small class="text-muted"
               >계정이 없으신가요? <router-link to="/join" class="text-reset">가입</router-link></small
             >
-          </div>
+          </div> -->
         </form>
       </div>
     </div>

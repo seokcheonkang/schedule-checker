@@ -1,15 +1,20 @@
-const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 
 require('dotenv').config();
+
+// ---
+
+const LOG = require('../middleware/log');
+
+// ---
 
 const MIDDLEWARE_PATH = '../middleware';
 const SERVICE_PATH = '../service';
 const { generateToken, verifyToken } = require(`${MIDDLEWARE_PATH}/jwt.js`);
 const { getMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
 
-const LOG = require('../middleware/log');
+// ---
 
 router.post('/create', (req, res) => {
   LOG(req.originalUrl);
