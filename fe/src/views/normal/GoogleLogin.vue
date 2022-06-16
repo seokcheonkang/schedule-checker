@@ -104,7 +104,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="google-area">
+  <div class="google-area-wrapper">
     <div class="google-btn" @click="handleClickSignIn" v-if="Vue3GoogleOauth.isInit">
       <div class="google-icon-wrapper">
         <img class="google-icon" src="/assets/image/google-logo.svg" />

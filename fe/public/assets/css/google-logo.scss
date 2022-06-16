@@ -2,7 +2,7 @@ $white: #fff;
 $google-blue: #4285f4;
 $button-active-blue: #1669f2;
 
-.google-area {
+.google-area-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +43,7 @@ $button-active-blue: #1669f2;
 }
 
 @media (min-width: 300px) {
-  .google-area {
+  .google-area-wrapper {
     .google-btn {
       cursor: pointer;
       width: 100%;
