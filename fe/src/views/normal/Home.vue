@@ -47,7 +47,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h5 class="mt-2" style="text-align: center">
+  <h5 class="tac">
     <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="800" height="200" />
   </h5>
   <hr />
