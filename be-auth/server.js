@@ -2,17 +2,9 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 
-const passport = require('passport');
-const session = require('express-session');
-
 // --
 const app = express();
 app.use(express.json());
-
-// Passport setting
-app.use(session({ secret: 'MySecret', resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // --
 const CONTROLLER_PATH = './controller';

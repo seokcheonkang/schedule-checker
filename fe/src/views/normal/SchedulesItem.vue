@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
@@ -16,7 +16,7 @@ import swal from 'sweetalert2';
 const route = useRoute();
 const seq = Number(route.params.seq); // 전달받은 파라미터
 
-// Server Data
+// TODO : Server Data
 const item = {
   seq: 201,
   title: '테스트201',
@@ -37,9 +37,11 @@ const confirm = (paramForParent) => {
   });
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   LOGD(route.name);
 });
+
+onMounted(() => {});
 </script>
 
 <template>

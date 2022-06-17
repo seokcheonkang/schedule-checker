@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
@@ -9,10 +9,17 @@ import CustomActionButton from '@/components/CustomActionButton.vue';
 import MemberGrade from '@/sampleData/memberGrade.json';
 import MemberRegisterStatus from '@/sampleData/MemberRegisterStatus.json';
 
+// mixin
+import { LOG, LOGD } from '@/mixin/log.js';
+
 // swal
 import swal from 'sweetalert2';
 
-// Server Data
+// route
+const route = useRoute();
+const seq = Number(route.params.seq); // 전달받은 파라미터
+
+// TODO : Server Data
 const item = {
   seq: 2,
   userEmail: 'yunbeom.kim@bespinglobal.com',
@@ -22,10 +29,6 @@ const item = {
   registerDate: '2022-05-03 23:59:59',
   registerStatus: '2',
 };
-
-// route
-const route = useRoute();
-const seq = Number(route.params.seq); // 전달받은 파라미터
 
 const confirm = (paramForParent) => {
   const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
@@ -38,13 +41,21 @@ const confirm = (paramForParent) => {
       denyButtonText,
     })
     .then((result) => {
+      let resultMessage = resultMessageN;
+      let confirmText = 'info';
+
       if (result.isConfirmed) {
-        swal.fire(resultMessageY, '', 'success');
-      } else if (result.isDenied) {
-        swal.fire(resultMessageN, '', 'info');
+        resultMessage = resultMessageY;
+        confirmText = 'success';
       }
+
+      swal.fire(resultMessage, '', confirmText);
     });
 };
+
+onBeforeMount(() => {
+  LOGD(route.name);
+});
 
 onMounted(() => {});
 </script>

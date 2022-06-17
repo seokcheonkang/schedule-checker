@@ -1,7 +1,4 @@
 <script setup>
-import { reactive } from 'vue';
-import { useRoute } from 'vue-router';
-
 import {
   onBeforeMount,
   onMounted,
@@ -13,6 +10,7 @@ import {
   onRenderTracked,
   onRenderTriggered,
 } from 'vue';
+import { useRoute } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';

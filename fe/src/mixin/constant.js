@@ -1,6 +1,6 @@
 export default {
-  REQ: 'Request',
-  RES: 'Response',
+  REQ: 'REQ',
+  RES: 'RES',
   BEARER: 'Bearer ',
   GET: 'GET',
   POST: 'POST',

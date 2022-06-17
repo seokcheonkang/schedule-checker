@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
@@ -15,9 +15,11 @@ const ENV_MODE = import.meta.env.MODE;
 // route
 const route = useRoute();
 
-onMounted(() => {
+onBeforeMount(() => {
   LOGD(route.name);
 });
+
+onMounted(() => {});
 </script>
 
 <template>

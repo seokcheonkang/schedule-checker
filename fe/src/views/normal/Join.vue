@@ -115,11 +115,15 @@ const submitForm = (paramForParent) => {
         denyButtonText,
       })
       .then((result) => {
+        let resultMessage = resultMessageN;
+        let confirmText = 'info';
+
         if (result.isConfirmed) {
-          swal.fire(resultMessageY, '', 'success');
-        } else if (result.isDenied) {
-          swal.fire(resultMessageN, '', 'info');
+          resultMessage = resultMessageY;
+          confirmText = 'success';
         }
+
+        swal.fire(resultMessage, '', confirmText);
       });
   }
 };

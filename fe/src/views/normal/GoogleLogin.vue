@@ -1,22 +1,68 @@
 <script setup>
-import { onMounted, inject } from 'vue';
+import { onBeforeMount, onMounted, inject } from 'vue';
+import { useRoute } from 'vue-router';
 
 // mixin
 import API from '@/mixin/api.js';
+import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
+import router from '../../router';
 
-// store
-const loginStore = useLoginStore();
+// swal
+import swal from 'sweetalert2';
 
 // env
 const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 
+// route
+const route = useRoute();
+
+// store
+const loginStore = useLoginStore();
+
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
+
+const createToken = async (userEmail) => {
+  const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
+  const argsCreate = { userEmail };
+
+  LOGD(CONSTANT.REQ, CONSTANT.POST, urlCreate, JSON.stringify(argsCreate));
+  const responseCreate = await API(CONSTANT.POST, urlCreate, argsCreate);
+  LOGD(CONSTANT.RES, CONSTANT.POST, urlCreate, JSON.stringify(responseCreate));
+
+  return responseCreate;
+};
+
+const verifyToken = async (responseCreateToken) => {
+  const authorization = CONSTANT.BEARER + responseCreateToken.result.accessToken;
+
+  const urlVerify = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
+  const argsVerify = {};
+  const headerVerify = { authorization };
+
+  LOGD(CONSTANT.REQ, CONSTANT.POST, urlVerify, JSON.stringify(argsVerify));
+  const responseVerify = await API(CONSTANT.POST, urlVerify, argsVerify, headerVerify);
+  LOGD(CONSTANT.RES, CONSTANT.POST, urlVerify, JSON.stringify(responseVerify));
+
+  if (responseVerify.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    loginStore.setAccessToken(authorization);
+    loginStore.setRefreshToken(responseCreateToken.result.refreshToken);
+    loginStore.setRole(responseVerify.result.userGrade);
+
+    router.push('/');
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+  }
+};
 
 const handleClickSignIn = async () => {
   try {
@@ -36,34 +82,8 @@ const handleClickSignIn = async () => {
     loginStore.setIsLogin(true);
     loginStore.setLoginInfo(profile);
 
-    const setAccessTokenByServer = async () => {
-      const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
-      const argsCreate = { userEmail: profile.email };
-
-      LOGD(CONSTANT.REQ, CONSTANT.POST, urlCreate, JSON.stringify(argsCreate));
-      const responseCreate = await API(CONSTANT.POST, urlCreate, argsCreate);
-      LOGD(CONSTANT.RES, CONSTANT.POST, urlCreate, JSON.stringify(responseCreate));
-
-      // ---
-
-      const authorization = CONSTANT.BEARER + responseCreate.result.accessToken;
-
-      const urlVerify = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
-      const argsVerify = {};
-      const headerVerify = { authorization };
-
-      LOGD(CONSTANT.REQ, CONSTANT.POST, urlVerify, JSON.stringify(argsVerify));
-      const responseVerify = await API(CONSTANT.POST, urlVerify, argsVerify, headerVerify);
-      LOGD(CONSTANT.RES, CONSTANT.POST, urlVerify, JSON.stringify(responseVerify));
-
-      if (responseVerify.code === 200) {
-        loginStore.setAccessToken(authorization);
-        loginStore.setRefreshToken(responseCreate.result.refreshToken);
-        loginStore.setRole(responseVerify.result.userGrade);
-      }
-    };
-
-    await setAccessTokenByServer();
+    const responseCreateToken = await createToken(profile.email);
+    await verifyToken(responseCreateToken);
   } catch (error) {
     //on fail do something
     console.error(error);
@@ -97,9 +117,9 @@ const handleClickDisconnect = () => {
   window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`;
 };
 
-onMounted(() => {
-  LOGD('GoogleLogin');
-});
+onBeforeMount(() => {});
+
+onMounted(() => {});
 </script>
 
 <template>

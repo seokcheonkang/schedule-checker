@@ -1,8 +1,9 @@
 <script setup>
-import { reactive, inject } from 'vue';
-import { useRouter } from 'vue-router';
+import { onBeforeMount, onMounted, reactive, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 // mixin
+import { LOG, LOGD } from '@/mixin/log.js';
 import { LOGOUT } from '@/mixin/logout.js';
 
 // store
@@ -12,10 +13,16 @@ import { useLoginStore } from '@/store/login.js';
 import swal from 'sweetalert2';
 
 // route
+const route = useRoute();
 const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
+
+// state
+const state = reactive({
+  profileImageUrl: 'http://picsum.photos/20',
+});
 
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
@@ -45,17 +52,17 @@ const logout = () => {
     });
 };
 
-// state
-const state = reactive({
-  profileImageUrl: 'http://picsum.photos/20',
-});
+onBeforeMount(() => {});
 
-const setProfileImage = () => {
-  if (loginStore.isLogin) {
-    state.profileImageUrl = loginStore.loginInfo.imageUrl;
-  }
-};
-setProfileImage();
+onMounted(() => {
+  const setProfileImage = () => {
+    if (loginStore.isLogin) {
+      state.profileImageUrl = loginStore.loginInfo.imageUrl;
+    }
+  };
+
+  setProfileImage();
+});
 </script>
 
 <template>

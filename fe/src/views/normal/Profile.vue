@@ -74,23 +74,21 @@ const getUserInfo = async () => {
     authorization: loginStore.accessToken,
   };
 
-  LOGD(CONSTANT.GET, url, JSON.stringify(args), JSON.stringify(header));
+  LOGD(CONSTANT.REQ, CONSTANT.GET, url, JSON.stringify(args), JSON.stringify(header));
+  const response = await API(CONSTANT.GET, url, args, header);
+  LOGD(CONSTANT.RES, CONSTANT.GET, url, JSON.stringify(response));
 
-  const data = await API(CONSTANT.GET, url, args, header);
-
-  if (data.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOGD(JSON.stringify(data));
-
-    state.userInfo.seq = data.result.seq;
-    state.userInfo.userEmail = data.result.userEmail;
-    state.userInfo.userName = data.result.userName;
-    state.userInfo.userGrade = data.result.userGrade;
-    state.userInfo.userGradeVal = data.result.userGradeVal;
-    state.userInfo.registerDate = data.result.registerDate;
-    state.userInfo.registerStatus = data.result.registerStatus;
-    state.userInfo.registerStatusVal = data.result.registerStatusVal;
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    state.userInfo.seq = response.result.seq;
+    state.userInfo.userEmail = response.result.userEmail;
+    state.userInfo.userName = response.result.userName;
+    state.userInfo.userGrade = response.result.userGrade;
+    state.userInfo.userGradeVal = response.result.userGradeVal;
+    state.userInfo.registerDate = response.result.registerDate;
+    state.userInfo.registerStatus = response.result.registerStatus;
+    state.userInfo.registerStatusVal = response.result.registerStatusVal;
   } else {
-    LOGD(JSON.stringify(data));
+    LOGD(response.code);
   }
 };
 

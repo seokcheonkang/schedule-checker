@@ -13,6 +13,7 @@ import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
+import { LOGOUT } from '@/mixin/logout.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -20,12 +21,12 @@ import { useLoginStore } from '@/store/login.js';
 // swal
 import swal from 'sweetalert2';
 
+// env
+const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
+
 // route
 const route = useRoute();
 const router = useRouter();
-
-// env
-const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // store
 const loginStore = useLoginStore();
@@ -80,30 +81,22 @@ const getMembers = async () => {
     authorization: loginStore.accessToken,
   };
 
-  LOGD(CONSTANT.GET, url, JSON.stringify(args));
-
+  LOGD(CONSTANT.REQ, CONSTANT.GET, url, JSON.stringify(args), JSON.stringify(header));
   const response = await API(CONSTANT.GET, url, args, header);
+  LOGD(CONSTANT.RES, CONSTANT.GET, url, JSON.stringify(response));
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOGD(JSON.stringify(response));
-
     pagination.columns = response.result.columns;
     pagination.colspan = response.result.columns.length;
     pagination.oriList = response.result.dataList;
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
-    loginStore.setIsLogin(false);
-    loginStore.setLoginInfo(null);
-    loginStore.setRole(null);
-    loginStore.setAccessToken(null);
-    loginStore.setRefreshToken(null);
-
     swal.fire({
       icon: 'error',
       title: '에러',
       text: MESSAGE.MESSAGE_HTTP_STATUS_419,
     });
 
-    router.push('/');
+    LOGOUT();
   } else {
     LOGD(response.code);
   }

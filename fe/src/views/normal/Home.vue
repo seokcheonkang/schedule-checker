@@ -2,9 +2,6 @@
 import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
-// custom
-import CustomPageHeader from '@/components/CustomPageHeader.vue';
-
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
@@ -22,33 +19,35 @@ const state = reactive({
   msg: {},
 });
 
-onBeforeMount(() => {
-  LOGD(route.name);
-});
-
-onMounted(async () => {
+const getInfo = async () => {
   const url = `${ENV_URL_BACKEND_HOME}/`;
   const args = {};
 
-  LOGD(CONSTANT.GET, url, JSON.stringify(args));
+  LOGD(CONSTANT.REQ, CONSTANT.GET, url, JSON.stringify(args));
+  const response = await API(CONSTANT.GET, url, args);
+  LOGD(CONSTANT.RES, CONSTANT.POST, url, JSON.stringify(response));
 
-  const data = await API(CONSTANT.GET, url, args);
-
-  if (data.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOGD(JSON.stringify(data));
-
-    state.msg.userAgent = data.result.userAgent;
-    state.msg.hostname = data.result.hostname;
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    state.msg.userAgent = response.result.userAgent;
+    state.msg.hostname = response.result.hostname;
   } else {
     state.msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
     state.msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;
   }
+};
+
+onBeforeMount(() => {
+  LOGD(route.name);
+});
+
+onMounted(() => {
+  getInfo();
 });
 </script>
 
 <template>
   <h5 class="tac">
-    <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="800" height="200" />
+    <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="500" height="100" />
   </h5>
   <hr />
   <h5 class="">

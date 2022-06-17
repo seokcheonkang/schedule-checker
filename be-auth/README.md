@@ -60,9 +60,3 @@ $ npm i express dotenv cross-env
 ```console
 $ npm i jsonwebtoken rand-token
 ```
-
-#### passport
-
-```console
-$ npm i passport express-session passport-google-oauth2
-```
