@@ -1627,7 +1627,7 @@ const service = {
     return schedules;
   },
   getSchedule: (seq) => {
-    return schedules.find((schedule) => schedule.dataList.seq === seq);
+    return schedules.dataList.find((schedule) => schedule.seq === Number(seq));
   },
 };
 

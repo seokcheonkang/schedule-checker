@@ -5,7 +5,11 @@ const os = require('os');
 
 // ---
 
-const LOG = require('../middleware/log');
+const MIDDLEWARE_PATH = '../middleware';
+
+// ---
+
+const LOG = require(`${MIDDLEWARE_PATH}/log`);
 
 // ---
 

@@ -42,7 +42,7 @@ const service = {
 
     try {
       result = jwt.verify(token, key);
-      return res.status(200).json({ code: 200, message: '토큰이 생성되었습니다.', result });
+      return res.status(200).json({ code: 200, message: '토큰이 생성되었거나 검증되었습니다.', result });
     } catch (error) {
       // 유효시간 초과
       if (error.name === 'TokenExpiredError') {

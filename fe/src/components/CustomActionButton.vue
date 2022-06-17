@@ -40,14 +40,6 @@ const handleButtonClicked = () => {
         resultMessageN: '취소했습니다.',
       };
       break;
-    case 'scheduleConfirm':
-      paramForParent = {
-        title: '앗!',
-        icon: 'warning',
-        text: '아직 공사중 입니다.',
-        footer: '<a href="/" class="btn btn-warning">홈으로</a>',
-      };
-      break;
     default:
       paramForParent = {
         title: `정말 ${props.text} 하시겠습니까?`,

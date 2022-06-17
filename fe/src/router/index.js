@@ -61,7 +61,7 @@ const routes = [
     meta: { authorization: [99] },
   },
   {
-    path: '/admin/Members/:seq',
+    path: '/admin/Members/:userEmail',
     name: 'AdminMembersItem',
     component: () => import('@/views/admin/MembersItem.vue'),
     meta: { authorization: [99] },
