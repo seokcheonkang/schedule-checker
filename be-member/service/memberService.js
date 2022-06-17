@@ -18,11 +18,11 @@ const members = {
   dataList: [
     {
       seq: 6,
-      userEmail: 'test2',
+      userEmail: 'idealful@gmail.com',
       userName: 'test2',
       userPassword: '1',
-      userGrade: 1,
-      userGradeVal: '일반',
+      userGrade: 99,
+      userGradeVal: '관리자',
       registerDate: '2022-06-08 23:59:59',
       registerStatus: '2',
       registerStatusVal: '승인',
@@ -88,6 +88,9 @@ const members = {
 const service = {
   getMembers: () => {
     return members;
+  },
+  getMemberByUserEmail: (userEmail) => {
+    return members.dataList.find((member) => member.userEmail === userEmail);
   },
   getMember: (userEmail, userPassword) => {
     return members.dataList.find((member) => member.userEmail === userEmail && member.userPassword === userPassword);

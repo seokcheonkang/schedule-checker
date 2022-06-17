@@ -1,8 +1,6 @@
 <script setup>
-import { reactive } from 'vue';
+import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-
-import { onBeforeMount, onMounted } from 'vue';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -11,10 +9,9 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
-import { LOG } from '@/mixin/log.js';
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // env
-const ENV_MODE = import.meta.env.MODE;
 const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // route
@@ -26,19 +23,19 @@ const state = reactive({
 });
 
 onBeforeMount(() => {
-  LOG(ENV_MODE, route.name);
+  LOGD(route.name);
 });
 
 onMounted(async () => {
   const url = `${ENV_URL_BACKEND_HOME}/`;
   const args = {};
 
-  LOG(ENV_MODE, CONSTANT.GET, url, JSON.stringify(args));
+  LOGD(CONSTANT.GET, url, JSON.stringify(args));
 
   const data = await API(CONSTANT.GET, url, args);
 
-  if (data.code === 200) {
-    LOG(ENV_MODE, JSON.stringify(data));
+  if (data.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    LOGD(JSON.stringify(data));
 
     state.msg.userAgent = data.result.userAgent;
     state.msg.hostname = data.result.hostname;

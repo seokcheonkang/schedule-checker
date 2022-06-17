@@ -1,8 +1,16 @@
 const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
 
+// ---
+
+const LOG = require('./log');
+
+// ---
+
 const service = {
   generateToken: (req, res, member) => {
+    LOG('generateToken');
+
     const args = { userEmail: member.userEmail, userName: member.userName, userGrade: member.userGrade };
 
     const key = process.env.JWT_ACCESS_TOKEN_SECRET;
@@ -11,6 +19,8 @@ const service = {
       expiresIn: process.env.JWT_ACCESS_TOKEN_TIME,
       issuer: process.env.JWT_ACCESS_TOKEN_ISSUER,
     };
+
+    LOG('options', JSON.stringify(options));
 
     req.headers.authorization = jwt.sign(args, key, options);
 
@@ -22,6 +32,8 @@ const service = {
     return result;
   },
   verifyToken: (req, res) => {
+    LOG('verifyToken');
+
     const token = req.headers.authorization.replace('Bearer ', '');
 
     const key = process.env.JWT_ACCESS_TOKEN_SECRET;

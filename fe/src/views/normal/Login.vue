@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GoogleLogin from './GoogleLogin.vue';
@@ -8,13 +8,10 @@ import GoogleLogin from './GoogleLogin.vue';
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 
 // mixin
-import { LOG } from '@/mixin/log.js';
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
-
-// env
-const ENV_MODE = import.meta.env.MODE;
 
 // route
 const route = useRoute();
@@ -22,9 +19,11 @@ const route = useRoute();
 // store
 const loginStore = useLoginStore();
 
-onMounted(() => {
-  LOG(ENV_MODE, route.name);
+onBeforeMount(() => {
+  LOGD(route.name);
 });
+
+onMounted(() => {});
 </script>
 
 <template>

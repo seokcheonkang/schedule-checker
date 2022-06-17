@@ -5,12 +5,12 @@ require('dotenv').config();
 
 // ---
 
-const LOG = require('../middleware/log');
+const MIDDLEWARE_PATH = '../middleware';
+const SERVICE_PATH = '../service';
 
 // ---
 
-const MIDDLEWARE_PATH = '../middleware';
-const SERVICE_PATH = '../service';
+const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const { generateToken, verifyToken } = require(`${MIDDLEWARE_PATH}/jwt.js`);
 const { getMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
 

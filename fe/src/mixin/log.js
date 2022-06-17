@@ -33,15 +33,18 @@ const showLog = (type, color, val1, val2, val3, val4, val5) => {
   );
 };
 
-const LOG = (mode, val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
-  if (mode === 'production') {
-    return;
-  }
+const LOG = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
+  const type = 'LOG';
+  const color = 'tomato';
 
+  showLog(type, color, val1, val2, val3, val4, val5);
+};
+
+const LOGD = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
   const type = 'LOG_DEBUG';
   const color = 'skyblue';
 
   showLog(type, color, val1, val2, val3, val4, val5);
 };
 
-export { LOG };
+export { LOG, LOGD };

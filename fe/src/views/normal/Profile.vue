@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 // custom
@@ -7,16 +7,38 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
 // mixin
-import { LOG } from '@/mixin/log.js';
+import API from '@/mixin/api.js';
+import MESSAGE from '@/mixin/message';
+import CONSTANT from '@/mixin/constant';
+import { LOG, LOGD } from '@/mixin/log.js';
+
+// store
+import { useLoginStore } from '@/store/login.js';
 
 // swal
 import swal from 'sweetalert2';
 
 // env
-const ENV_MODE = import.meta.env.MODE;
+const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // route
 const route = useRoute();
+
+// store
+const loginStore = useLoginStore();
+
+// state
+const state = reactive({
+  userInfo: {
+    seq: null,
+    userName: null,
+    userGrade: null,
+    userGradeVal: null,
+    registerDate: null,
+    registerStatus: null,
+    registerStatusVal: null,
+  },
+});
 
 const leave = (paramForParent) => {
   const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
@@ -29,16 +51,55 @@ const leave = (paramForParent) => {
       denyButtonText,
     })
     .then((result) => {
+      let resultMessage = resultMessageN;
+      let confirmText = 'info';
+
       if (result.isConfirmed) {
-        swal.fire(resultMessageY, '', 'success');
-      } else if (result.isDenied) {
-        swal.fire(resultMessageN, '', 'info');
+        resultMessage = resultMessageY;
+        confirmText = 'success';
       }
+
+      swal.fire(resultMessage, '', confirmText);
     });
 };
 
+const getUserInfo = async () => {
+  const {
+    loginInfo: { email },
+  } = loginStore;
+
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${email}`;
+  const args = {};
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  LOGD(CONSTANT.GET, url, JSON.stringify(args), JSON.stringify(header));
+
+  const data = await API(CONSTANT.GET, url, args, header);
+
+  if (data.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    LOGD(JSON.stringify(data));
+
+    state.userInfo.seq = data.result.seq;
+    state.userInfo.userEmail = data.result.userEmail;
+    state.userInfo.userName = data.result.userName;
+    state.userInfo.userGrade = data.result.userGrade;
+    state.userInfo.userGradeVal = data.result.userGradeVal;
+    state.userInfo.registerDate = data.result.registerDate;
+    state.userInfo.registerStatus = data.result.registerStatus;
+    state.userInfo.registerStatusVal = data.result.registerStatusVal;
+  } else {
+    LOGD(JSON.stringify(data));
+  }
+};
+
+onBeforeMount(() => {
+  LOGD(route.name);
+});
+
 onMounted(() => {
-  LOG(ENV_MODE, route.name);
+  getUserInfo();
 });
 </script>
 
@@ -51,11 +112,15 @@ onMounted(() => {
           <h4 class="mb-3">프로필</h4>
           <div class="form-floating mb-3">
             <h5 class="text-muted">이름</h5>
-            <div class="mb-3">홍길동</div>
+            <div class="mb-3">{{ state.userInfo.userName }}</div>
             <h5 class="text-muted">이메일</h5>
-            <div class="mb-3">you@example.com</div>
+            <div class="mb-3">{{ state.userInfo.userEmail }}</div>
+            <h5 class="text-muted">가입일시</h5>
+            <div class="mb-3">{{ state.userInfo.registerDate }}</div>
             <h5 class="text-muted">권한</h5>
-            <div class="mb-3">일반</div>
+            <div class="mb-3">{{ state.userInfo.userGradeVal }}</div>
+            <h5 class="text-muted">상태</h5>
+            <div class="mb-3">{{ state.userInfo.registerStatusVal }}</div>
           </div>
           <CustomActionButton text="회원 탈퇴" command="memberLeave" option1="btn-danger" @buttonClicked="leave" />
         </div>

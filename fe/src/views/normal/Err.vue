@@ -18,45 +18,37 @@ import {
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 
 // mixin
-import { LOG } from '@/mixin/log.js';
-
-// env
-const ENV_MODE = import.meta.env.MODE;
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // route
 const route = useRoute();
 
-// state
-const state = reactive({
-  msg: {},
-});
-
 onBeforeMount(() => {
-  LOG(ENV_MODE, route.name);
+  LOGD(route.name);
 });
 onMounted(() => {
-  // LOG(ENV_MODE, 'onMounted');
+  // LOGD('onMounted');
 });
 onBeforeUpdate(() => {
-  // LOG(ENV_MODE, 'onBeforeUpdate');
+  // LOGD('onBeforeUpdate');
 });
 onUpdated(() => {
-  // LOG(ENV_MODE, 'onUpdated');
+  // LOGD('onUpdated');
 });
 onBeforeUnmount(() => {
-  // LOG(ENV_MODE, 'onBeforeUnmount');
+  // LOGD('onBeforeUnmount');
 });
 onUnmounted(() => {
-  // LOG(ENV_MODE, 'onUnmounted');
+  // LOGD('onUnmounted');
 });
 onErrorCaptured(() => {
-  // LOG(ENV_MODE, 'onErrorCaptured');
+  // LOGD('onErrorCaptured');
 });
 onRenderTracked(() => {
-  // LOG(ENV_MODE, 'onRenderTracked');
+  // LOGD('onRenderTracked');
 });
 onRenderTriggered(() => {
-  // LOG(ENV_MODE, 'onRenderTriggered');
+  // LOGD('onRenderTriggered');
 });
 </script>
 

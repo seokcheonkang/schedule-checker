@@ -12,7 +12,7 @@ import Paginate from 'vuejs-paginate-next';
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
-import { LOG } from '@/mixin/log.js';
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -25,7 +25,6 @@ const route = useRoute();
 const router = useRouter();
 
 // env
-const ENV_MODE = import.meta.env.MODE;
 const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // store
@@ -78,15 +77,15 @@ const getMembers = async () => {
   const url = `${ENV_URL_BACKEND_MEMBER}/members`;
   const args = {};
   const header = {
-    Authorization: loginStore.accessToken,
+    authorization: loginStore.accessToken,
   };
 
-  LOG(ENV_MODE, CONSTANT.GET, url, JSON.stringify(args));
+  LOGD(CONSTANT.GET, url, JSON.stringify(args));
 
   const response = await API(CONSTANT.GET, url, args, header);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOG(ENV_MODE, JSON.stringify(response));
+    LOGD(JSON.stringify(response));
 
     pagination.columns = response.result.columns;
     pagination.colspan = response.result.columns.length;
@@ -106,12 +105,12 @@ const getMembers = async () => {
 
     router.push('/');
   } else {
-    LOG(ENV_MODE, response.code);
+    LOGD(response.code);
   }
 };
 
 onBeforeMount(() => {
-  LOG(ENV_MODE, route.name);
+  LOGD(route.name);
 });
 
 onMounted(() => {

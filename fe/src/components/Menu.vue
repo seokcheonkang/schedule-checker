@@ -3,16 +3,13 @@ import { reactive, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
 // mixin
-import { LOG } from '@/mixin/log.js';
+import { LOGOUT } from '@/mixin/logout.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
 
 // swal
 import swal from 'sweetalert2';
-
-// env
-const ENV_MODE = import.meta.env.MODE;
 
 // route
 const router = useRouter();
@@ -43,13 +40,7 @@ const logout = () => {
     .then((result) => {
       if (result.isConfirmed) {
         handleClickSignOut();
-        loginStore.setIsLogin(false);
-        loginStore.setLoginInfo(null);
-        loginStore.setRole(null);
-        loginStore.setAccessToken(null);
-        loginStore.setRefreshToken(null);
-        LOG(ENV_MODE, 'Logout');
-        router.push('/');
+        LOGOUT(router);
       }
     });
 };

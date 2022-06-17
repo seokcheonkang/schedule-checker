@@ -12,7 +12,7 @@ import Paginate from 'vuejs-paginate-next';
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
-import { LOG } from '@/mixin/log.js';
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -20,16 +20,15 @@ import { useLoginStore } from '@/store/login.js';
 // swal
 import swal from 'sweetalert2';
 
+// env
+const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
+
 // route
 const route = useRoute();
 const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
-
-// env
-const ENV_MODE = import.meta.env.MODE;
-const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // state
 const state = reactive({
@@ -43,15 +42,15 @@ const getSchedules = async () => {
   const url = `${ENV_URL_BACKEND_HOME}/schedules`;
   const args = {};
   const header = {
-    Authorization: loginStore.accessToken,
+    authorization: loginStore.accessToken,
   };
 
-  LOG(ENV_MODE, CONSTANT.GET, url, JSON.stringify(args));
+  LOGD(CONSTANT.GET, url, JSON.stringify(args));
 
   schedules = await API(CONSTANT.GET, url, args, header);
 
   if (schedules.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    LOG(ENV_MODE, JSON.stringify(schedules));
+    LOGD(JSON.stringify(schedules));
 
     pagination.columns = schedules.result.columns;
     pagination.colspan = schedules.result.columns.length;
@@ -71,7 +70,7 @@ const getSchedules = async () => {
 
     router.push('/');
   } else {
-    LOG(ENV_MODE, schedules.code);
+    LOGD(schedules.code);
   }
 };
 
@@ -113,7 +112,7 @@ const pagination = reactive({
 });
 
 onBeforeMount(() => {
-  LOG(ENV_MODE, route.name);
+  LOGD(route.name);
 });
 
 onMounted(() => {

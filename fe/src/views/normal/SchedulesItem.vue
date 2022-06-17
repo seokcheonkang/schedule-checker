@@ -7,13 +7,10 @@ import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
 // mixin
-import { LOG } from '@/mixin/log.js';
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // swal
 import swal from 'sweetalert2';
-
-// env
-const ENV_MODE = import.meta.env.MODE;
 
 // route
 const route = useRoute();
@@ -41,7 +38,7 @@ const confirm = (paramForParent) => {
 };
 
 onMounted(() => {
-  LOG(ENV_MODE, route.name);
+  LOGD(route.name);
 });
 </script>
 

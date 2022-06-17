@@ -4,7 +4,7 @@ import { onMounted, inject } from 'vue';
 // mixin
 import API from '@/mixin/api.js';
 import CONSTANT from '@/mixin/constant';
-import { LOG } from '@/mixin/log.js';
+import { LOG, LOGD } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -13,7 +13,6 @@ import { useLoginStore } from '@/store/login.js';
 const loginStore = useLoginStore();
 
 // env
-const ENV_MODE = import.meta.env.MODE;
 const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
 
 // google oauth
@@ -41,9 +40,9 @@ const handleClickSignIn = async () => {
       const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
       const argsCreate = { userEmail: profile.email };
 
-      LOG(ENV_MODE, CONSTANT.REQ, CONSTANT.POST, urlCreate, JSON.stringify(argsCreate));
+      LOGD(CONSTANT.REQ, CONSTANT.POST, urlCreate, JSON.stringify(argsCreate));
       const responseCreate = await API(CONSTANT.POST, urlCreate, argsCreate);
-      LOG(ENV_MODE, CONSTANT.RES, CONSTANT.POST, urlCreate, JSON.stringify(responseCreate));
+      LOGD(CONSTANT.RES, CONSTANT.POST, urlCreate, JSON.stringify(responseCreate));
 
       // ---
 
@@ -53,9 +52,9 @@ const handleClickSignIn = async () => {
       const argsVerify = {};
       const headerVerify = { authorization };
 
-      LOG(ENV_MODE, CONSTANT.REQ, CONSTANT.POST, urlVerify, JSON.stringify(argsVerify));
+      LOGD(CONSTANT.REQ, CONSTANT.POST, urlVerify, JSON.stringify(argsVerify));
       const responseVerify = await API(CONSTANT.POST, urlVerify, argsVerify, headerVerify);
-      LOG(ENV_MODE, CONSTANT.RES, CONSTANT.POST, urlVerify, JSON.stringify(responseVerify));
+      LOGD(CONSTANT.RES, CONSTANT.POST, urlVerify, JSON.stringify(responseVerify));
 
       if (responseVerify.code === 200) {
         loginStore.setAccessToken(authorization);
@@ -99,7 +98,7 @@ const handleClickDisconnect = () => {
 };
 
 onMounted(() => {
-  LOG(ENV_MODE, 'GoogleLogin');
+  LOGD('GoogleLogin');
 });
 </script>
 

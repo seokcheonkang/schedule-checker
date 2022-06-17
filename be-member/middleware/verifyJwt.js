@@ -9,6 +9,7 @@ const verifyJwt = (req, res, next) => {
   let response = null;
 
   const authorization = req.headers.authorization;
+
   if (!authorization) {
     response = res.status(401).json({ code: 401, message: 'Unauthorized' });
     return response;
