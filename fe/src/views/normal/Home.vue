@@ -47,7 +47,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <CustomPageHeader text="홈" />
+  <h5 class="mt-2" style="text-align: center">
+    <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="800" height="200" />
+  </h5>
+  <hr />
   <h5 class="">
     <span>User-Agent : </span>
     <span> {{ state.msg.userAgent }}</span>
