@@ -102,3 +102,9 @@ $ npm i vue3-google-oauth2
 ```console
 $ npm i sass scss
 ```
+
+#### vue3-loading-overlay
+
+```console
+$ npm i vue3-loading-overlay
+```

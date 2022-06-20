@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useLoading } from 'vue3-loading-overlay';
 import { useLoginStore } from '@/store/login.js';
 
 // static page
 import Home from '@/views/normal/Home.vue';
 import Err from '@/views/normal/Err.vue';
+
+// loading
+const loader = useLoading();
 
 const routes = [
   {
@@ -74,6 +78,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  loader.show();
+
   const authenticationState = useLoginStore?._pinia?.state?._value?.login;
 
   const { authorization } = to.meta;
@@ -91,6 +97,10 @@ router.beforeEach((to, from, next) => {
   }
 
   next();
+});
+
+router.afterEach((to, from) => {
+  loader.hide();
 });
 
 export default router;

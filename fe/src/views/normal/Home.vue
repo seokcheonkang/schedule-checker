@@ -25,6 +25,7 @@ const getInfo = async () => {
 
   LOGD(CONSTANT.REQ, CONSTANT.GET, url, JSON.stringify(args));
   const response = await API(CONSTANT.GET, url, args);
+
   LOGD(CONSTANT.RES, CONSTANT.GET, url, JSON.stringify(response));
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
