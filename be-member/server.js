@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const ip = require('ip');
 const dotenv = require('dotenv');
 
 // --
@@ -31,7 +32,8 @@ const PORT = process.env.PORT || 8003;
 app.listen(PORT, () => {
   setEnv(process.env.NODE_ENV);
 
-  const URL = `${process.env.BASE_URL_THIS}`;
+  const URL = !process.env.BASE_URL_THIS ? ip.address() + PORT : process.env.BASE_URL_THIS;
+  // const URL = ip.address() + ':' + PORT;
 
   console.log(`Server listening : ${URL}`);
 });

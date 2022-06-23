@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const ip = require('ip');
 const dotenv = require('dotenv');
 
 // --
@@ -31,7 +32,8 @@ const PORT = process.env.PORT || 8002;
 app.listen(PORT, () => {
   setEnv(process.env.NODE_ENV);
 
-  const URL = `${process.env.BASE_URL_THIS}`;
+  const URL = !process.env.BASE_URL_THIS ? ip.address() + PORT : process.env.BASE_URL_THIS;
+  // const URL = ip.address() + ':' + PORT;
 
   console.log(`Server listening : ${URL}`);
 });
@@ -43,8 +45,10 @@ app.all('/*', (req, res, next) => {
 });
 
 // ---
+const mainController = require(`${CONTROLLER_PATH}/mainController`);
 const authGoogleController = require(`${CONTROLLER_PATH}/authGoogleController`);
 const jwtController = require(`${CONTROLLER_PATH}/jwtController`);
 
+app.use('/', mainController);
 app.use('/auth/google', authGoogleController);
 app.use('/jwt', jwtController);

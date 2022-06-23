@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useLoading } from 'vue3-loading-overlay';
+
 import { useLoginStore } from '@/store/login.js';
+import { useLoadingStore } from '@/store/loading.js';
 
 // static page
 import Home from '@/views/normal/Home.vue';
 import Err from '@/views/normal/Err.vue';
-
-// loading
-const loader = useLoading();
 
 const routes = [
   {
@@ -78,7 +76,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  loader.show();
+  let loadingState = useLoadingStore?._pinia?.state?._value?.loading;
+  loadingState = true;
 
   const authenticationState = useLoginStore?._pinia?.state?._value?.login;
 
@@ -100,7 +99,8 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
-  loader.hide();
+  let loadingState = useLoadingStore?._pinia?.state?._value?.loading;
+  loadingState = false;
 });
 
 export default router;

@@ -16,9 +16,6 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 // paginate
 import Paginate from 'vuejs-paginate-next';
 
-// loading
-import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
-
 // pinia
 const pinia = createPinia();
 pinia.use(piniaPersist);

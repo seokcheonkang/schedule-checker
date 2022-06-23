@@ -5,8 +5,8 @@
   "scripts": {
     "start": "vite --mode production",
     "dev": "vite --mode development",
-    "prd": "vite --mode production --host",
-    "build": "vite build --mode development",
+    "prd": "vite --mode production",
+    "build": "vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -21,7 +21,6 @@
     "vue-router": "^4.0.13",
     "vue-sweetalert2": "^5.0.2",
     "vue3-google-oauth2": "^1.0.6",
-    "vue3-loading-overlay": "^0.0.0",
     "vuejs-paginate-next": "^1.0.2"
   },
   "devDependencies": {
