@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 8002;
 app.listen(PORT, () => {
   setEnv(process.env.NODE_ENV);
 
-  const URL = !process.env.BASE_URL_THIS ? ip.address() + PORT : process.env.BASE_URL_THIS;
+  const URL = !process.env.BASE_URL_THIS ? ip.address() + ':' + PORT : process.env.BASE_URL_THIS;
   // const URL = ip.address() + ':' + PORT;
 
   console.log(`Server listening : ${URL}`);
