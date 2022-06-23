@@ -13,12 +13,18 @@ export default async (method = 'get', url, data, headers) => {
     data,
     headers,
   })
-    .then((response) => {
-      LOGD(CONSTANT.RES, method, url, JSON.stringify(response.data));
+    .then((res) => {
+      const resData = res.data;
 
-      return response.data;
+      LOGD(CONSTANT.RES, method, url, JSON.stringify(resData));
+
+      return resData;
     })
-    .catch((e) => {
-      return { code: e.code, message: e.message, result: null };
+    .catch((err) => {
+      const errData = { code: err.code, message: err.message, result: null };
+
+      LOGD(CONSTANT.RES, method, url, JSON.stringify(errData));
+
+      return errData;
     });
 };
