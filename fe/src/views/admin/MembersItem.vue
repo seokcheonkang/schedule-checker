@@ -73,9 +73,7 @@ const getUserInfo = async (email) => {
     authorization: loginStore.accessToken,
   };
 
-  LOGD(CONSTANT.REQ, CONSTANT.GET, url, JSON.stringify(args), JSON.stringify(header));
   const response = await API(CONSTANT.GET, url, args, header);
-  LOGD(CONSTANT.RES, CONSTANT.GET, url, JSON.stringify(response));
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.userInfo.seq = response.result.seq;

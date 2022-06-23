@@ -31,9 +31,7 @@ const createToken = async (userEmail) => {
   const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
   const argsCreate = { userEmail };
 
-  LOGD(CONSTANT.REQ, CONSTANT.POST, urlCreate, JSON.stringify(argsCreate));
   const responseCreate = await API(CONSTANT.POST, urlCreate, argsCreate);
-  LOGD(CONSTANT.RES, CONSTANT.POST, urlCreate, JSON.stringify(responseCreate));
 
   return responseCreate;
 };
@@ -45,9 +43,7 @@ const verifyToken = async (responseCreateToken) => {
   const argsVerify = {};
   const headerVerify = { authorization };
 
-  LOGD(CONSTANT.REQ, CONSTANT.POST, urlVerify, JSON.stringify(argsVerify));
   const responseVerify = await API(CONSTANT.POST, urlVerify, argsVerify, headerVerify);
-  LOGD(CONSTANT.RES, CONSTANT.POST, urlVerify, JSON.stringify(responseVerify));
 
   if (responseVerify.code === MESSAGE.CODE_HTTP_STATUS_200) {
     loginStore.setAccessToken(authorization);

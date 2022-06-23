@@ -46,9 +46,7 @@ const getSchedules = async () => {
     authorization: loginStore.accessToken,
   };
 
-  LOGD(CONSTANT.REQ, CONSTANT.GET, url, JSON.stringify(args), JSON.stringify(header));
   schedules = await API(CONSTANT.GET, url, args, header);
-  LOGD(CONSTANT.RES, CONSTANT.GET, url, JSON.stringify(schedules));
 
   if (schedules.code === MESSAGE.CODE_HTTP_STATUS_200) {
     pagination.columns = schedules.result.columns;
