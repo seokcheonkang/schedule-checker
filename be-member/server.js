@@ -45,6 +45,8 @@ app.all('/*', (req, res, next) => {
 });
 
 // ---
+const mainController = require(`${CONTROLLER_PATH}/mainController`);
 const memberController = require(`${CONTROLLER_PATH}/memberController`);
 
+app.use('/', mainController);
 app.use('/members', memberController);
