@@ -1,5 +1,5 @@
 # nginx 이미지를 사용. 뒤에 version tag가 없으면 latest 를 사용.
-FROM nginx:1.21.6
+FROM nginx:alpine
 
 # root 에 app 폴더를 생성.
 RUN mkdir -p /app/fe
