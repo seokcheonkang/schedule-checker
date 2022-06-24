@@ -13,7 +13,7 @@ onMounted(() => {});
 </script>
 
 <template>
-  <div class="spinnerContainer" v-if="loadingStore.loading">
+  <div class="spinnerContainer" v-if="loadingStore.isLoading">
     <div class="spinner"></div>
     <div class="dim"></div>
   </div>

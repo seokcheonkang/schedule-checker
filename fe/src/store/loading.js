@@ -3,16 +3,16 @@ import { defineStore } from 'pinia';
 export const useLoadingStore = defineStore({
   id: 'loading',
   state: () => ({
-    loading: false,
+    isLoading: false,
   }),
   getters: {
     getIsLoading: (state) => {
-      return state.loading;
+      return state.isLoading;
     },
   },
   actions: {
     setIsLoading(val) {
-      this.loading = val;
+      this.isLoading = val;
     },
   },
 });

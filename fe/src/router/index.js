@@ -66,10 +66,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let loadingState = useLoadingStore?._pinia?.state?._value?.loading;
-  loadingState = true;
+  useLoadingStore().setIsLoading(true);
 
-  const authenticationState = useLoginStore?._pinia?.state?._value?.login;
+  // const authenticationState = useLoginStore?._pinia?.state?._value?.login;
+  const authenticationState = useLoginStore();
 
   const { authorization } = to.meta;
 
@@ -89,8 +89,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
-  let loadingState = useLoadingStore?._pinia?.state?._value?.loading;
-  loadingState = false;
+  useLoadingStore().setIsLoading(false);
 });
 
 export default router;
