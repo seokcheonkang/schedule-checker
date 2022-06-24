@@ -45,7 +45,7 @@ onMounted(() => {
 
 <template>
   <h5 class="tac">
-    <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="500" height="100" />
+    <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="300" height="60" />
   </h5>
   <hr />
   <h5 class="">

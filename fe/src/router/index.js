@@ -35,16 +35,6 @@ const routes = [
     meta: { authorization: [1, 99] },
   },
   {
-    path: '/Join',
-    name: 'Join',
-    component: () => import('@/views/normal/Join.vue'),
-  },
-  {
-    path: '/Find',
-    name: 'Find',
-    component: () => import('@/views/normal/Find.vue'),
-  },
-  {
     path: '/Schedules',
     name: 'Schedules',
     component: () => import('@/views/normal/schedules.vue'),

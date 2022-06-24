@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted } from 'vue';
+import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GoogleLogin from './GoogleLogin.vue';
@@ -19,11 +19,22 @@ const route = useRoute();
 // store
 const loginStore = useLoginStore();
 
+// state
+const state = reactive({
+  loginInfo: {
+    userId: null,
+  },
+});
+
 onBeforeMount(() => {
   LOGD(route.name);
 });
 
-onMounted(() => {});
+onMounted(() => {
+  if (loginStore.isLogin) {
+    state.loginInfo.userId = loginStore.loginInfo.id;
+  }
+});
 </script>
 
 <template>
@@ -36,11 +47,7 @@ onMounted(() => {});
             <GoogleLogin />
             <hr class="my-4" />
           </div>
-          <div class="mb-1">
-            <small class="text-muted"
-              >아이디나 비밀번호를 잃어버리셨나요? <router-link to="/find" class="text-reset">찾기</router-link></small
-            >
-          </div>
+          <div v-else>환영합니다. {{ state.loginInfo.userId }}</div>
         </form>
       </div>
     </div>
