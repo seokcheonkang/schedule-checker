@@ -14,27 +14,14 @@ const members = {
     { key: 'regist_date', val: '가입일시' },
     { key: 'user_status', val: '가입상태' },
   ],
-  dataList: [
-    {
-      user_code: 'a1',
-      name: 'test2',
-      e_mail: 'idealful@gmail.com',
-      privilege: '관리자',
-      grade: 99,
-      regist_date: '2022-06-08 23:59:59',
-      user_status: '2',
-      // seq: 6,
-      // userEmail: 'idealful@gmail.com',
-      // userName: 'test2',
-      // userPassword: '1',
-      // userGrade: 99,
-      // userGradeVal: '관리자',
-      // registerDate: '2022-06-08 23:59:59',
-      // registerStatus: '2',
-      // registerStatusVal: '승인',
-    },
-  ],
+  dataList: null,
 };
+
+// ---
+const MIDDLEWARE_PATH = '../middleware';
+
+// ---
+const LOG = require(`${MIDDLEWARE_PATH}/log`);
 
 // ---
 const db = require('../database/connect/mariadb');
@@ -47,14 +34,11 @@ const service = {
     const result = await db
       .query(sql)
       .then((response) => {
-        return response;
-      })
-      .then((response) => {
         members.dataList = response;
         return members;
       })
       .catch((err) => {
-        console.log(err);
+        LOG(err);
       });
 
     return result;
@@ -68,11 +52,8 @@ const service = {
       .then((response) => {
         return response;
       })
-      .then((response) => {
-        return response;
-      })
       .catch((err) => {
-        console.log(err);
+        LOG(err);
       });
 
     return result;
