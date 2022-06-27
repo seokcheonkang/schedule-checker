@@ -51,7 +51,7 @@ const service = {
       .query(sql, param)
       .then((response) => {
         if (response.length < 1) {
-          LOG('조회된 결과가 없습니다.');
+          return null;
         } else {
           return response[0];
         }
@@ -59,8 +59,6 @@ const service = {
       .catch((err) => {
         LOG(err);
       });
-
-    LOG(result);
 
     return result;
   },

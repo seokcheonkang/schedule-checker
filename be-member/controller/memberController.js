@@ -24,12 +24,15 @@ router.get('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const result = await getMembers();
-
-  const response = { code: 200, message: '조회 성공', result };
+  const response = { code: null, result };
+  response.code = 200; // OK
+  if (!result) {
+    response.code = 204; // No Content
+  }
 
   LOG(JSON.stringify(response));
 
-  res.status(200).json(response);
+  res.status(response.code).json(response);
 });
 
 // router.get('/:userEmail', verifyJwt, async (req, res) => {
@@ -40,11 +43,15 @@ router.get('/:userEmail', async (req, res) => {
 
   const result = await getMemberByUserEmail(userEmail);
 
-  const response = { code: 200, message: '조회 성공', result };
+  const response = { code: null, result };
+  response.code = 200; // OK
+  if (!result) {
+    response.code = 204; // No Content
+  }
 
   LOG(JSON.stringify(response));
 
-  res.status(200).json(response);
+  res.status(response.code).json(response);
 });
 
 // router.post('/', verifyJwt, async (req, res) => {
@@ -63,11 +70,15 @@ router.post('/', async (req, res) => {
 
   const result = await insertMember(userInfo);
 
-  const response = { code: 201, message: '등록 성공', result };
+  const response = { code: null, result };
+  response.code = 201; // Created
+  if (!result) {
+    response.code = 204; // No Content
+  }
 
   LOG(JSON.stringify(response));
 
-  res.status(201).json(response);
+  res.status(response.code).json(response);
 });
 
 // router.patch('/', verifyJwt, async (req, res) => {
@@ -86,11 +97,15 @@ router.patch('/', async (req, res) => {
 
   const result = await updateMember(userInfo);
 
-  const response = { code: 201, message: '수정 성공', result };
+  const response = { code: null, result };
+  response.code = 201; // Created
+  if (!result) {
+    response.code = 204; // No Content
+  }
 
   LOG(JSON.stringify(response));
 
-  res.status(201).json(response);
+  res.status(response.code).json(response);
 });
 // router.delete('/', verifyJwt, async (req, res) => {
 router.delete('/', async (req, res) => {
@@ -104,11 +119,15 @@ router.delete('/', async (req, res) => {
 
   await deleteMember(userInfo);
 
-  const response = { code: 201, message: '삭제 성공', userInfo };
+  const response = { code: null, result };
+  response.code = 201; // Created
+  if (!result) {
+    response.code = 204; // No Content
+  }
 
   LOG(JSON.stringify(response));
 
-  res.status(201).json(response);
+  res.status(response.code).json(response);
 });
 
 module.exports = router;
