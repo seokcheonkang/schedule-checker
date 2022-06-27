@@ -61,3 +61,9 @@ $ npm i ip
 ```console
 $ npm i request
 ```
+
+#### mariadb
+
+```console
+$ npm i mariadb
+```
