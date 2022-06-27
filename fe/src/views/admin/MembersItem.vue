@@ -33,13 +33,13 @@ const loginStore = useLoginStore();
 // state
 const state = reactive({
   userInfo: {
-    seq: null,
-    userName: null,
-    userGrade: null,
-    userGradeVal: null,
-    registerDate: null,
-    registerStatus: null,
-    registerStatusVal: null,
+    user_code: null,
+    e_mail: null,
+    name: null,
+    privilege: null,
+    grade: null,
+    regist_date: null,
+    user_status: null,
   },
 });
 
@@ -66,8 +66,8 @@ const confirm = (paramForParent) => {
     });
 };
 
-const getUserInfo = async (email) => {
-  const url = `${ENV_URL_BACKEND_MEMBER}/members/${email}`;
+const getUserInfo = async (e_mail) => {
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${e_mail}`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,
@@ -76,14 +76,13 @@ const getUserInfo = async (email) => {
   const response = await API(CONSTANT.GET, url, args, header);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    state.userInfo.seq = response.result.seq;
-    state.userInfo.userEmail = response.result.userEmail;
-    state.userInfo.userName = response.result.userName;
-    state.userInfo.userGrade = response.result.userGrade;
-    state.userInfo.userGradeVal = response.result.userGradeVal;
-    state.userInfo.registerDate = response.result.registerDate;
-    state.userInfo.registerStatus = response.result.registerStatus;
-    state.userInfo.registerStatusVal = response.result.registerStatusVal;
+    state.userInfo.user_code = response.result.user_code;
+    state.userInfo.name = response.result.name;
+    state.userInfo.e_mail = response.result.e_mail;
+    state.userInfo.privilege = response.result.privilege;
+    state.userInfo.grade = response.result.grade;
+    state.userInfo.regist_date = response.result.regist_date;
+    state.userInfo.user_status = response.result.user_status;
   } else {
     LOGD(response.code);
   }
@@ -94,7 +93,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  getUserInfo(route.params.userEmail);
+  getUserInfo(route.params.e_mail);
 });
 </script>
 
@@ -104,33 +103,33 @@ onMounted(() => {
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">
         <div class="p-4 p-md-4 border rounded-3 bg-light">
-          <h4 class="mb-3">{{ state.userInfo.userName }}</h4>
+          <h4 class="mb-3">{{ state.userInfo.name }}</h4>
           <div class="form-floating mb-3">
             <h5 class="text-muted mb-3">
-              <span>순번</span>
+              <span>코드</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.seq }}</span>
+              <span>{{ state.userInfo.user_code }}</span>
             </h5>
             <h5 class="text-muted mb-3">
               <span>이메일</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.userEmail }}</span>
+              <span>{{ state.userInfo.e_mail }}</span>
             </h5>
             <h5 class="text-muted mb-3">
               <span>이름</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.userName }}</span>
+              <span>{{ state.userInfo.name }}</span>
             </h5>
             <h5 class="text-muted mb-3">
-              <span>회원등급</span>
+              <span>권한</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.userGrade }}</span>
+              <span>{{ state.userInfo.privilege }}</span>
             </h5>
             <h5 class="text-muted mb-3">
-              <span>회원등급(값)</span>
+              <span>등급</span>
               <span>&nbsp;:&nbsp;</span>
               <span>
-                <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="state.userInfo.userGrade">
+                <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="state.userInfo.grade">
                   <option :value="column.key" v-for="column in MemberGrade">
                     {{ column.val }}
                   </option>
@@ -140,12 +139,12 @@ onMounted(() => {
             <h5 class="text-muted mb-3">
               <span>가입일시</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.registerDate }}</span>
+              <span>{{ state.userInfo.regist_date }}</span>
             </h5>
             <h5 class="text-muted mb-3">
-              <span>가입상태</span>
+              <span>상태</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.registerStatus }}</span>
+              <span>{{ state.userInfo.user_status }}</span>
             </h5>
             <h5 class="text-muted mb-3">
               <span>가입상태(값)</span>
@@ -154,7 +153,7 @@ onMounted(() => {
                 <select
                   class="form-select me-2 w-20 dpin"
                   aria-label="searchOption"
-                  v-model="state.userInfo.registerStatus"
+                  v-model="state.userInfo.user_status"
                 >
                   <option :value="column.key" v-for="column in MemberRegisterStatus">
                     {{ column.val }}

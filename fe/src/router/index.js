@@ -41,7 +41,7 @@ const routes = [
     meta: { authorization: [1, 99] },
   },
   {
-    path: '/Schedules/:seq',
+    path: '/Schedules/:schedule_code',
     name: 'SchedulesItem',
     component: () => import('@/views/normal/SchedulesItem.vue'),
     meta: { authorization: [1, 99] },
@@ -53,7 +53,7 @@ const routes = [
     meta: { authorization: [99] },
   },
   {
-    path: '/admin/Members/:userEmail',
+    path: '/admin/Members/:e_mail',
     name: 'AdminMembersItem',
     component: () => import('@/views/admin/MembersItem.vue'),
     meta: { authorization: [99] },

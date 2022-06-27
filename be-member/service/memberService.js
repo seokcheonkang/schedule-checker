@@ -2,17 +2,17 @@ const members = {
   columns: [
     {
       key: 'user_code',
-      val: '유저코드',
+      val: '코드',
     },
     {
       key: 'name',
       val: '이름',
     },
     { key: 'e_mail', val: '이메일' },
-    { key: 'privilege', val: '회원등급(값)' },
-    { key: 'grade', val: '회원등급' },
+    { key: 'privilege', val: '권한' },
+    { key: 'grade', val: '등급' },
     { key: 'regist_date', val: '가입일시' },
-    { key: 'user_status', val: '가입상태' },
+    { key: 'user_status', val: '상태' },
   ],
   dataList: null,
 };
@@ -50,11 +50,17 @@ const service = {
     const result = await db
       .query(sql, param)
       .then((response) => {
-        return response;
+        if (response.length < 1) {
+          LOG('조회된 결과가 없습니다.');
+        } else {
+          return response[0];
+        }
       })
       .catch((err) => {
         LOG(err);
       });
+
+    LOG(result);
 
     return result;
   },

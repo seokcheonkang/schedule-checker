@@ -139,22 +139,21 @@ onMounted(() => {
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
-          <td class="text-center" title="이메일">
-            <router-link :to="{ path: `/admin/members/${item.userEmail}` }" class="btn-td">
-              {{ item.userEmail }}
-            </router-link>
-          </td>
+          <td class="text-center" title="코드">{{ item.user_code }}&nbsp;</td>
           <td class="text-center" title="이름">
-            <router-link :to="{ path: `/admin/members/${item.userEmail}` }" class="btn-td">
-              {{ item.userName }}
+            <router-link :to="{ path: `/admin/members/${item.e_mail}` }" class="btn-td">
+              {{ item.name }}
             </router-link>
           </td>
-          <td class="text-center" title="회원등급">{{ item.userGrade }}</td>
-          <td class="text-center" title="회원등급(값)">{{ item.userGradeVal }}</td>
-          <td class="text-center" title="가입일시">{{ item.registerDate }}</td>
-          <td class="text-center" title="가입상태">{{ item.registerStatus }}</td>
-          <td class="text-center" title="가입상태(값)">{{ item.registerStatusVal }}</td>
+          <td class="text-center" title="이메일">
+            <router-link :to="{ path: `/admin/members/${item.e_mail}` }" class="btn-td">
+              {{ item.e_mail }}
+            </router-link>
+          </td>
+          <td class="text-center" title="권한">{{ item.privilege }}</td>
+          <td class="text-center" title="등급">{{ item.grade }}</td>
+          <td class="text-center" title="가입일시">{{ item.regist_date }}</td>
+          <td class="text-center" title="상태">{{ item.user_status }}</td>
         </tr>
       </tbody>
     </table>
