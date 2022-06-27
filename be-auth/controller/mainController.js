@@ -4,15 +4,12 @@ const router = express.Router();
 require('dotenv').config();
 
 // ---
-
 const MIDDLEWARE_PATH = '../middleware';
 
 // ---
-
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 
 // ---
-
 router.get('/', (req, res) => {
   LOG(req.originalUrl);
 

@@ -4,18 +4,15 @@ const router = express.Router();
 require('dotenv').config();
 
 // ---
-
 const MIDDLEWARE_PATH = '../middleware';
 const SERVICE_PATH = '../service';
 
 // ---
-
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const { generateToken, verifyToken } = require(`${MIDDLEWARE_PATH}/jwt.js`);
 const { getMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
-
 router.post('/create', (req, res) => {
   LOG(req.originalUrl);
 

@@ -2,18 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 // ---
-
 const MIDDLEWARE_PATH = '../middleware';
 const SERVICE_PATH = '../service';
 
 // ---
-
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const { getSchedules, getSchedule } = require(`${SERVICE_PATH}/scheduleService`);
 
 // ---
-
 router.get('/', verifyJwt, (req, res) => {
   LOG(req.originalUrl);
 

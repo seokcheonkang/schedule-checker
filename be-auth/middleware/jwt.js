@@ -2,11 +2,9 @@ const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
 
 // ---
-
 const LOG = require('./log');
 
 // ---
-
 const service = {
   generateToken: (req, res, member) => {
     LOG('generateToken');

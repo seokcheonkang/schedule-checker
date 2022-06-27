@@ -4,12 +4,10 @@ const router = express.Router();
 require('dotenv').config();
 
 // ---
-
 const MIDDLEWARE_PATH = '../middleware';
 const SERVICE_PATH = '../service';
 
 // ---
-
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const {
@@ -21,7 +19,6 @@ const {
 } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
-
 // router.get('/', verifyJwt, async (req, res) => {
 router.get('/', async (req, res) => {
   LOG(req.originalUrl);
