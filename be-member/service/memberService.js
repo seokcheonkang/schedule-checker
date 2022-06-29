@@ -24,7 +24,7 @@ const MIDDLEWARE_PATH = '../middleware';
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 
 // ---
-const db = require('../database/connect/mariadb');
+const db = require('../database/connect/db.js');
 db.getConnection();
 
 const service = {
