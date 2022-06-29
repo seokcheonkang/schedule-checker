@@ -19,12 +19,13 @@ const members = {
 
 // ---
 const MIDDLEWARE_PATH = '../middleware';
+const DATABASE_PATH = '../database';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 
 // ---
-const db = require('../database/connect/db.js');
+const db = require(`${DATABASE_PATH}/db.js`);
 db.getConnection();
 
 const service = {

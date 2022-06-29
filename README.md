@@ -4,9 +4,9 @@
 
 ### 1. backend
 
+be-home
 be-auth
 be-member
-be-schedule
 
 ### 2. frontend
 
