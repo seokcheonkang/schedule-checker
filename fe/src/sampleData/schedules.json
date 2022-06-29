@@ -1,14 +1,14 @@
 {
   "columns": [
     {
-      "key": "seq",
+      "key": "schedule_code",
       "val": "순번"
     },
     { "key": "title", "val": "제목" },
-    { "key": "status", "val": "상태" },
-    { "key": "uncompletedCount", "val": "미완료수" },
-    { "key": "completedCount", "val": "완료수" },
-    { "key": "insertDate", "val": "등록일시" }
+    { "key": "schedule_status", "val": "스케줄상태" },
+    { "key": "process_status", "val": "진행상태" },
+    { "key": "regist_date", "val": "등록일시" },
+    { "key": "limit_date", "val": "만료일시" }
   ],
   "dataList": [
     {
