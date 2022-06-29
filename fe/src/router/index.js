@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home, // eager loading page
   },
   {
     path: '/error/notFound',
@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/Login',
     name: 'Login',
-    component: () => import('@/views/normal/Login.vue'), // lazy-load page
+    component: () => import('@/views/normal/Login.vue'), // lazy loading page
   },
   {
     path: '/Profile',
