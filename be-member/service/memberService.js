@@ -63,7 +63,7 @@ const service = {
     return result;
   },
   insertMember: async (userInfo) => {
-    const sql = `insert into tb_user values (?, ?, ?, 'normal', 1, now(), 1)`;
+    const sql = `insert into tb_user values (?, ?, ?, 'user', 1, now(), 1)`;
     const param = [userInfo.user_code, userInfo.name, userInfo.e_mail];
 
     await db.query(sql, param);
