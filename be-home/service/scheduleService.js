@@ -21,15 +21,6 @@ const schedules = {
       key: 'limit_date',
       val: '마감일시',
     },
-    // {
-    //   key: 'seq',
-    //   val: '순번',
-    // },
-    // { key: 'title', val: '제목' },
-    // { key: 'status', val: '상태' },
-    // { key: 'uncompletedCount', val: '미완료수' },
-    // { key: 'completedCount', val: '완료수' },
-    // { key: 'insertDate', val: '등록일시' },
   ],
   dataList: [],
 };
@@ -81,8 +72,46 @@ const service = {
 
     return result;
   },
-  getSchedule: (seq) => {
-    return schedules.dataList.find((schedule) => schedule.seq === Number(seq));
+  getSchedule: async (schedule_code) => {
+    const sql = `
+    select 
+           schedule_code
+         , title
+         , schedule_status 
+         , process_status 
+         , date_format(regist_date, '%Y-%m-%d %H:%i:%s') as regist_date
+         , date_format(limit_date, '%Y-%m-%d %H:%i:%s') as limit_date
+         , case when schedule_status = '1' then '준비'
+                when schedule_status = '2' then '진행'
+                when schedule_status = '3' then '취소'
+                when schedule_status = '99' then '만료'
+                else '알수없음'
+            end as schedule_status_val
+         , case when process_status = '1' then '준비'
+                when process_status = '99' then '종료'
+                else '알수없음'
+            end as process_status_val
+      from tb_schedule 
+     where 1=1 
+       and schedule_code = ?
+    `;
+
+    const param = schedule_code;
+
+    const result = await db
+      .query(sql, param)
+      .then((response) => {
+        if (response.length < 1) {
+          return null;
+        } else {
+          return response[0];
+        }
+      })
+      .catch((err) => {
+        LOG(err);
+      });
+
+    return result;
   },
 };
 

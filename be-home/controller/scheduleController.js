@@ -23,12 +23,12 @@ router.get('/', verifyJwt, async (req, res) => {
   res.status(200).json(response);
 });
 
-router.get('/:seq', verifyJwt, (req, res) => {
+router.get('/:schedule_code', verifyJwt, async (req, res) => {
   LOG(req.originalUrl);
 
-  const seq = req.params.seq;
+  const schedule_code = req.params.schedule_code;
 
-  const result = getSchedule(seq);
+  const result = await getSchedule(schedule_code);
 
   const response = { code: 200, message: '조회 성공', result };
 
