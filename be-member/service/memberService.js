@@ -29,7 +29,27 @@ db.getConnection();
 
 const service = {
   getMembers: async () => {
-    const sql = 'select * from tb_user';
+    const sql = `
+    select 
+           user_code
+         , user_email
+         , user_name
+         , grade
+         , status
+         , regist_date
+         , case when grade = '1' then '회원'
+                when grade = '99' then '관리자'
+                else '알수업음'
+            end as grade_val
+         , case when status = '1' then '대기'
+                when status = '2' then '정지'
+                when status = '3' then '탈퇴'
+                when status = '99' then '승인'
+                else '알수업음'
+            end as status_val
+      from tb_user 
+     where 1=1 
+    `;
 
     const result = await db
       .query(sql)
@@ -44,7 +64,28 @@ const service = {
     return result;
   },
   getMemberByUserEmail: async (user_email) => {
-    const sql = 'select * from tb_user where 1=1 and user_email = ?';
+    const sql = `
+    select 
+           user_code
+         , user_email
+         , user_name
+         , grade
+         , status
+         , regist_date
+         , case when grade = '1' then '회원'
+                when grade = '99' then '관리자'
+                else '알수업음'
+            end as grade_val
+         , case when status = '1' then '대기'
+                when status = '2' then '정지'
+                when status = '3' then '탈퇴'
+                when status = '99' then '승인'
+                else '알수업음'
+            end as status_val
+      from tb_user 
+     where 1=1 
+       and user_email = ?
+    `;
     const param = user_email;
 
     const result = await db
@@ -63,7 +104,25 @@ const service = {
     return result;
   },
   insertMember: async (userInfo) => {
-    const sql = `insert into tb_user (user_code, user_email, user_name, grade, status, regist_date) values (?, ?, ?, '1', '1', now())`;
+    const sql = `
+    insert into tb_user
+    (
+        user_code
+      , user_email
+      , user_name
+      , grade
+      , status
+      , regist_date
+    ) values (
+        ?
+      , ?
+      , ?
+      , '1'
+      , '1'
+      , now()
+    )
+    `;
+
     const param = [userInfo.user_code, userInfo.user_email, userInfo.user_name];
 
     await db.query(sql, param);
@@ -71,7 +130,15 @@ const service = {
     return service.getMemberByUserEmail(userInfo.user_email);
   },
   updateMember: async (userInfo) => {
-    const sql = `update tb_user set grade = ?, status = ? where 1=1 and user_email = ?`;
+    const sql = `
+    update tb_user 
+       set
+           grade = ?
+         , status = ? 
+     where 1=1 
+       and user_email = ?
+    `;
+
     const param = [userInfo.grade, userInfo.status, userInfo.user_email];
 
     await db.query(sql, param);
@@ -79,7 +146,12 @@ const service = {
     return service.getMemberByUserEmail(userInfo.user_email);
   },
   deleteMember: async (userInfo) => {
-    const sql = `delete from tb_user where 1=1 and user_email = ?`;
+    const sql = `
+    delete from tb_user
+     where 1=1 
+       and user_email = ?
+    `;
+
     const param = [userInfo.user_email];
 
     await db.query(sql, param);
