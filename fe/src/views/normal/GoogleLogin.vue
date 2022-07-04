@@ -68,9 +68,6 @@ const verifyToken = async (responseCreateToken) => {
     loginStore.setAccessToken(authorization);
     loginStore.setRefreshToken(responseCreateToken.result.refreshToken);
     loginStore.setGrade(response.result.grade);
-    debugger;
-
-    router.push('/');
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({
       icon: 'error',

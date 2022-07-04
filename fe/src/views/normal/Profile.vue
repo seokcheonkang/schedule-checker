@@ -39,6 +39,8 @@ const state = reactive({
     grade: null,
     status: null,
     regist_date: null,
+    grade_val: null,
+    status_val: null,
   },
 });
 
@@ -80,11 +82,13 @@ const getUserInfo = async () => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.userInfo.user_code = response.result.user_code;
-    state.userInfo.user_email = response.result.user_email; // TODO
+    state.userInfo.user_email = response.result.user_email;
     state.userInfo.user_name = response.result.user_name;
     state.userInfo.status = response.result.status;
     state.userInfo.grade = response.result.grade;
     state.userInfo.regist_date = response.result.regist_date;
+    state.userInfo.status_val = response.result.status_val;
+    state.userInfo.grade_val = response.result.grade_val;
   } else {
     LOGD(response.code);
   }
@@ -112,21 +116,9 @@ onMounted(() => {
             <h5 class="text-muted">이메일</h5>
             <div class="mb-3">{{ state.userInfo.user_email }}</div>
             <h5 class="text-muted">권한</h5>
-            <div class="mb-3">
-              <select class="bg-light w-30 select-border-none" v-model="state.userInfo.grade" disabled>
-                <option :value="column.key" v-for="column in MemberGrade">
-                  {{ column.val }}
-                </option>
-              </select>
-            </div>
+            <div class="mb-3">{{ state.userInfo.grade_val }}</div>
             <h5 class="text-muted">상태</h5>
-            <div class="mb-3">
-              <select class="bg-light w-30 select-border-none" v-model="state.userInfo.status" disabled>
-                <option :value="column.key" v-for="column in MemberRegisterStatus">
-                  {{ column.val }}
-                </option>
-              </select>
-            </div>
+            <div class="mb-3">{{ state.userInfo.status_val }}</div>
             <h5 class="text-muted">가입일시</h5>
             <div class="mb-3">{{ state.userInfo.regist_date }}</div>
           </div>

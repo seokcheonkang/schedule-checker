@@ -11,10 +11,10 @@ const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const { getSchedules, getSchedule } = require(`${SERVICE_PATH}/scheduleService`);
 
 // ---
-router.get('/', verifyJwt, (req, res) => {
+router.get('/', verifyJwt, async (req, res) => {
   LOG(req.originalUrl);
 
-  const result = getSchedules();
+  const result = await getSchedules();
 
   const response = { code: 200, message: '조회 성공', result };
 

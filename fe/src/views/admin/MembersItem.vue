@@ -81,6 +81,8 @@ const getUserInfo = async (user_email) => {
     state.userInfo.grade = response.result.grade;
     state.userInfo.status = response.result.status;
     state.userInfo.regist_date = response.result.regist_date;
+    state.userInfo.grade_val = response.result.grade_val;
+    state.userInfo.status_val = response.result.status_val;
   } else {
     LOGD(response.code);
   }
@@ -131,11 +133,6 @@ onMounted(() => {
             </h5>
             <h5 class="text-muted mb-3">
               <span>상태</span>
-              <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.status }}</span>
-            </h5>
-            <h5 class="text-muted mb-3">
-              <span>가입상태(값)</span>
               <span>&nbsp;:&nbsp;</span>
               <span>
                 <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="state.userInfo.status">

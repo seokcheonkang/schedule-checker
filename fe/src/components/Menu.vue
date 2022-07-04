@@ -21,7 +21,7 @@ const loginStore = useLoginStore();
 
 // state
 const state = reactive({
-  profileImageUrl: 'http://picsum.photos/20',
+  profileImageUrl: `http://picsum.photos/20`,
 });
 
 // google oauth
@@ -52,17 +52,17 @@ const logout = () => {
     });
 };
 
+const setProfileImage = () => {
+  if (loginStore.isLogin) {
+    state.profileImageUrl = `${loginStore.loginInfo.imageUrl}`;
+  }
+};
+
+setProfileImage();
+
 onBeforeMount(() => {});
 
-onMounted(() => {
-  const setProfileImage = () => {
-    if (loginStore.isLogin) {
-      state.profileImageUrl = loginStore.loginInfo.imageUrl;
-    }
-  };
-
-  setProfileImage();
-});
+onMounted(() => {});
 </script>
 
 <template>

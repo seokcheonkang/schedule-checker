@@ -141,16 +141,16 @@ onMounted(() => {
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center" title="순번">{{ item.seq }}&nbsp;</td>
+          <td class="text-center" title="순번">{{ item.schedule_code }}&nbsp;</td>
           <td class="text-center" title="제목">
-            <router-link :to="{ path: `/schedules/${item.seq}` }" class="btn-td">
+            <router-link :to="{ path: `/schedules/${item.schedule_code}` }" class="btn-td">
               {{ item.title }}
             </router-link>
           </td>
-          <td class="text-center" title="상태">{{ item.status }}</td>
-          <td class="text-center" title="미완료수">{{ item.uncompletedCount }}</td>
-          <td class="text-center" title="완료수">{{ item.completedCount }}</td>
-          <td class="text-center" title="등록일시">{{ item.insertDate }}</td>
+          <td class="text-center" title="등록 상태">{{ item.schedule_status_val }}</td>
+          <td class="text-center" title="진행 상태">{{ item.process_status_val }}</td>
+          <td class="text-center" title="등록일시">{{ item.regist_date }}</td>
+          <td class="text-center" title="만료일시">{{ item.limit_date }}</td>
         </tr>
       </tbody>
     </table>

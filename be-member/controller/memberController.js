@@ -19,8 +19,8 @@ const {
 } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
-// router.get('/', verifyJwt, async (req, res) => {
-router.get('/', async (req, res) => {
+router.get('/', verifyJwt, async (req, res) => {
+  // router.get('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const result = await getMembers();
@@ -54,7 +54,6 @@ router.get('/:user_email', async (req, res) => {
   res.status(response.code).json(response);
 });
 
-// router.post('/', verifyJwt, async (req, res) => {
 router.post('/', async (req, res) => {
   LOG(req.originalUrl);
 
@@ -81,8 +80,8 @@ router.post('/', async (req, res) => {
   res.status(response.code).json(response);
 });
 
-// router.patch('/', verifyJwt, async (req, res) => {
-router.patch('/', async (req, res) => {
+router.patch('/', verifyJwt, async (req, res) => {
+  // router.patch('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const grade = req.body.grade;
@@ -107,8 +106,9 @@ router.patch('/', async (req, res) => {
 
   res.status(response.code).json(response);
 });
-// router.delete('/', verifyJwt, async (req, res) => {
-router.delete('/', async (req, res) => {
+
+router.delete('/', verifyJwt, async (req, res) => {
+  // router.delete('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const user_email = req.body.user_email;

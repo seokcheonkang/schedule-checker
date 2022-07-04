@@ -36,16 +36,16 @@ const service = {
          , user_name
          , grade
          , status
-         , regist_date
+         , date_format(regist_date, '%Y-%m-%d %H:%i:%s') as regist_date
          , case when grade = '1' then '회원'
                 when grade = '99' then '관리자'
-                else '알수업음'
+                else '알수없음'
             end as grade_val
          , case when status = '1' then '대기'
                 when status = '2' then '정지'
                 when status = '3' then '탈퇴'
                 when status = '99' then '승인'
-                else '알수업음'
+                else '알수없음'
             end as status_val
       from tb_user 
      where 1=1 
@@ -71,16 +71,16 @@ const service = {
          , user_name
          , grade
          , status
-         , regist_date
+         , date_format(regist_date, '%Y-%m-%d %H:%i:%s') as regist_date
          , case when grade = '1' then '회원'
                 when grade = '99' then '관리자'
-                else '알수업음'
+                else '알수없음'
             end as grade_val
          , case when status = '1' then '대기'
                 when status = '2' then '정지'
                 when status = '3' then '탈퇴'
                 when status = '99' then '승인'
-                else '알수업음'
+                else '알수없음'
             end as status_val
       from tb_user 
      where 1=1 
