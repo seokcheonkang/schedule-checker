@@ -6,7 +6,7 @@ export const useLoginStore = defineStore({
   state: () => ({
     isLogin: false,
     loginInfo: null,
-    role: null,
+    grade: null,
     accessToken: null,
     refreshToken: null,
   }),
@@ -17,8 +17,8 @@ export const useLoginStore = defineStore({
     getLoginInfo: (state) => {
       return state.loginInfo;
     },
-    getRole: (state) => {
-      return state.role;
+    getGrade: (state) => {
+      return state.grade;
     },
     getAccessToken: (state) => {
       return state.accessToken;
@@ -34,8 +34,8 @@ export const useLoginStore = defineStore({
     setLoginInfo(val) {
       this.loginInfo = val;
     },
-    setRole(val) {
-      this.role = val;
+    setGrade(val) {
+      this.grade = val;
     },
     setAccessToken(val) {
       this.accessToken = val;

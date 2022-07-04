@@ -4,34 +4,31 @@
       "key": "user_code",
       "val": "코드"
     },
+    { "key": "user_email", "val": "이메일" },
     {
-      "key": "name",
+      "key": "user_name",
       "val": "이름"
     },
-    { "key": "e_mail", "val": "이메일" },
-    { "key": "privilege", "val": "권한" },
     { "key": "grade", "val": "등급" },
-    { "key": "regist_date", "val": "가입일시" },
-    { "key": "user_status", "val": "상태" }
+    { "key": "status", "val": "상태" },
+    { "key": "regist_date", "val": "가입일시" }
   ],
   "dataList": [
     {
       "user_code": "a2",
-      "userName": "test2",
-      "e_mail": "yunbeom.kim@bespinglobal.com",
-      "privilege": "user",
+      "user_email": "a2@bespinglobal.com",
+      "user_name": "test2",
       "grade": "1",
-      "regist_date": "2022-06-08 23:59:59",
-      "user_status": "99"
+      "status": "1",
+      "regist_date": "2022-06-08 23:59:59"
     },
     {
       "user_code": "a1",
-      "userName": "test1",
-      "e_mail": "idealful@bespinglobal.com",
-      "privilege": "admin",
+      "user_email": "a1@bespinglobal.com",
+      "user_name": "test1",
       "grade": "99",
-      "regist_date": "2022-06-08 23:59:59",
-      "user_status": "99"
+      "status": "99",
+      "regist_date": "2022-06-08 23:59:59"
     }
   ]
 }

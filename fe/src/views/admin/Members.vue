@@ -141,19 +141,18 @@ onMounted(() => {
         <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center" title="코드">{{ item.user_code }}&nbsp;</td>
           <td class="text-center" title="이름">
-            <router-link :to="{ path: `/admin/members/${item.e_mail}` }" class="btn-td">
-              {{ item.name }}
+            <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
+              {{ item.user_name }}
             </router-link>
           </td>
           <td class="text-center" title="이메일">
-            <router-link :to="{ path: `/admin/members/${item.e_mail}` }" class="btn-td">
-              {{ item.e_mail }}
+            <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
+              {{ item.user_email }}
             </router-link>
           </td>
-          <td class="text-center" title="권한">{{ item.privilege }}</td>
           <td class="text-center" title="등급">{{ item.grade }}</td>
+          <td class="text-center" title="상태">{{ item.status }}</td>
           <td class="text-center" title="가입일시">{{ item.regist_date }}</td>
-          <td class="text-center" title="상태">{{ item.user_status }}</td>
         </tr>
       </tbody>
     </table>

@@ -6,6 +6,9 @@ import { useRoute } from 'vue-router';
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
+import MemberGrade from '@/sampleData/memberGrade.json';
+import MemberRegisterStatus from '@/sampleData/MemberRegisterStatus.json';
+
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
@@ -30,13 +33,12 @@ const loginStore = useLoginStore();
 // state
 const state = reactive({
   userInfo: {
-    seq: null,
-    userName: null,
-    userGrade: null,
-    userGradeVal: null,
-    registerDate: null,
-    registerStatus: null,
-    registerStatusVal: null,
+    user_code: null,
+    user_email: null,
+    user_name: null,
+    grade: null,
+    status: null,
+    regist_date: null,
   },
 });
 
@@ -77,14 +79,12 @@ const getUserInfo = async () => {
   const response = await API(CONSTANT.GET, url, args, header);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    state.userInfo.seq = response.result.seq;
-    state.userInfo.userEmail = response.result.userEmail;
-    state.userInfo.userName = response.result.userName;
-    state.userInfo.userGrade = response.result.userGrade;
-    state.userInfo.userGradeVal = response.result.userGradeVal;
-    state.userInfo.registerDate = response.result.registerDate;
-    state.userInfo.registerStatus = response.result.registerStatus;
-    state.userInfo.registerStatusVal = response.result.registerStatusVal;
+    state.userInfo.user_code = response.result.user_code;
+    state.userInfo.user_email = response.result.user_email; // TODO
+    state.userInfo.user_name = response.result.user_name;
+    state.userInfo.status = response.result.status;
+    state.userInfo.grade = response.result.grade;
+    state.userInfo.regist_date = response.result.regist_date;
   } else {
     LOGD(response.code);
   }
@@ -108,15 +108,27 @@ onMounted(() => {
           <h4 class="mb-3">프로필</h4>
           <div class="form-floating mb-3">
             <h5 class="text-muted">이름</h5>
-            <div class="mb-3">{{ state.userInfo.userName }}</div>
+            <div class="mb-3">{{ state.userInfo.user_name }}</div>
             <h5 class="text-muted">이메일</h5>
-            <div class="mb-3">{{ state.userInfo.userEmail }}</div>
-            <h5 class="text-muted">가입일시</h5>
-            <div class="mb-3">{{ state.userInfo.registerDate }}</div>
+            <div class="mb-3">{{ state.userInfo.user_email }}</div>
             <h5 class="text-muted">권한</h5>
-            <div class="mb-3">{{ state.userInfo.userGradeVal }}</div>
+            <div class="mb-3">
+              <select class="bg-light w-30 select-border-none" v-model="state.userInfo.grade" disabled>
+                <option :value="column.key" v-for="column in MemberGrade">
+                  {{ column.val }}
+                </option>
+              </select>
+            </div>
             <h5 class="text-muted">상태</h5>
-            <div class="mb-3">{{ state.userInfo.registerStatusVal }}</div>
+            <div class="mb-3">
+              <select class="bg-light w-30 select-border-none" v-model="state.userInfo.status" disabled>
+                <option :value="column.key" v-for="column in MemberRegisterStatus">
+                  {{ column.val }}
+                </option>
+              </select>
+            </div>
+            <h5 class="text-muted">가입일시</h5>
+            <div class="mb-3">{{ state.userInfo.regist_date }}</div>
           </div>
           <CustomActionButton text="회원 탈퇴" command="memberLeave" option1="btn-danger" @buttonClicked="leave" />
         </div>

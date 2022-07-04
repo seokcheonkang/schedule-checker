@@ -17,6 +17,7 @@ import swal from 'sweetalert2';
 
 // env
 const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
+const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // route
 const route = useRoute();
@@ -27,28 +28,47 @@ const loginStore = useLoginStore();
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
 
-const createToken = async (userEmail) => {
-  const urlCreate = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
-  const argsCreate = { userEmail };
+const isMember = async (user_email) => {
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const args = {};
 
-  const responseCreate = await API(CONSTANT.POST, urlCreate, argsCreate);
+  const response = await API(CONSTANT.GET, url, args);
 
-  return responseCreate;
+  return response;
+};
+
+const createMember = async (profile) => {
+  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
+  const args = { user_code: profile.id, user_name: profile.name, user_email: profile.email };
+
+  const response = await API(CONSTANT.POST, url, args);
+
+  return response;
+};
+
+const createToken = async (user_email) => {
+  const url = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
+  const args = { user_email };
+
+  const response = await API(CONSTANT.POST, url, args);
+
+  return response;
 };
 
 const verifyToken = async (responseCreateToken) => {
   const authorization = CONSTANT.BEARER + responseCreateToken.result.accessToken;
 
-  const urlVerify = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
-  const argsVerify = {};
-  const headerVerify = { authorization };
+  const url = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
+  const args = {};
+  const header = { authorization };
 
-  const responseVerify = await API(CONSTANT.POST, urlVerify, argsVerify, headerVerify);
+  const response = await API(CONSTANT.POST, url, args, header);
 
-  if (responseVerify.code === MESSAGE.CODE_HTTP_STATUS_200) {
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     loginStore.setAccessToken(authorization);
     loginStore.setRefreshToken(responseCreateToken.result.refreshToken);
-    loginStore.setRole(responseVerify.result.userGrade);
+    loginStore.setGrade(response.result.grade);
+    debugger;
 
     router.push('/');
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
@@ -70,19 +90,31 @@ const handleClickSignIn = async () => {
 
     const profile = {
       // access_token: googleUser.getAuthResponse().access_token,
-      email: googleUser.getBasicProfile().getEmail(),
       id: googleUser.getBasicProfile().getId(),
+      name: googleUser.getBasicProfile().getName(),
+      email: googleUser.getBasicProfile().getEmail(),
       imageUrl: googleUser.getBasicProfile().getImageUrl(),
     };
 
-    loginStore.setIsLogin(true);
-    loginStore.setLoginInfo(profile);
+    const responseIsMember = await isMember(profile.email);
+    if (responseIsMember.code !== MESSAGE.CODE_HTTP_STATUS_200) {
+      await createMember(profile);
+    }
 
     const responseCreateToken = await createToken(profile.email);
     await verifyToken(responseCreateToken);
+
+    const processAfterToken = async () => {
+      loginStore.setIsLogin(true);
+      loginStore.setLoginInfo(profile);
+
+      router.push('/');
+    };
+
+    await processAfterToken();
   } catch (error) {
     //on fail do something
-    console.error(error);
+    LOGD('error', JSON.stringify(error));
     return null;
   }
 };

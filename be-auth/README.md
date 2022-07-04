@@ -55,14 +55,20 @@ $ npm i nodemon -D
 $ npm i express dotenv cross-env
 ```
 
-#### jsonwebtoken
-
-```console
-$ npm i jsonwebtoken rand-token
-```
-
 #### ip
 
 ```console
 $ npm i ip
+```
+
+#### request
+
+```console
+$ npm i request, request-promise-native
+```
+
+#### jsonwebtoken
+
+```console
+$ npm i jsonwebtoken rand-token
 ```

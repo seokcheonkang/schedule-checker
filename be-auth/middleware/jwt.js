@@ -9,7 +9,11 @@ const service = {
   generateToken: (req, res, member) => {
     LOG('generateToken');
 
-    const args = { userEmail: member.userEmail, userName: member.userName, userGrade: member.userGrade };
+    const args = {
+      user_email: member.result.user_email,
+      user_name: member.result.user_name,
+      grade: member.result.grade,
+    };
 
     const key = process.env.JWT_ACCESS_TOKEN_SECRET;
 

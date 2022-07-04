@@ -34,12 +34,11 @@ const loginStore = useLoginStore();
 const state = reactive({
   userInfo: {
     user_code: null,
-    e_mail: null,
-    name: null,
-    privilege: null,
+    user_email: null,
+    user_name: null,
     grade: null,
+    status: null,
     regist_date: null,
-    user_status: null,
   },
 });
 
@@ -66,8 +65,8 @@ const confirm = (paramForParent) => {
     });
 };
 
-const getUserInfo = async (e_mail) => {
-  const url = `${ENV_URL_BACKEND_MEMBER}/members/${e_mail}`;
+const getUserInfo = async (user_email) => {
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,
@@ -77,12 +76,11 @@ const getUserInfo = async (e_mail) => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.userInfo.user_code = response.result.user_code;
-    state.userInfo.name = response.result.name;
-    state.userInfo.e_mail = response.result.e_mail;
-    state.userInfo.privilege = response.result.privilege;
+    state.userInfo.user_email = response.result.user_email;
+    state.userInfo.user_name = response.result.user_name;
     state.userInfo.grade = response.result.grade;
+    state.userInfo.status = response.result.status;
     state.userInfo.regist_date = response.result.regist_date;
-    state.userInfo.user_status = response.result.user_status;
   } else {
     LOGD(response.code);
   }
@@ -93,7 +91,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  getUserInfo(route.params.e_mail);
+  getUserInfo(route.params.user_email);
 });
 </script>
 
@@ -103,7 +101,7 @@ onMounted(() => {
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">
         <div class="p-4 p-md-4 border rounded-3 bg-light">
-          <h4 class="mb-3">{{ state.userInfo.name }}</h4>
+          <h4 class="mb-3">{{ state.userInfo.user_name }}</h4>
           <div class="form-floating mb-3">
             <h5 class="text-muted mb-3">
               <span>코드</span>
@@ -113,17 +111,12 @@ onMounted(() => {
             <h5 class="text-muted mb-3">
               <span>이메일</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.e_mail }}</span>
+              <span>{{ state.userInfo.user_email }}</span>
             </h5>
             <h5 class="text-muted mb-3">
               <span>이름</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.name }}</span>
-            </h5>
-            <h5 class="text-muted mb-3">
-              <span>권한</span>
-              <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.privilege }}</span>
+              <span>{{ state.userInfo.user_name }}</span>
             </h5>
             <h5 class="text-muted mb-3">
               <span>등급</span>
@@ -137,29 +130,25 @@ onMounted(() => {
               </span>
             </h5>
             <h5 class="text-muted mb-3">
-              <span>가입일시</span>
-              <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.regist_date }}</span>
-            </h5>
-            <h5 class="text-muted mb-3">
               <span>상태</span>
               <span>&nbsp;:&nbsp;</span>
-              <span>{{ state.userInfo.user_status }}</span>
+              <span>{{ state.userInfo.status }}</span>
             </h5>
             <h5 class="text-muted mb-3">
               <span>가입상태(값)</span>
               <span>&nbsp;:&nbsp;</span>
               <span>
-                <select
-                  class="form-select me-2 w-20 dpin"
-                  aria-label="searchOption"
-                  v-model="state.userInfo.user_status"
-                >
+                <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="state.userInfo.status">
                   <option :value="column.key" v-for="column in MemberRegisterStatus">
                     {{ column.val }}
                   </option>
                 </select>
               </span>
+            </h5>
+            <h5 class="text-muted mb-3">
+              <span>가입일시</span>
+              <span>&nbsp;:&nbsp;</span>
+              <span>{{ state.userInfo.regist_date }}</span>
             </h5>
           </div>
           <CustomActionButton text="회원 수정" command="memberConfirm" @buttonClicked="confirm" />

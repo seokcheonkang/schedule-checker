@@ -35,13 +35,13 @@ router.get('/', async (req, res) => {
   res.status(response.code).json(response);
 });
 
-// router.get('/:userEmail', verifyJwt, async (req, res) => {
-router.get('/:userEmail', async (req, res) => {
+// router.get('/:user_email', verifyJwt, async (req, res) => {
+router.get('/:user_email', async (req, res) => {
   LOG(req.originalUrl);
 
-  const userEmail = req.params.userEmail;
+  const user_email = req.params.user_email;
 
-  const result = await getMemberByUserEmail(userEmail);
+  const result = await getMemberByUserEmail(user_email);
 
   const response = { code: null, result };
   response.code = 200; // OK
@@ -59,13 +59,13 @@ router.post('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const user_code = req.body.user_code;
-  const name = req.body.name;
-  const e_mail = req.body.e_mail;
+  const user_email = req.body.user_email;
+  const user_name = req.body.user_name;
 
   const userInfo = {
     user_code,
-    name,
-    e_mail,
+    user_email,
+    user_name,
   };
 
   const result = await insertMember(userInfo);
@@ -86,13 +86,13 @@ router.patch('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const grade = req.body.grade;
-  const user_status = req.body.user_status;
-  const e_mail = req.body.e_mail;
+  const status = req.body.status;
+  const user_email = req.body.user_email;
 
   const userInfo = {
     grade,
-    user_status,
-    e_mail,
+    status,
+    user_email,
   };
 
   const result = await updateMember(userInfo);
@@ -111,10 +111,10 @@ router.patch('/', async (req, res) => {
 router.delete('/', async (req, res) => {
   LOG(req.originalUrl);
 
-  const e_mail = req.body.e_mail;
+  const user_email = req.body.user_email;
 
   const userInfo = {
-    e_mail,
+    user_email,
   };
 
   await deleteMember(userInfo);

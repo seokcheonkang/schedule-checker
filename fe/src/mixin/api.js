@@ -14,7 +14,11 @@ export default async (method = 'get', url, data, headers) => {
     headers,
   })
     .then((res) => {
-      const resData = res.data;
+      let resData = res.data;
+
+      if (res.status !== 200) {
+        resData = { code: res.status, result: res.statusText };
+      }
 
       LOGD(CONSTANT.RES, method, url, JSON.stringify(resData));
 

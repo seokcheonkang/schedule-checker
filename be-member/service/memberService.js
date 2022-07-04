@@ -4,15 +4,14 @@ const members = {
       key: 'user_code',
       val: '코드',
     },
+    { key: 'user_email', val: '이메일' },
     {
-      key: 'name',
+      key: 'user_name',
       val: '이름',
     },
-    { key: 'e_mail', val: '이메일' },
-    { key: 'privilege', val: '권한' },
     { key: 'grade', val: '등급' },
+    { key: 'status', val: '상태' },
     { key: 'regist_date', val: '가입일시' },
-    { key: 'user_status', val: '상태' },
   ],
   dataList: null,
 };
@@ -44,9 +43,9 @@ const service = {
 
     return result;
   },
-  getMemberByUserEmail: async (userEmail) => {
-    const sql = 'select * from tb_user where 1=1 and e_mail = ?';
-    const param = userEmail;
+  getMemberByUserEmail: async (user_email) => {
+    const sql = 'select * from tb_user where 1=1 and user_email = ?';
+    const param = user_email;
 
     const result = await db
       .query(sql, param)
@@ -64,24 +63,24 @@ const service = {
     return result;
   },
   insertMember: async (userInfo) => {
-    const sql = `insert into tb_user values (?, ?, ?, 'user', 1, now(), 1)`;
-    const param = [userInfo.user_code, userInfo.name, userInfo.e_mail];
+    const sql = `insert into tb_user (user_code, user_email, user_name, grade, status, regist_date) values (?, ?, ?, '1', '1', now())`;
+    const param = [userInfo.user_code, userInfo.user_email, userInfo.user_name];
 
     await db.query(sql, param);
 
-    return service.getMemberByUserEmail(userInfo.e_mail);
+    return service.getMemberByUserEmail(userInfo.user_email);
   },
   updateMember: async (userInfo) => {
-    const sql = `update tb_user set grade = ?, user_status = ? where 1=1 and e_mail = ?`;
-    const param = [userInfo.grade, userInfo.user_status, userInfo.e_mail];
+    const sql = `update tb_user set grade = ?, status = ? where 1=1 and user_email = ?`;
+    const param = [userInfo.grade, userInfo.status, userInfo.user_email];
 
     await db.query(sql, param);
 
-    return service.getMemberByUserEmail(userInfo.e_mail);
+    return service.getMemberByUserEmail(userInfo.user_email);
   },
   deleteMember: async (userInfo) => {
-    const sql = `delete from tb_user where 1=1 and e_mail = ?`;
-    const param = [userInfo.e_mail];
+    const sql = `delete from tb_user where 1=1 and user_email = ?`;
+    const param = [userInfo.user_email];
 
     await db.query(sql, param);
   },

@@ -32,7 +32,7 @@ app.use(Paginate);
 
 app.use(gAuthPlugin, {
   clientId: gauthClientId,
-  prompt: 'consent',
+  // prompt: 'consent',
   fetch_basic_profile: true,
 });
 

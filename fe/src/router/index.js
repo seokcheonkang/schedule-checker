@@ -32,31 +32,31 @@ const routes = [
     path: '/Profile',
     name: 'Profile',
     component: () => import('@/views/normal/Profile.vue'),
-    meta: { authorization: [1, 99] },
+    meta: { authorization: ['1', '99'] },
   },
   {
     path: '/Schedules',
     name: 'Schedules',
     component: () => import('@/views/normal/schedules.vue'),
-    meta: { authorization: [1, 99] },
+    meta: { authorization: ['1', '99'] },
   },
   {
     path: '/Schedules/:schedule_code',
     name: 'SchedulesItem',
     component: () => import('@/views/normal/SchedulesItem.vue'),
-    meta: { authorization: [1, 99] },
+    meta: { authorization: ['1', '99'] },
   },
   {
     path: '/admin/Members',
     name: 'AdminMembers',
     component: () => import('@/views/admin/Members.vue'),
-    meta: { authorization: [99] },
+    meta: { authorization: ['99'] },
   },
   {
-    path: '/admin/Members/:e_mail',
+    path: '/admin/Members/:user_email',
     name: 'AdminMembersItem',
     component: () => import('@/views/admin/MembersItem.vue'),
-    meta: { authorization: [99] },
+    meta: { authorization: ['99'] },
   },
 ];
 
@@ -80,7 +80,7 @@ router.beforeEach((to, from, next) => {
     }
 
     // 권한 없으면
-    if (authorization.length && !authorization.includes(authenticationState?.role)) {
+    if (authorization.length && !authorization.includes(authenticationState?.grade)) {
       return next({ path: '/error/needAuth' });
     }
   }

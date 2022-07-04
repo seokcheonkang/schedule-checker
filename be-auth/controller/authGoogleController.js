@@ -13,21 +13,21 @@ const { generateToken, verifyToken } = require(`${MIDDLEWARE_PATH}/jwt.js`);
 const { getMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
   LOG(req.originalUrl);
 
-  const userEmail = req.body.userEmail;
+  const user_email = req.body.user_email;
 
-  if (!userEmail) {
+  if (!user_email) {
     return res.status(500).json({ code: 500, message: '이메일이 없습니다.' });
   }
 
-  const member = getMemberByUserEmail(userEmail);
+  const member = await getMemberByUserEmail(user_email);
   if (!member) {
     return res.status(500).json({ code: 500, message: '해당하는 회원이 존재 하지 않습니다.', member });
   }
 
-  const result = generateToken(req, res, member);
+  const result = await generateToken(req, res, member);
 
   const response = { code: 200, message: '토큰이 정상 발급되었습니다.', result };
 
