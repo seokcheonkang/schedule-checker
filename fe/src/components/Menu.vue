@@ -61,14 +61,6 @@ const logout = () => {
     });
 };
 
-// const setProfileImage = () => {
-//   if (loginStore.isLogin) {
-//     state.profileImageUrl = `${loginStore.loginInfo.imageUrl}`;
-//   }
-// };
-
-// setProfileImage();
-
 onBeforeMount(() => {});
 
 onMounted(() => {});
@@ -93,7 +85,7 @@ onMounted(() => {});
         </button>
         <div class="navbar-collapse collapse show" id="navBarsMobile">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" v-if="loginStore.isLogin">
+            <li class="nav-item" v-if="loginStore.isLogin && loginStore.status === '99'">
               <router-link class="nav-link" aria-current="page" to="/schedules">스케줄</router-link>
             </li>
             <li class="nav-item dropdown" v-if="loginStore.isLogin && loginStore.grade === '99'">

@@ -59,7 +59,7 @@ const getSchedules = async () => {
       text: MESSAGE.MESSAGE_HTTP_STATUS_419,
     });
 
-    LOGOUT();
+    LOGOUT(router);
   } else {
     LOGD(schedules.code);
   }

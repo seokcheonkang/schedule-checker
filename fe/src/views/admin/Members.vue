@@ -94,7 +94,7 @@ const getMembers = async () => {
       text: MESSAGE.MESSAGE_HTTP_STATUS_419,
     });
 
-    LOGOUT();
+    LOGOUT(router);
   } else {
     LOGD(response.code);
   }
