@@ -96,15 +96,15 @@ onMounted(() => {});
             <li class="nav-item" v-if="loginStore.isLogin">
               <router-link class="nav-link" aria-current="page" to="/schedules">스케줄</router-link>
             </li>
-            <li class="nav-item dropdown" v-if="loginStore.isLogin">
+            <li class="nav-item dropdown" v-if="loginStore.isLogin && loginStore.grade === '99'">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
                 id="dropdown01"
                 data-bs-toggle="dropdown"
                 aria-expanded="true"
-                >관리</a
-              >
+                >관리
+              </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown01">
                 <li>
                   <router-link class="dropdown-item" to="/admin/members">회원</router-link>

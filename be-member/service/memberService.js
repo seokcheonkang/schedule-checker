@@ -86,6 +86,7 @@ const service = {
      where 1=1 
        and user_email = ?
     `;
+
     const param = user_email;
 
     const result = await db
