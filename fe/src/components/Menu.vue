@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, reactive, inject } from 'vue';
+import { onBeforeMount, onMounted, reactive, watchEffect, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 // mixin
@@ -21,7 +21,16 @@ const loginStore = useLoginStore();
 
 // state
 const state = reactive({
-  profileImageUrl: `http://picsum.photos/20`,
+  profileImage: `/assets/image/profile.png`,
+  setProfileImage: () => {
+    if (loginStore.isLogin) {
+      state.profileImage = `${loginStore.loginInfo.imageUrl}`;
+    }
+  },
+});
+
+watchEffect(() => {
+  return state.setProfileImage();
 });
 
 // google oauth
@@ -52,13 +61,13 @@ const logout = () => {
     });
 };
 
-const setProfileImage = () => {
-  if (loginStore.isLogin) {
-    state.profileImageUrl = `${loginStore.loginInfo.imageUrl}`;
-  }
-};
+// const setProfileImage = () => {
+//   if (loginStore.isLogin) {
+//     state.profileImageUrl = `${loginStore.loginInfo.imageUrl}`;
+//   }
+// };
 
-setProfileImage();
+// setProfileImage();
 
 onBeforeMount(() => {});
 
@@ -115,7 +124,7 @@ onMounted(() => {});
                 >
                   <img
                     id="profile_img"
-                    :src="state.profileImageUrl"
+                    :src="state.profileImage"
                     class="rounded-circle profile-image"
                     alt="사용자 이미지"
                     referrerpolicy="no-referrer"
