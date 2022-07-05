@@ -57,5 +57,7 @@ const handleButtonClicked = () => {
 </script>
 
 <template>
-  <button type="button" :class="[option1, option2, option3]" @click="handleButtonClicked">{{ text }}</button>
+  <button type="button" :class="[option1, option2, option3]" class="mt-1" @click="handleButtonClicked">
+    {{ text }}
+  </button>
 </template>

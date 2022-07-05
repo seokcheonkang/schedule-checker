@@ -42,7 +42,7 @@ const state = reactive({
   },
 });
 
-const confirm = () => {
+const goBack = () => {
   router.go(-1);
 };
 
@@ -99,7 +99,7 @@ onMounted(() => {
             <h5 class="text-muted">만료일시</h5>
             <div class="mb-3">{{ state.scheduleInfo.limit_date }}</div>
           </div>
-          <CustomActionButton text="확인" @click="confirm" />
+          <CustomActionButton text="목록" @click="goBack" />
         </div>
       </div>
     </div>

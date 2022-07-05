@@ -25,6 +25,7 @@ const state = reactive({
   msg: {},
   isLogin: loginStore.isLogin,
   grade: loginStore.grade,
+  status: loginStore.status,
 });
 
 const getInfo = async () => {

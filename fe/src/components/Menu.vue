@@ -91,7 +91,7 @@ onMounted(() => {});
             <li class="nav-item" v-if="state.isLogin && state.status === '99'">
               <router-link class="nav-link" aria-current="page" to="/schedules">스케줄</router-link>
             </li>
-            <li class="nav-item dropdown" v-if="state.isLogin && state.grade === '99'">
+            <li class="nav-item dropdown" v-if="state.isLogin && state.status === '99' && state.grade === '99'">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"

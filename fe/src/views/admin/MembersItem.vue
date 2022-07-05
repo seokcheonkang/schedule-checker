@@ -1,6 +1,6 @@
 <script setup>
 import { onBeforeMount, onMounted, reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
@@ -26,6 +26,7 @@ const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // route
 const route = useRoute();
+const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
@@ -41,6 +42,10 @@ const state = reactive({
     regist_date: null,
   },
 });
+
+const goBack = () => {
+  router.go(-1);
+};
 
 const confirm = (paramForParent) => {
   const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
@@ -148,7 +153,8 @@ onMounted(() => {
               <span>{{ state.userInfo.regist_date }}</span>
             </h5>
           </div>
-          <CustomActionButton text="회원 수정" command="memberConfirm" @buttonClicked="confirm" />
+          <CustomActionButton text="회원 수정" command="memberConfirm" option1="btn-primary" @buttonClicked="confirm" />
+          <CustomActionButton text="목록" @click="goBack" />
         </div>
       </div>
     </div>
