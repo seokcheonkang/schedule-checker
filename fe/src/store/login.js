@@ -5,8 +5,10 @@ export const useLoginStore = defineStore({
   id: 'login',
   state: () => ({
     isLogin: false,
-    loginInfo: null,
+    userInfo: null,
+    image: null,
     grade: null,
+    status: null,
     accessToken: null,
     refreshToken: null,
   }),
@@ -14,11 +16,17 @@ export const useLoginStore = defineStore({
     getIsLogin: (state) => {
       return state.isLogin;
     },
-    getLoginInfo: (state) => {
-      return state.loginInfo;
+    getUserInfo: (state) => {
+      return state.userInfo;
+    },
+    getImage: (state) => {
+      return state.image;
     },
     getGrade: (state) => {
       return state.grade;
+    },
+    getStatus: (state) => {
+      return state.status;
     },
     getAccessToken: (state) => {
       return state.accessToken;
@@ -31,16 +39,22 @@ export const useLoginStore = defineStore({
     setIsLogin(val) {
       this.isLogin = val;
     },
-    setLoginInfo(val) {
-      this.loginInfo = val;
+    setUserInfo(val) {
+      this.userInfo = val;
+    },
+    setImage(val) {
+      this.image = val;
     },
     setGrade(val) {
       this.grade = val;
     },
+    setStatus(val) {
+      this.status = val;
+    },
     setAccessToken(val) {
       this.accessToken = val;
-      // this.loginInfo = JSON.parse(JSON.stringify(jwt_decode(val)));
-      // this.loginInfo = { ...jwt_decode(val) };
+      // this.info = JSON.parse(JSON.stringify(jwt_decode(val)));
+      // this.info = { ...jwt_decode(val) };
     },
     setRefreshToken(val) {
       this.refreshToken = val;

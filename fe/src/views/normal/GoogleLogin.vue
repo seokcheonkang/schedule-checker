@@ -68,6 +68,7 @@ const verifyToken = async (responseCreateToken) => {
     loginStore.setAccessToken(authorization);
     loginStore.setRefreshToken(responseCreateToken.result.refreshToken);
     loginStore.setGrade(response.result.grade);
+    loginStore.setStatus(response.result.status);
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({
       icon: 'error',
@@ -90,7 +91,7 @@ const handleClickSignIn = async () => {
       id: googleUser.getBasicProfile().getId(),
       name: googleUser.getBasicProfile().getName(),
       email: googleUser.getBasicProfile().getEmail(),
-      imageUrl: googleUser.getBasicProfile().getImageUrl(),
+      image: googleUser.getBasicProfile().getImageUrl(),
     };
 
     const responseIsMember = await isMember(profile.email);
@@ -103,7 +104,8 @@ const handleClickSignIn = async () => {
 
     const processAfterToken = async () => {
       loginStore.setIsLogin(true);
-      loginStore.setLoginInfo(profile);
+      loginStore.setUserInfo(profile);
+      loginStore.setImage(profile.image);
 
       router.push('/');
     };
@@ -132,7 +134,7 @@ const handleClickSignOut = async () => {
     await Vue3GoogleOauth.instance.signOut();
     console.log('handleClickSignOut isAuthorized', Vue3GoogleOauth.isAuthorized);
     loginStore.setIsLogin(false);
-    loginStore.setLoginInfo({});
+    loginStore.setUserInfo({});
   } catch (error) {
     console.error(error);
   }

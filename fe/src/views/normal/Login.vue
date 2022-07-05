@@ -21,9 +21,10 @@ const loginStore = useLoginStore();
 
 // state
 const state = reactive({
-  loginInfo: {
+  userInfo: {
     userId: null,
   },
+  isLogin: loginStore.isLogin,
 });
 
 onBeforeMount(() => {
@@ -32,7 +33,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
   if (loginStore.isLogin) {
-    state.loginInfo.userId = loginStore.loginInfo.id;
+    state.userInfo.userId = loginStore.userInfo.id;
   }
 });
 </script>
@@ -43,11 +44,11 @@ onMounted(() => {
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
         <form class="p-4 p-md-4 border rounded-3 bg-light">
-          <div v-if="!loginStore.isLogin">
+          <div v-if="!state.isLogin">
             <GoogleLogin />
             <hr class="my-4" />
           </div>
-          <div v-else>환영합니다. {{ state.loginInfo.userId }}</div>
+          <div v-else>환영합니다. {{ state.userInfo.userId }}</div>
         </form>
       </div>
     </div>

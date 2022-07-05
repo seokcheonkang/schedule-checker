@@ -69,7 +69,7 @@ const leave = (paramForParent) => {
 
 const getUserInfo = async () => {
   const {
-    loginInfo: { email },
+    userInfo: { email },
   } = loginStore;
 
   const url = `${ENV_URL_BACKEND_MEMBER}/members/${email}`;
