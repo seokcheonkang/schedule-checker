@@ -34,9 +34,11 @@ const state = reactive({
     schedule_code: null,
     title: null,
     status_val: null,
-    user_name_and_email: null,
-    uncompleted_count: null,
+    total_count: null,
     completed_count: null,
+    uncompleted_count: null,
+    completed_user: null,
+    uncompleted_user: null,
     regist_date: null,
     limit_date: null,
   },
@@ -59,9 +61,11 @@ const getScheduleInfo = async (schedule_code) => {
     state.scheduleInfo.schedule_code = response.result.schedule_code;
     state.scheduleInfo.title = response.result.title;
     state.scheduleInfo.status_val = response.result.status_val;
-    state.scheduleInfo.user_name_and_email = response.result.user_name_and_email.split(',').join('<br>');
-    state.scheduleInfo.uncompleted_count = response.result.uncompleted_count;
+    state.scheduleInfo.total_count = response.result.total_count;
     state.scheduleInfo.completed_count = response.result.completed_count;
+    state.scheduleInfo.uncompleted_count = response.result.uncompleted_count;
+    state.scheduleInfo.completed_user = response.result.completed_user.split(',').join('<br>');
+    state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
     state.scheduleInfo.regist_date = response.result.regist_date;
     state.scheduleInfo.limit_date = response.result.limit_date;
   } else {
@@ -86,18 +90,32 @@ onMounted(() => {
         <div class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">{{ state.scheduleInfo.title }}</h4>
           <div class="form-floating mb-3">
-            <h5 class="text-muted">완료자</h5>
-            <div class="mb-3">
-              <span v-html="state.scheduleInfo.user_name_and_email"></span>
-            </div>
             <h5 class="text-muted">순번</h5>
             <div class="mb-3">{{ state.scheduleInfo.schedule_code }}</div>
             <h5 class="text-muted">스케줄 상태</h5>
             <div class="mb-3">{{ state.scheduleInfo.status_val }}</div>
-            <h5 class="text-muted">미완료건수</h5>
-            <div class="mb-3">{{ state.scheduleInfo.uncompleted_count }}</div>
-            <h5 class="text-muted">완료건수</h5>
-            <div class="mb-3">{{ state.scheduleInfo.completed_count }}</div>
+            <h5 class="text-muted">전체 / 완료 / 미완료</h5>
+            <div class="mb-3">
+              <span class="text-dark">
+                {{ state.scheduleInfo.total_count }}
+              </span>
+              <span class="text-dark"> / </span>
+              <span class="text-primary">
+                {{ state.scheduleInfo.completed_count }}
+              </span>
+              <span class="text-dark"> / </span>
+              <span class="text-warning">
+                {{ state.scheduleInfo.uncompleted_count }}
+              </span>
+            </div>
+            <h5 class="text-muted">완료</h5>
+            <div class="mb-3 text-primary">
+              <span v-html="state.scheduleInfo.completed_user"></span>
+            </div>
+            <h5 class="text-muted">미완료</h5>
+            <div class="mb-3 text-warning">
+              <span v-html="state.scheduleInfo.uncompleted_user"></span>
+            </div>
             <h5 class="text-muted">등록일시</h5>
             <div class="mb-3">{{ state.scheduleInfo.regist_date }}</div>
             <h5 class="text-muted">만료일시</h5>

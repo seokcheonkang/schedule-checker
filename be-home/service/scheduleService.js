@@ -11,11 +11,15 @@ const schedules = {
     },
     {
       key: 'uncompleted_count',
-      val: '미완료건수',
+      val: '미완료',
     },
     {
       key: 'completed_count',
-      val: '완료건수',
+      val: '완료',
+    },
+    {
+      key: 'total_count',
+      val: '전체',
     },
     {
       key: 'regist_date',
@@ -50,8 +54,9 @@ const service = {
          , date_format(max(t1.regist_date), '%y-%m-%d %h:%i:%s') as regist_date
          , date_format(max(t1.limit_date), '%y-%m-%d %h:%i:%s') as limit_date
          , max(t1.status_val) as status_val
-         , sum(t1.uncompleted_count) as uncompleted_count
+         , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count
+         , sum(t1.uncompleted_count) as uncompleted_count
       from (
             select 
                    a.schedule_code
@@ -65,12 +70,12 @@ const service = {
                         when a.status = '99' then '진행'
                         else '알수없음'
                     end as status_val
-                 , case when b.status = '1' then 1 
-                        else 0
-                    end as uncompleted_count
                  , case when b.status = '99' then 1 
                         else 0
                     end as completed_count
+                 , case when b.status != '99' then 1 
+                        else 0
+                    end as uncompleted_count
               from tb_schedule a
               left join tb_schedule_detail b
                 on a.schedule_code = b.schedule_code
@@ -102,9 +107,11 @@ const service = {
          , date_format(max(t1.regist_date), '%y-%m-%d %h:%i:%s') as regist_date
          , date_format(max(t1.limit_date), '%y-%m-%d %h:%i:%s') as limit_date
          , max(t1.status_val) as status_val
-         , sum(t1.uncompleted_count) as uncompleted_count
+         , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count
-         , group_concat(t1.user_name_and_email separator ',') as user_name_and_email
+         , sum(t1.uncompleted_count) as uncompleted_count
+         , ifnull(group_concat(t1.completed_user separator ','), '없음') as completed_user
+         , ifnull(group_concat(t1.uncompleted_user separator ','), '없음') as uncompleted_user
       from (
             select 
                    a.schedule_code
@@ -118,15 +125,18 @@ const service = {
                         when a.status = '99' then '진행'
                         else '알수없음'
                     end as status_val
-                 , case when b.status = '1' then 1 
-                        else 0
-                    end as uncompleted_count
                  , case when b.status = '99' then 1 
                         else 0
                     end as completed_count
+                 , case when b.status != '99' then 1 
+                        else 0
+                    end as uncompleted_count
                  , case when b.status = '99' then concat(c.user_name, '/', c.user_email)
+                        else null
+                    end as completed_user
+                 , case when b.status != '99' then concat(c.user_name, '/', c.user_email)
                    else null
-                    end as user_name_and_email
+                    end as uncompleted_user
               from tb_schedule a
               left join tb_schedule_detail b
                 on a.schedule_code = b.schedule_code
