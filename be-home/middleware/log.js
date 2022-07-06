@@ -34,7 +34,9 @@ const showLog = (type, val1, val2, val3, val4, val5) => {
 const LOG = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
   const type = 'LOG';
 
-  showLog(type, val1, val2, val3, val4, val5);
+  if (process.env.IS_LOG === 'Y') {
+    showLog(type, val1, val2, val3, val4, val5);
+  }
 };
 
 module.exports = LOG;

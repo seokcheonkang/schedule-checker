@@ -44,7 +44,9 @@ const LOGD = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
   const type = 'LOG_DEBUG';
   const color = 'skyblue';
 
-  showLog(type, color, val1, val2, val3, val4, val5);
+  if (import.meta.env.VITE_APP_IS_LOG) {
+    showLog(type, color, val1, val2, val3, val4, val5);
+  }
 };
 
 export { LOG, LOGD };

@@ -12,7 +12,7 @@ import { useLoginStore } from '@/store/login.js';
 // store
 const loginStore = useLoginStore();
 
-console.log(`VITE_APP_GREETING : ${import.meta.env.VITE_APP_GREETING}`);
+console.log(`GREETING : ${import.meta.env.VITE_APP_GREETING}`);
 
 onBeforeMount(() => {});
 

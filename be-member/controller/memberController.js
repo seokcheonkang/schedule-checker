@@ -20,7 +20,6 @@ const {
 
 // ---
 router.get('/', verifyJwt, async (req, res) => {
-  // router.get('/', async (req, res) => {
   LOG(req.originalUrl);
 
   const result = await getMembers();
@@ -81,7 +80,6 @@ router.post('/', async (req, res) => {
 });
 
 router.patch('/:user_email', verifyJwt, async (req, res) => {
-  // router.patch('/:user_email', async (req, res) => {
   LOG(req.originalUrl);
 
   const grade = req.body.grade;
@@ -108,7 +106,6 @@ router.patch('/:user_email', verifyJwt, async (req, res) => {
 });
 
 router.delete('/:user_email', verifyJwt, async (req, res) => {
-  // router.delete('/:user_email', async (req, res) => {
   LOG(req.originalUrl);
 
   const user_email = req.params.user_email;
