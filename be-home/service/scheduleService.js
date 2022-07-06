@@ -7,19 +7,19 @@ const schedules = {
     { key: 'title', val: '제목' },
     {
       key: 'status_val',
-      val: '스케줄 상태',
+      val: '상태',
     },
     {
       key: 'uncompleted_count',
-      val: '미완료',
+      val: '미완료(건수)',
     },
     {
       key: 'completed_count',
-      val: '완료',
+      val: '완료(건수)',
     },
     {
       key: 'total_count',
-      val: '전체',
+      val: '전체(건수)',
     },
     {
       key: 'regist_date',
@@ -51,8 +51,8 @@ const service = {
            t1.schedule_code
          , max(t1.title) as title
          , max(t1.status) as status
-         , date_format(max(t1.regist_date), '%y-%m-%d %h:%i:%s') as regist_date
-         , date_format(max(t1.limit_date), '%y-%m-%d %h:%i:%s') as limit_date
+         , date_format(max(t1.regist_date), '%Y-%m-%d %h:%i:%s') as regist_date
+         , date_format(max(t1.limit_date), '%Y-%m-%d %h:%i:%s') as limit_date
          , max(t1.status_val) as status_val
          , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count
@@ -104,8 +104,8 @@ const service = {
            t1.schedule_code
          , max(t1.title) as title
          , max(t1.status) as status
-         , date_format(max(t1.regist_date), '%y-%m-%d %h:%i:%s') as regist_date
-         , date_format(max(t1.limit_date), '%y-%m-%d %h:%i:%s') as limit_date
+         , date_format(max(t1.regist_date), '%Y-%m-%d %h:%i:%s') as regist_date
+         , date_format(max(t1.limit_date), '%Y-%m-%d %h:%i:%s') as limit_date
          , max(t1.status_val) as status_val
          , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count

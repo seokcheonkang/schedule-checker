@@ -90,36 +90,54 @@ onMounted(() => {
         <div class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">{{ state.scheduleInfo.title }}</h4>
           <div class="form-floating mb-3">
-            <h5 class="text-muted">순번</h5>
-            <div class="mb-3">{{ state.scheduleInfo.schedule_code }}</div>
-            <h5 class="text-muted">스케줄 상태</h5>
-            <div class="mb-3">{{ state.scheduleInfo.status_val }}</div>
-            <h5 class="text-muted">전체 / 완료 / 미완료</h5>
-            <div class="mb-3">
+            <h5>
+              <span class="text-muted">순번 : </span>
+              <span class="text-dark">
+                {{ state.scheduleInfo.schedule_code }}
+              </span>
+            </h5>
+            <h5>
+              <span class="text-muted">상태 : </span>
+              <span class="text-dark">
+                {{ state.scheduleInfo.status_val }}
+              </span>
+            </h5>
+            <h5>
+              <span class="text-muted">전체 : </span>
               <span class="text-dark">
                 {{ state.scheduleInfo.total_count }}
               </span>
-              <span class="text-dark"> / </span>
+            </h5>
+            <h5>
+              <span class="text-muted">완료 : </span>
               <span class="text-primary">
                 {{ state.scheduleInfo.completed_count }}
               </span>
-              <span class="text-dark"> / </span>
-              <span class="text-warning">
-                {{ state.scheduleInfo.uncompleted_count }}
-              </span>
-            </div>
-            <h5 class="text-muted">완료</h5>
+            </h5>
             <div class="mb-3 text-primary">
               <span v-html="state.scheduleInfo.completed_user"></span>
             </div>
-            <h5 class="text-muted">미완료</h5>
+            <h5>
+              <span class="text-muted">미완료 : </span>
+              <span class="text-warning">
+                {{ state.scheduleInfo.uncompleted_count }}
+              </span>
+            </h5>
             <div class="mb-3 text-warning">
               <span v-html="state.scheduleInfo.uncompleted_user"></span>
             </div>
-            <h5 class="text-muted">등록일시</h5>
-            <div class="mb-3">{{ state.scheduleInfo.regist_date }}</div>
-            <h5 class="text-muted">만료일시</h5>
-            <div class="mb-3">{{ state.scheduleInfo.limit_date }}</div>
+            <h5>
+              <span class="text-muted">등록일시 : </span>
+              <span class="text-dark">
+                {{ state.scheduleInfo.regist_date }}
+              </span>
+            </h5>
+            <h5>
+              <span class="text-muted">만료일시 : </span>
+              <span class="text-dark">
+                {{ state.scheduleInfo.limit_date }}
+              </span>
+            </h5>
           </div>
           <CustomActionButton text="목록" @click="goBack" />
         </div>
