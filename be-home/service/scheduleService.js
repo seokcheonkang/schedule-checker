@@ -104,6 +104,7 @@ const service = {
          , max(t1.status_val) as status_val
          , sum(t1.uncompleted_count) as uncompleted_count
          , sum(t1.completed_count) as completed_count
+         , group_concat(t1.user_name_and_email separator ',') as user_name_and_email
       from (
             select 
                    a.schedule_code
@@ -123,9 +124,14 @@ const service = {
                  , case when b.status = '99' then 1 
                         else 0
                     end as completed_count
+                 , case when b.status = '99' then concat(c.user_name, '/', c.user_email)
+                   else null
+                    end as user_name_and_email
               from tb_schedule a
               left join tb_schedule_detail b
                 on a.schedule_code = b.schedule_code
+              left join tb_user c
+                on b.user_code = c.user_code
              where 1=1 
                and a.schedule_code = ?
         ) t1

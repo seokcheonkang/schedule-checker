@@ -34,6 +34,7 @@ const state = reactive({
     schedule_code: null,
     title: null,
     status_val: null,
+    user_name_and_email: null,
     uncompleted_count: null,
     completed_count: null,
     regist_date: null,
@@ -58,6 +59,7 @@ const getScheduleInfo = async (schedule_code) => {
     state.scheduleInfo.schedule_code = response.result.schedule_code;
     state.scheduleInfo.title = response.result.title;
     state.scheduleInfo.status_val = response.result.status_val;
+    state.scheduleInfo.user_name_and_email = response.result.user_name_and_email.split(',').join('<br>');
     state.scheduleInfo.uncompleted_count = response.result.uncompleted_count;
     state.scheduleInfo.completed_count = response.result.completed_count;
     state.scheduleInfo.regist_date = response.result.regist_date;
@@ -84,10 +86,12 @@ onMounted(() => {
         <div class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">{{ state.scheduleInfo.title }}</h4>
           <div class="form-floating mb-3">
+            <h5 class="text-muted">완료자</h5>
+            <div class="mb-3">
+              <span v-html="state.scheduleInfo.user_name_and_email"></span>
+            </div>
             <h5 class="text-muted">순번</h5>
             <div class="mb-3">{{ state.scheduleInfo.schedule_code }}</div>
-            <h5 class="text-muted">제목</h5>
-            <div class="mb-3">{{ state.scheduleInfo.title }}</div>
             <h5 class="text-muted">스케줄 상태</h5>
             <div class="mb-3">{{ state.scheduleInfo.status_val }}</div>
             <h5 class="text-muted">미완료건수</h5>
