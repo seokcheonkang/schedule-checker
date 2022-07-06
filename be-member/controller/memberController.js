@@ -80,13 +80,13 @@ router.post('/', async (req, res) => {
   res.status(response.code).json(response);
 });
 
-router.patch('/', verifyJwt, async (req, res) => {
-  // router.patch('/', async (req, res) => {
+router.patch('/:user_email', verifyJwt, async (req, res) => {
+  // router.patch('/:user_email', async (req, res) => {
   LOG(req.originalUrl);
 
   const grade = req.body.grade;
   const status = req.body.status;
-  const user_email = req.body.user_email;
+  const user_email = req.params.user_email;
 
   const userInfo = {
     grade,
@@ -107,17 +107,13 @@ router.patch('/', verifyJwt, async (req, res) => {
   res.status(response.code).json(response);
 });
 
-router.delete('/', verifyJwt, async (req, res) => {
-  // router.delete('/', async (req, res) => {
+router.delete('/:user_email', verifyJwt, async (req, res) => {
+  // router.delete('/:user_email', async (req, res) => {
   LOG(req.originalUrl);
 
-  const user_email = req.body.user_email;
+  const user_email = req.params.user_email;
 
-  const userInfo = {
-    user_email,
-  };
-
-  await deleteMember(userInfo);
+  const result = await deleteMember(user_email);
 
   const response = { code: null, result };
   response.code = 201; // Created

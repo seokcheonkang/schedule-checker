@@ -1,19 +1,17 @@
 <script setup>
 import { onBeforeMount, onMounted, reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
-
-import MemberGrade from '@/sampleData/memberGrade.json';
-import MemberRegisterStatus from '@/sampleData/MemberRegisterStatus.json';
 
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
+import { LOGOUT } from '@/mixin/logout.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -26,6 +24,7 @@ const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // route
 const route = useRoute();
+const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
@@ -43,6 +42,65 @@ const state = reactive({
     status_val: null,
   },
 });
+
+const getUserInfo = async () => {
+  const {
+    userInfo: { email: user_email },
+  } = loginStore;
+
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const args = {};
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  const response = await API(CONSTANT.GET, url, args, header);
+
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    state.userInfo.user_code = response.result.user_code;
+    state.userInfo.user_email = response.result.user_email;
+    state.userInfo.user_name = response.result.user_name;
+    state.userInfo.status = response.result.status;
+    state.userInfo.grade = response.result.grade;
+    state.userInfo.regist_date = response.result.regist_date;
+    state.userInfo.status_val = response.result.status_val;
+    state.userInfo.grade_val = response.result.grade_val;
+  } else {
+    LOGD(response.code);
+  }
+};
+
+const deleteMember = async () => {
+  const {
+    userInfo: { email: user_email },
+  } = loginStore;
+
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const args = {};
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  const response = await API(CONSTANT.DELETE, url, args, header);
+
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_204) {
+    swal.fire({
+      icon: 'info',
+      title: '탈퇴 완료',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_200,
+    });
+
+    LOGOUT(router);
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+  } else {
+    LOGD(response.code);
+  }
+};
 
 const leave = (paramForParent) => {
   const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
@@ -64,34 +122,9 @@ const leave = (paramForParent) => {
       }
 
       swal.fire(resultMessage, '', confirmText);
+
+      deleteMember();
     });
-};
-
-const getUserInfo = async () => {
-  const {
-    userInfo: { email },
-  } = loginStore;
-
-  const url = `${ENV_URL_BACKEND_MEMBER}/members/${email}`;
-  const args = {};
-  const header = {
-    authorization: loginStore.accessToken,
-  };
-
-  const response = await API(CONSTANT.GET, url, args, header);
-
-  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    state.userInfo.user_code = response.result.user_code;
-    state.userInfo.user_email = response.result.user_email;
-    state.userInfo.user_name = response.result.user_name;
-    state.userInfo.status = response.result.status;
-    state.userInfo.grade = response.result.grade;
-    state.userInfo.regist_date = response.result.regist_date;
-    state.userInfo.status_val = response.result.status_val;
-    state.userInfo.grade_val = response.result.grade_val;
-  } else {
-    LOGD(response.code);
-  }
 };
 
 onBeforeMount(() => {

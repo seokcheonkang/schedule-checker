@@ -146,14 +146,14 @@ const service = {
 
     return service.getMemberByUserEmail(userInfo.user_email);
   },
-  deleteMember: async (userInfo) => {
+  deleteMember: async (user_email) => {
     const sql = `
     delete from tb_user
      where 1=1 
        and user_email = ?
     `;
 
-    const param = [userInfo.user_email];
+    const param = user_email;
 
     await db.query(sql, param);
   },

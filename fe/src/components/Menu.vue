@@ -28,12 +28,9 @@ const state = reactive({
   },
 });
 
-watchEffect(
-  () => {
-    return state.setProfileImage();
-  },
-  { immediate: true }
-);
+watchEffect(() => {
+  return state.setProfileImage();
+});
 
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
