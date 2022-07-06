@@ -23,9 +23,6 @@ const loginStore = useLoginStore();
 // state
 const state = reactive({
   msg: {},
-  isLogin: loginStore.isLogin,
-  grade: loginStore.grade,
-  status: loginStore.status,
 });
 
 const getInfo = async () => {
@@ -57,8 +54,8 @@ onMounted(() => {
     <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="300" height="60" />
   </h5>
   <hr />
-  <h5 class="txt-red" v-if="state.isLogin && state.status !== '99'">
-    <span>code : {{ state.status }}, 당신의 계정은 사용 허가가 필요합니다. 관리자에게 문의하세요. </span>
+  <h5 class="txt-red" v-if="loginStore.isLogin && loginStore.status !== '99'">
+    <span>code : {{ loginStore.status }}, 당신의 계정은 사용 허가가 필요합니다. 관리자에게 문의하세요. </span>
   </h5>
   <h5 class="">
     <span>User-Agent : </span>

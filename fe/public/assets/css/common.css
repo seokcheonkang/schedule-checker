@@ -88,6 +88,12 @@
   text-decoration: none;
 }
 
+.btn-admin {
+  color: #fff !important;
+  background-color: #800080 !important;
+  border-color: #800080 !important;
+}
+
 .p-center-child {
   display: flex;
   justify-content: center;

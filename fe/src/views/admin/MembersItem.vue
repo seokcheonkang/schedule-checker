@@ -187,7 +187,7 @@ onMounted(() => {
               <span>{{ state.userInfo.regist_date }}</span>
             </h5>
           </div>
-          <CustomActionButton text="회원 수정" command="memberConfirm" option1="btn-primary" @buttonClicked="confirm" />
+          <CustomActionButton text="회원 수정" command="memberConfirm" option1="btn-admin" @buttonClicked="confirm" />
           <CustomActionButton text="목록" @click="goBack" />
         </div>
       </div>

@@ -21,6 +21,10 @@ const props = defineProps({
     type: String,
     default: 'w-100',
   },
+  option4: {
+    type: String,
+    default: 'mt-1',
+  },
 });
 
 // emits
@@ -57,7 +61,7 @@ const handleButtonClicked = () => {
 </script>
 
 <template>
-  <button type="button" :class="[option1, option2, option3]" class="mt-1" @click="handleButtonClicked">
+  <button type="button" :class="[option1, option2, option3, option4]" @click="handleButtonClicked">
     {{ text }}
   </button>
 </template>

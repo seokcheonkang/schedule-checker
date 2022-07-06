@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
+import CustomActionButton from '@/components/CustomActionButton.vue';
 
 // vuejs-paginate
 import Paginate from 'vuejs-paginate-next';
@@ -127,6 +128,15 @@ onMounted(() => {
       aria-label="검색"
       v-model="state.searchValue"
       @input="pagination.getSearchList"
+    />
+    <CustomActionButton
+      text="글쓰기"
+      command="scheduleCreate"
+      option1="btn-admin"
+      option3="w-10"
+      option4=""
+      @buttonClicked="create"
+      v-if="loginStore.isLogin && loginStore.status === '99' && loginStore.grade === '99'"
     />
   </form>
   <div class="table-responsive">
