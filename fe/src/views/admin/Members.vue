@@ -144,12 +144,12 @@ onMounted(() => {
               {{ item.user_code }}
             </router-link>
           </td>
-          <td class="text-center" title="이메일">
+          <td class="text-left" title="이메일">
             <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
               {{ item.user_email }}
             </router-link>
           </td>
-          <td class="text-center" title="이름">
+          <td class="text-left" title="이름">
             <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
               {{ item.user_name }}
             </router-link>

@@ -6,11 +6,11 @@ const schedules = {
     },
     { key: 'title', val: '제목' },
     {
-      key: 'schedule_status',
+      key: 'schedule_status_val',
       val: '스케줄 상태',
     },
     {
-      key: 'process_status',
+      key: 'process_status_val',
       val: '진행 상태',
     },
     {

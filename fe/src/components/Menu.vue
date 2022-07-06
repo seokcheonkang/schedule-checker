@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, reactive, watchEffect, inject } from 'vue';
+import { onBeforeMount, onMounted, reactive, watch, watchEffect, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 // mixin
@@ -19,11 +19,7 @@ const router = useRouter();
 // store
 const loginStore = useLoginStore();
 
-// state
 const state = reactive({
-  isLogin: loginStore.isLogin,
-  grade: loginStore.grade,
-  status: loginStore.status,
   profileImage: `/assets/image/profile.png`,
   setProfileImage: () => {
     if (loginStore.isLogin && loginStore.image) {
@@ -32,9 +28,12 @@ const state = reactive({
   },
 });
 
-watchEffect(() => {
-  return state.setProfileImage();
-});
+watchEffect(
+  () => {
+    return state.setProfileImage();
+  },
+  { immediate: true }
+);
 
 // google oauth
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
@@ -88,10 +87,13 @@ onMounted(() => {});
         </button>
         <div class="navbar-collapse collapse show" id="navBarsMobile">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" v-if="state.isLogin && state.status === '99'">
+            <li class="nav-item" v-if="loginStore.isLogin && loginStore.status === '99'">
               <router-link class="nav-link" aria-current="page" to="/schedules">스케줄</router-link>
             </li>
-            <li class="nav-item dropdown" v-if="state.isLogin && state.status === '99' && state.grade === '99'">
+            <li
+              class="nav-item dropdown"
+              v-if="loginStore.isLogin && loginStore.status === '99' && loginStore.grade === '99'"
+            >
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
