@@ -105,7 +105,6 @@ const handleClickSignIn = async () => {
     const processAfterToken = async () => {
       loginStore.setIsLogin(true);
       loginStore.setUserInfo(profile);
-      loginStore.setImage(profile.image);
 
       router.push('/');
     };

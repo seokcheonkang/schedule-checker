@@ -6,6 +6,8 @@ import { useLoadingStore } from '@/store/loading.js';
 // static page
 import Home from '@/views/normal/Home.vue';
 import Err from '@/views/normal/Err.vue';
+import SchedulesItem from '@/views/normal/SchedulesItem.vue';
+import MembersItem from '@/views/admin/MembersItem.vue';
 
 const routes = [
   {
@@ -43,7 +45,7 @@ const routes = [
   {
     path: '/Schedules/:schedule_code',
     name: 'SchedulesItem',
-    component: () => import('@/views/normal/SchedulesItem.vue'),
+    component: SchedulesItem,
     meta: { authorization: ['1', '99'] },
   },
   {
@@ -55,7 +57,7 @@ const routes = [
   {
     path: '/admin/Members/:user_email',
     name: 'AdminMembersItem',
-    component: () => import('@/views/admin/MembersItem.vue'),
+    component: MembersItem,
     meta: { authorization: ['99'] },
   },
 ];

@@ -22,8 +22,8 @@ const loginStore = useLoginStore();
 const state = reactive({
   profileImage: `/assets/image/profile.png`,
   setProfileImage: () => {
-    if (loginStore.isLogin && loginStore.image) {
-      state.profileImage = loginStore.image;
+    if (loginStore.isLogin && loginStore.userInfo.image) {
+      state.profileImage = loginStore.userInfo.image;
     }
   },
 });
