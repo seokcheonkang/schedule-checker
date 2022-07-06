@@ -169,7 +169,7 @@ onMounted(() => {
       :firstLastButton="true"
       :firstButtonText="'처음'"
       :lastButtonText="'끝'"
-      :containerClass="'pagination justify-content-center btn py-3'"
+      :containerClass="'pagination justify-content-center py-3'"
     >
     </paginate>
   </div>

@@ -6,8 +6,8 @@ import { useRoute, useRouter } from 'vue-router';
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
-import MemberGrade from '@/sampleData/memberGrade.json';
-import MemberRegisterStatus from '@/sampleData/MemberRegisterStatus.json';
+import MemberGrade from '@/flag/memberGrade.json';
+import MemberStatus from '@/flag/memberStatus.json';
 
 // mixin
 import API from '@/mixin/api.js';
@@ -175,7 +175,7 @@ onMounted(() => {
               <span>&nbsp;:&nbsp;</span>
               <span>
                 <select class="form-select me-2 w-20 dpin" aria-label="searchOption" v-model="state.userInfo.status">
-                  <option :value="column.key" v-for="column in MemberRegisterStatus">
+                  <option :value="column.key" v-for="column in MemberStatus">
                     {{ column.val }}
                   </option>
                 </select>
