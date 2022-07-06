@@ -41,6 +41,7 @@ const state = reactive({
     uncompleted_user: null,
     regist_date: null,
     limit_date: null,
+    content: null,
   },
 });
 
@@ -68,6 +69,7 @@ const getScheduleInfo = async (schedule_code) => {
     state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
     state.scheduleInfo.regist_date = response.result.regist_date;
     state.scheduleInfo.limit_date = response.result.limit_date;
+    state.scheduleInfo.content = response.result.content.replaceAll('\r', '<br>');
   } else {
     LOGD(response.code);
   }
@@ -90,25 +92,25 @@ onMounted(() => {
         <div class="p-4 p-md-4 border rounded-3 bg-light">
           <h4 class="mb-3">{{ state.scheduleInfo.title }}</h4>
           <div class="form-floating mb-3">
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">순번 : </span>
               <span class="text-dark">
                 {{ state.scheduleInfo.schedule_code }}
               </span>
             </h5>
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">상태 : </span>
               <span class="text-dark">
                 {{ state.scheduleInfo.status_val }}
               </span>
             </h5>
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">전체 : </span>
               <span class="text-dark">
                 {{ state.scheduleInfo.total_count }}
               </span>
             </h5>
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">완료 : </span>
               <span class="text-primary">
                 {{ state.scheduleInfo.completed_count }}
@@ -117,7 +119,7 @@ onMounted(() => {
             <div class="mb-3 text-primary">
               <span v-html="state.scheduleInfo.completed_user"></span>
             </div>
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">미완료 : </span>
               <span class="text-warning">
                 {{ state.scheduleInfo.uncompleted_count }}
@@ -126,18 +128,22 @@ onMounted(() => {
             <div class="mb-3 text-warning">
               <span v-html="state.scheduleInfo.uncompleted_user"></span>
             </div>
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">등록일시 : </span>
               <span class="text-dark">
                 {{ state.scheduleInfo.regist_date }}
               </span>
             </h5>
-            <h5>
+            <h5 class="mb-3">
               <span class="text-muted">만료일시 : </span>
               <span class="text-dark">
                 {{ state.scheduleInfo.limit_date }}
               </span>
             </h5>
+            <h5 class="mb-3 text-muted">내용</h5>
+            <div class="mb-3">
+              <span v-html="state.scheduleInfo.content"></span>
+            </div>
           </div>
           <CustomActionButton text="목록" @click="goBack" />
         </div>

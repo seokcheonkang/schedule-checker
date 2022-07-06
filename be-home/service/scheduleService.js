@@ -112,6 +112,7 @@ const service = {
          , sum(t1.uncompleted_count) as uncompleted_count
          , ifnull(group_concat(t1.completed_user separator ','), '없음') as completed_user
          , ifnull(group_concat(t1.uncompleted_user separator ','), '없음') as uncompleted_user
+         , max(t1.content) as content
       from (
             select 
                    a.schedule_code
@@ -137,6 +138,7 @@ const service = {
                  , case when b.status != '99' then concat(c.user_name, '/', c.user_email)
                    else null
                     end as uncompleted_user
+                 , a.content
               from tb_schedule a
               left join tb_schedule_detail b
                 on a.schedule_code = b.schedule_code
