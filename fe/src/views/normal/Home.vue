@@ -58,7 +58,7 @@ onMounted(() => {
   </h5>
   <hr />
   <h5 class="txt-red" v-if="state.isLogin && state.status !== '99'">
-    <span>code : [{{ state.grade }}], 당신의 계정은 사용 허가가 필요합니다. 관리자에게 문의하세요. </span>
+    <span>code : {{ state.status }}, 당신의 계정은 사용 허가가 필요합니다. 관리자에게 문의하세요. </span>
   </h5>
   <h5 class="">
     <span>User-Agent : </span>

@@ -47,6 +47,38 @@ const goBack = () => {
   router.go(-1);
 };
 
+const updateMember = async () => {
+  const user_email = state.userInfo.user_email;
+  const grade = state.userInfo.grade;
+  const status = state.userInfo.status;
+
+  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const args = { grade, status };
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  const response = await API(CONSTANT.PATCH, url, args, header);
+
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_201) {
+    swal.fire({
+      icon: 'info',
+      title: '수정 완료',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_200,
+    });
+
+    router.go(-1);
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+  } else {
+    LOGD(response.code);
+  }
+};
+
 const confirm = (paramForParent) => {
   const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
 
@@ -67,6 +99,8 @@ const confirm = (paramForParent) => {
       }
 
       swal.fire(resultMessage, '', confirmText);
+
+      updateMember();
     });
 };
 
