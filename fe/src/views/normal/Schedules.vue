@@ -39,7 +39,7 @@ const state = reactive({
 });
 
 const create = async () => {
-  router.push('/admin/Schedules/Create');
+  router.push('/admin/schedules/create');
 };
 
 let schedules = null;

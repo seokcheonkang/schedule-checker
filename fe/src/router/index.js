@@ -49,19 +49,19 @@ const routes = [
     meta: { authorization: ['1', '99'] },
   },
   {
-    path: '/admin/Schedules/Create',
+    path: '/Admin/Schedules/Create',
     name: 'AdminSchedulesCreate',
     component: () => import('@/views/admin/SchedulesCreate.vue'),
     meta: { authorization: ['99'] },
   },
   {
-    path: '/admin/Members',
+    path: '/Admin/Members',
     name: 'AdminMembers',
     component: () => import('@/views/admin/Members.vue'),
     meta: { authorization: ['99'] },
   },
   {
-    path: '/admin/Members/:user_email',
+    path: '/Admin/Members/:user_email',
     name: 'AdminMembersItem',
     component: MembersItem,
     meta: { authorization: ['99'] },
