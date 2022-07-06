@@ -6,12 +6,16 @@ const schedules = {
     },
     { key: 'title', val: '제목' },
     {
-      key: 'schedule_status_val',
+      key: 'status_val',
       val: '스케줄 상태',
     },
     {
-      key: 'process_status_val',
-      val: '진행 상태',
+      key: 'uncompleted_count',
+      val: '미완료건수',
+    },
+    {
+      key: 'completed_count',
+      val: '완료건수',
     },
     {
       key: 'regist_date',
@@ -40,24 +44,41 @@ const service = {
   getSchedules: async () => {
     const sql = `
     select 
-           schedule_code
-         , title
-         , schedule_status 
-         , process_status 
-         , date_format(regist_date, '%Y-%m-%d %H:%i:%s') as regist_date
-         , date_format(limit_date, '%Y-%m-%d %H:%i:%s') as limit_date
-         , case when schedule_status = '1' then '준비'
-                when schedule_status = '2' then '진행'
-                when schedule_status = '3' then '취소'
-                when schedule_status = '99' then '만료'
-                else '알수없음'
-            end as schedule_status_val
-         , case when process_status = '1' then '준비'
-                when process_status = '99' then '종료'
-                else '알수없음'
-            end as process_status_val
-      from tb_schedule 
-     where 1=1 
+           t1.schedule_code
+         , max(t1.title) as title
+         , max(t1.status) as status
+         , date_format(max(t1.regist_date), '%y-%m-%d %h:%i:%s') as regist_date
+         , date_format(max(t1.limit_date), '%y-%m-%d %h:%i:%s') as limit_date
+         , max(t1.status_val) as status_val
+         , sum(t1.uncompleted_count) as uncompleted_count
+         , sum(t1.completed_count) as completed_count
+      from (
+            select 
+                   a.schedule_code
+                 , a.title
+                 , a.status
+                 , a.regist_date
+                 , a.limit_date
+                 , case when a.status = '1' then '준비'
+                        when a.status = '2' then '취소'
+                        when a.status = '3' then '만료'
+                        when a.status = '99' then '진행'
+                        else '알수없음'
+                    end as status_val
+                 , case when b.status = '1' then 1 
+                        else 0
+                    end as uncompleted_count
+                 , case when b.status = '99' then 1 
+                        else 0
+                    end as completed_count
+              from tb_schedule a
+              left join tb_schedule_detail b
+                on a.schedule_code = b.schedule_code
+             where 1=1 
+        ) t1
+     where 1=1
+     group by t1.schedule_code
+     order by t1.schedule_code desc
     `;
 
     const result = await db
@@ -75,25 +96,41 @@ const service = {
   getSchedule: async (schedule_code) => {
     const sql = `
     select 
-           schedule_code
-         , title
-         , schedule_status 
-         , process_status 
-         , date_format(regist_date, '%Y-%m-%d %H:%i:%s') as regist_date
-         , date_format(limit_date, '%Y-%m-%d %H:%i:%s') as limit_date
-         , case when schedule_status = '1' then '준비'
-                when schedule_status = '2' then '진행'
-                when schedule_status = '3' then '취소'
-                when schedule_status = '99' then '만료'
-                else '알수없음'
-            end as schedule_status_val
-         , case when process_status = '1' then '준비'
-                when process_status = '99' then '종료'
-                else '알수없음'
-            end as process_status_val
-      from tb_schedule 
-     where 1=1 
-       and schedule_code = ?
+           t1.schedule_code
+         , max(t1.title) as title
+         , max(t1.status) as status
+         , date_format(max(t1.regist_date), '%y-%m-%d %h:%i:%s') as regist_date
+         , date_format(max(t1.limit_date), '%y-%m-%d %h:%i:%s') as limit_date
+         , max(t1.status_val) as status_val
+         , sum(t1.uncompleted_count) as uncompleted_count
+         , sum(t1.completed_count) as completed_count
+      from (
+            select 
+                   a.schedule_code
+                 , a.title
+                 , a.status
+                 , a.regist_date
+                 , a.limit_date
+                 , case when a.status = '1' then '준비'
+                        when a.status = '2' then '취소'
+                        when a.status = '3' then '만료'
+                        when a.status = '99' then '진행'
+                        else '알수없음'
+                    end as status_val
+                 , case when b.status = '1' then 1 
+                        else 0
+                    end as uncompleted_count
+                 , case when b.status = '99' then 1 
+                        else 0
+                    end as completed_count
+              from tb_schedule a
+              left join tb_schedule_detail b
+                on a.schedule_code = b.schedule_code
+             where 1=1 
+               and a.schedule_code = ?
+        ) t1
+     where 1=1
+     group by t1.schedule_code
     `;
 
     const param = schedule_code;

@@ -68,4 +68,8 @@ onMounted(() => {
     <span>hostname : </span>
     <span>{{ state.msg.hostname }} </span>
   </h5>
+  <hr />
+  <h5 class="">
+    <span>Link : <a href="https://bespinglobal.okta.com/" target="_blank">Okta</a> </span>
+  </h5>
 </template>

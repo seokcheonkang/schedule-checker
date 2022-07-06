@@ -147,8 +147,9 @@ onMounted(() => {
               {{ item.title }}
             </router-link>
           </td>
-          <td class="text-center" title="등록 상태">{{ item.schedule_status_val }}</td>
-          <td class="text-center" title="진행 상태">{{ item.process_status_val }}</td>
+          <td class="text-center" title="스케줄 상태">{{ item.status_val }}</td>
+          <td class="text-center" title="미완료건수">{{ item.uncompleted_count }}</td>
+          <td class="text-center" title="완료건수">{{ item.completed_count }}</td>
           <td class="text-center" title="등록일시">{{ item.regist_date }}</td>
           <td class="text-center" title="만료일시">{{ item.limit_date }}</td>
         </tr>
