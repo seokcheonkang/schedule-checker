@@ -51,9 +51,6 @@ const service = {
 
     return result;
   },
-  getMember: (userEmail, userPassword) => {
-    return members.dataList.find((member) => member.userEmail === userEmail && member.userPassword === userPassword);
-  },
 };
 
 module.exports = service;

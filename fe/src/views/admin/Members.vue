@@ -110,7 +110,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <CustomPageHeader text="회원 목록" />
+  <CustomPageHeader text="회원 목록" option3="txt-admin" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
     <select class="form-select me-2 w-20" aria-label="searchOption" v-model="state.searchKey">
       <option value="">선택</option>

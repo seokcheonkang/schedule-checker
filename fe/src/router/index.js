@@ -39,7 +39,7 @@ const routes = [
   {
     path: '/Schedules',
     name: 'Schedules',
-    component: () => import('@/views/normal/schedules.vue'),
+    component: () => import('@/views/normal/Schedules.vue'),
     meta: { authorization: ['1', '99'] },
   },
   {
@@ -47,6 +47,12 @@ const routes = [
     name: 'SchedulesItem',
     component: SchedulesItem,
     meta: { authorization: ['1', '99'] },
+  },
+  {
+    path: '/admin/Schedules/Create',
+    name: 'AdminSchedulesCreate',
+    component: () => import('@/views/admin/SchedulesCreate.vue'),
+    meta: { authorization: ['99'] },
   },
   {
     path: '/admin/Members',

@@ -109,6 +109,10 @@
   color: red !important;
 }
 
+.txt-admin {
+  color: #800080 !important;
+}
+
 .pagination li {
   display: inline-block;
   font-weight: 400;

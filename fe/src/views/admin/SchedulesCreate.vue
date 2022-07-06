@@ -49,27 +49,33 @@ const goBack = () => {
   router.go(-1);
 };
 
-const getScheduleInfo = async (schedule_code) => {
-  const url = `${ENV_URL_BACKEND_HOME}/schedules/${schedule_code}`;
-  const args = {};
+const create = async () => {
+  const {
+    userInfo: { email: user_email },
+  } = loginStore;
+
+  const url = `${ENV_URL_BACKEND_HOME}/schedules`;
+  const args = { user_email };
   const header = {
     authorization: loginStore.accessToken,
   };
 
-  const response = await API(CONSTANT.GET, url, args, header);
+  const response = await API(CONSTANT.POST, url, args, header);
 
-  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    state.scheduleInfo.schedule_code = response.result.schedule_code;
-    state.scheduleInfo.title = response.result.title;
-    state.scheduleInfo.status_val = response.result.status_val;
-    state.scheduleInfo.total_count = response.result.total_count;
-    state.scheduleInfo.completed_count = response.result.completed_count;
-    state.scheduleInfo.uncompleted_count = response.result.uncompleted_count;
-    state.scheduleInfo.completed_user = response.result.completed_user.split(',').join('<br>');
-    state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
-    state.scheduleInfo.regist_date = response.result.regist_date;
-    state.scheduleInfo.limit_date = response.result.limit_date;
-    state.scheduleInfo.content = response.result.content.replaceAll('\r', '<br>');
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_201) {
+    swal.fire({
+      icon: 'info',
+      title: '스케줄 생성 완료',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_201,
+    });
+
+    LOGOUT(router);
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
   } else {
     LOGD(response.code);
   }
@@ -79,13 +85,11 @@ onBeforeMount(() => {
   LOGD(route.name);
 });
 
-onMounted(() => {
-  getScheduleInfo(Number(route.params.schedule_code));
-});
+onMounted(() => {});
 </script>
 
 <template>
-  <CustomPageHeader text="스케줄 상세" />
+  <CustomPageHeader text="스케줄 생성" option3="txt-admin" />
   <div class="container">
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">

@@ -38,6 +38,10 @@ const state = reactive({
   searchValue: '',
 });
 
+const create = async () => {
+  router.push('/admin/Schedules/Create');
+};
+
 let schedules = null;
 
 const getSchedules = async () => {
@@ -113,7 +117,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <CustomPageHeader :text="route.name" />
+  <CustomPageHeader text="스케줄 목록" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
     <select class="form-select me-2 w-20" aria-label="searchOption" v-model="state.searchKey">
       <option value="">선택</option>

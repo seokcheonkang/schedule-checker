@@ -168,6 +168,30 @@ const service = {
 
     return result;
   },
+  insertSchedule: async (scheduleInfo) => {
+    const sql = `
+    insert into tb_schedule
+    (
+        title
+      , content
+      , status
+      , regist_date
+      , limit_date
+    ) values (
+        ?
+      , ?
+      , '1'
+      , now()
+      , ?
+    )
+    `;
+
+    const param = [scheduleInfo.title, scheduleInfo.content, scheduleInfo.limit_date];
+
+    await db.query(sql, param);
+
+    return service.getSchedules();
+  },
 };
 
 module.exports = service;
