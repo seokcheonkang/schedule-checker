@@ -96,11 +96,11 @@ const confirm = (paramForParent) => {
       if (result.isConfirmed) {
         resultMessage = resultMessageY;
         confirmText = 'success';
+
+        updateMember();
       }
 
       swal.fire(resultMessage, '', confirmText);
-
-      updateMember();
     });
 };
 
