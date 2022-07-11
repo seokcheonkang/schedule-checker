@@ -103,6 +103,9 @@ onMounted(() => {});
                 <li>
                   <router-link class="dropdown-item" to="/admin/members">회원</router-link>
                 </li>
+                <li>
+                  <router-link class="dropdown-item" to="/admin/schedules">스케줄</router-link>
+                </li>
               </ul>
             </li>
           </ul>

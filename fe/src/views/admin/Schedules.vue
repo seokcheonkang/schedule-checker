@@ -38,6 +38,10 @@ const state = reactive({
   searchValue: '',
 });
 
+const create = async () => {
+  router.push('/admin/schedules/create');
+};
+
 let schedules = null;
 
 const getSchedules = async () => {
@@ -113,7 +117,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <CustomPageHeader text="스케줄 목록" />
+  <CustomPageHeader text="스케줄 목록" option3="txt-admin" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
     <select class="form-select me-2 w-20" aria-label="searchOption" v-model="state.searchKey">
       <option value="">선택</option>
@@ -128,6 +132,15 @@ onMounted(() => {
       aria-label="검색"
       v-model="state.searchValue"
       @input="pagination.getSearchList"
+    />
+    <CustomActionButton
+      text="글쓰기"
+      command="scheduleCreate"
+      option1="btn-admin"
+      option3="w-10"
+      option4=""
+      @buttonClicked="create"
+      v-if="loginStore.isLogin && loginStore.status === '99' && loginStore.grade === '99'"
     />
   </form>
   <div class="table-responsive">
@@ -144,7 +157,7 @@ onMounted(() => {
         <tr v-for="item in pagination.calculatedList" role="button">
           <td class="text-center" title="순번">{{ item.schedule_code }}&nbsp;</td>
           <td class="text-center" title="제목">
-            <router-link :to="{ path: `/schedules/${item.schedule_code}` }" class="btn-td">
+            <router-link :to="{ path: `/admin/schedules/${item.schedule_code}` }" class="btn-td">
               {{ item.title }}
             </router-link>
           </td>

@@ -180,13 +180,19 @@ const service = {
     ) values (
         ?
       , ?
-      , '1'
-      , now()
       , ?
+      , STR_TO_DATE(?,'%Y-%m-%d %H:%i:%s')
+      , STR_TO_DATE(?,'%Y-%m-%d %H:%i:%s')
     )
     `;
 
-    const param = [scheduleInfo.title, scheduleInfo.content, scheduleInfo.limit_date];
+    const param = [
+      scheduleInfo.title,
+      scheduleInfo.content,
+      scheduleInfo.status,
+      scheduleInfo.regist_date,
+      scheduleInfo.limit_date,
+    ];
 
     await db.query(sql, param);
 

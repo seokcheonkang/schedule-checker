@@ -114,14 +114,7 @@ const getUserInfo = async (user_email) => {
   const response = await API(CONSTANT.GET, url, args, header);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    state.userInfo.user_code = response.result.user_code;
-    state.userInfo.user_email = response.result.user_email;
-    state.userInfo.user_name = response.result.user_name;
-    state.userInfo.grade = response.result.grade;
-    state.userInfo.status = response.result.status;
-    state.userInfo.regist_date = response.result.regist_date;
-    state.userInfo.grade_val = response.result.grade_val;
-    state.userInfo.status_val = response.result.status_val;
+    state.userInfo = response.result;
   } else {
     LOGD(response.code);
   }
@@ -137,7 +130,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <CustomPageHeader text="회원 상세" />
+  <CustomPageHeader text="회원 상세" option3="txt-admin" />
   <div class="container">
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">

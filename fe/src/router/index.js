@@ -6,8 +6,9 @@ import { useLoadingStore } from '@/store/loading.js';
 // static page
 import Home from '@/views/normal/Home.vue';
 import Err from '@/views/normal/Err.vue';
-import SchedulesItem from '@/views/normal/SchedulesItem.vue';
 import MembersItem from '@/views/admin/MembersItem.vue';
+import SchedulesItem from '@/views/normal/SchedulesItem.vue';
+import AdminSchedulesItem from '@/views/admin/SchedulesItem.vue';
 
 const routes = [
   {
@@ -47,6 +48,18 @@ const routes = [
     name: 'SchedulesItem',
     component: SchedulesItem,
     meta: { authorization: ['1', '99'] },
+  },
+  {
+    path: '/Admin/Schedules',
+    name: 'AdminSchedules',
+    component: () => import('@/views/admin/Schedules.vue'),
+    meta: { authorization: ['99'] },
+  },
+  {
+    path: '/Admin/Schedules/:schedule_code',
+    name: 'AdminSchedulesItem',
+    component: AdminSchedulesItem,
+    meta: { authorization: ['99'] },
   },
   {
     path: '/Admin/Schedules/Create',

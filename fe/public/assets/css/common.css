@@ -30,6 +30,10 @@
   appearance: none !important;
 }
 
+.p-select {
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem !important;
+}
+
 .lt-7 {
   left: -7rem !important;
 }
@@ -74,6 +78,14 @@
   width: 90% !important;
 }
 
+.h-r2 {
+  height: 2rem !important;
+}
+
+.h-r10 {
+  height: 10rem !important;
+}
+
 /* individual */
 
 .chkWithText {
@@ -111,6 +123,7 @@
 
 .txt-admin {
   color: #800080 !important;
+  font-weight: bold;
 }
 
 .pagination li {

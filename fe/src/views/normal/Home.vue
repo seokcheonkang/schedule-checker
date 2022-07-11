@@ -32,8 +32,7 @@ const getInfo = async () => {
   const response = await API(CONSTANT.GET, url, args);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
-    state.msg.userAgent = response.result.userAgent;
-    state.msg.hostname = response.result.hostname;
+    state.msg = response.result;
   } else {
     state.msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
     state.msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;

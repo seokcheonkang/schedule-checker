@@ -79,7 +79,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <CustomPageHeader text="스케줄 상세" />
+  <CustomPageHeader text="스케줄 상세" option3="txt-admin" />
   <div class="container">
     <div class="row align-items-center my-3">
       <div class="col-md-10 mx-auto col-lg-10">
