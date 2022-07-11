@@ -164,6 +164,46 @@ onMounted(() => {});
               <li v-for="error in state.errors">{{ error }}</li>
             </ul>
           </div>
+          <div class="d-flex justify-content-start">
+            <div class="form-floating mb-3 w-50 me-2">
+              <input type="date" class="form-control" id="regist_date" v-model="state.form.regist_date" />
+              <label for="regist_date">등록일자</label>
+            </div>
+            <div class="form-floating mb-3 w-50">
+              <input type="time" class="form-control" id="regist_time" v-model="state.form.regist_time" />
+              <label for="regist_time">등록시간</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-start">
+            <div class="form-floating mb-3 w-50 me-2">
+              <input type="date" class="form-control" id="limit_date" v-model="state.form.limit_date" />
+              <label for="limit_date">마감일자</label>
+            </div>
+            <div class="form-floating mb-3 w-50">
+              <input type="time" class="form-control" id="limit_time" v-model="state.form.limit_time" />
+              <label for="limit_time">등록시간</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-start">
+            <div class="form-floating mb-3 w-50 me-2">
+              <select class="form-select me-2 p-select dpin" aria-label="searchOption" v-model="state.form.status">
+                <option :value="column.key" v-for="column in ScheduleStatus">
+                  {{ column.val }}
+                </option>
+              </select>
+            </div>
+            <div class="form-floating mb-3 w-50">
+              <input
+                type="text"
+                class="form-control"
+                id="regist_user"
+                placeholder="등록자"
+                v-model="state.form.regist_user"
+                readonly
+              />
+              <label for="regist_user">등록자</label>
+            </div>
+          </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="title" placeholder="제목" v-model="state.form.title" />
             <label for="title">제목</label>
@@ -176,40 +216,6 @@ onMounted(() => {});
               placeholder="내용"
             ></textarea>
             <label for="content">내용</label>
-          </div>
-          <div class="form-floating mb-3">
-            <select class="form-select me-2 p-select dpin" aria-label="searchOption" v-model="state.form.status">
-              <option :value="column.key" v-for="column in ScheduleStatus">
-                {{ column.val }}
-              </option>
-            </select>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="regist_date" v-model="state.form.regist_date" />
-            <label for="regist_date">등록일자</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="time" class="form-control" id="regist_time" v-model="state.form.regist_time" />
-            <label for="regist_time">등록시간</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="limit_date" v-model="state.form.limit_date" />
-            <label for="limit_date">마감일자</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="time" class="form-control" id="limit_time" v-model="state.form.limit_time" />
-            <label for="limit_time">등록시간</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="regist_user"
-              placeholder="등록자"
-              v-model="state.form.regist_user"
-              readonly
-            />
-            <label for="regist_user">등록자</label>
           </div>
           <CustomActionButton text="완료" command="create" @buttonClicked="create" option1="btn-admin" />
           <CustomActionButton text="목록" @click="goBack" />
