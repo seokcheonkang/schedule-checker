@@ -24,6 +24,7 @@ import { LOGOUT } from '../../mixin/logout';
 
 // env
 const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
+const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // route
 const route = useRoute();
@@ -43,12 +44,78 @@ const state = reactive({
     limit_date: NOW_DATE(),
     limit_time: '23:59:59',
     regist_user: loginStore.userInfo.name + '/' + loginStore.userInfo.email,
+    user_code: loginStore.userInfo.id,
+    user_email: loginStore.userInfo.email,
+    target_users: [],
+    checked_users: [],
   },
   errors: [],
 });
 
 const goBack = () => {
   router.go(-1);
+};
+
+const getMembers = async () => {
+  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
+  const args = {};
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  const response = await API(CONSTANT.GET, url, args, header);
+
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    state.form.target_users = response.result.dataList;
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    LOGOUT(router);
+  } else {
+    LOGD(response.code);
+  }
+};
+
+const changeCheckedUsers = (user_email) => {
+  state.form.checked_users = [];
+  const chkUsers = document.querySelectorAll('[name=chkUsers]');
+  chkUsers.forEach((chkUser) => {
+    if (chkUser?.id !== 'chkUsersAll') {
+      if (chkUser.checked) {
+        state.form.checked_users.push(chkUser.value);
+      }
+    }
+  });
+
+  if (state.form.checked_users.length === chkUsers.length - 1) {
+    document.querySelector('#chkUsersAll').checked = true;
+  } else {
+    document.querySelector('#chkUsersAll').checked = false;
+  }
+};
+
+const changeCheckAll = () => {
+  const chkUsers = document.querySelectorAll('[name=chkUsers]');
+
+  // check or uncheck all of checkboxes
+  let isCheckedAll = false;
+  if (chkUsers[0].checked) {
+    isCheckedAll = true;
+  }
+  chkUsers.forEach((chkUser) => {
+    chkUser.checked = isCheckedAll;
+  });
+
+  // add or remove checkboxes to array
+  if (chkUsers[0].checked) {
+    state.form.checked_users = state.form.target_users.map((user) => user.user_email);
+  } else {
+    state.form.checked_users = [];
+  }
 };
 
 const createSchedule = async () => {
@@ -86,11 +153,11 @@ const validation = {
     let isValidate = true;
     if (!title) {
       isValidate = false;
-      state.errors.push(`title은 반드시 입력해야 합니다.`);
+      state.errors.push(`제목은 반드시 입력해야 합니다.`);
     }
     if (title?.length > limitLength) {
       isValidate = false;
-      state.errors.push(`title은 ${limitLength} 글자로 제한됩니다.`);
+      state.errors.push(`제목은 ${limitLength} 글자로 제한됩니다.`);
     }
     return isValidate;
   },
@@ -98,11 +165,11 @@ const validation = {
     let isValidate = true;
     if (!content) {
       isValidate = false;
-      state.errors.push(`content은 반드시 입력해야 합니다.`);
+      state.errors.push(`내용은 반드시 입력해야 합니다.`);
     }
     if (content?.length > limitLength) {
       isValidate = false;
-      state.errors.push(`content은 ${limitLength} 글자로 제한됩니다.`);
+      state.errors.push(`내용은 ${limitLength} 글자로 제한됩니다.`);
     }
     return isValidate;
   },
@@ -137,11 +204,11 @@ const create = (paramForParent) => {
         if (result.isConfirmed) {
           resultMessage = resultMessageY;
           confirmText = 'success';
+
+          createSchedule();
         }
 
         swal.fire(resultMessage, '', confirmText);
-
-        createSchedule();
       });
   }
 };
@@ -150,7 +217,9 @@ onBeforeMount(() => {
   LOGD(route.name);
 });
 
-onMounted(() => {});
+onMounted(async () => {
+  await getMembers();
+});
 </script>
 
 <template>
@@ -159,11 +228,7 @@ onMounted(() => {});
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
         <form class="p-4 p-md-4 border rounded-3 bg-light" @input="validation.validateAll">
-          <div v-if="state.errors.length">
-            <ul class="errorMessage">
-              <li v-for="error in state.errors">{{ error }}</li>
-            </ul>
-          </div>
+          <h4 class="mb-3">기본 정보 입력</h4>
           <div class="d-flex justify-content-start">
             <div class="form-floating mb-3 w-50 me-2">
               <input type="date" class="form-control" id="regist_date" v-model="state.form.regist_date" />
@@ -204,6 +269,11 @@ onMounted(() => {});
               <label for="regist_user">등록자</label>
             </div>
           </div>
+          <div v-if="state.errors.length">
+            <ul class="errorMessage">
+              <li v-for="error in state.errors">{{ error }}</li>
+            </ul>
+          </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="title" placeholder="제목" v-model="state.form.title" />
             <label for="title">제목</label>
@@ -217,6 +287,43 @@ onMounted(() => {});
             ></textarea>
             <label for="content">내용</label>
           </div>
+          <h4 class="mb-3">대상 선택</h4>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend">
+              <div class="input-group-text p-08">
+                <input
+                  type="checkbox"
+                  id="chkUsersAll"
+                  name="chkUsers"
+                  aria-label="Checkbox"
+                  @change="changeCheckAll()"
+                />
+              </div>
+            </div>
+            <input type="text" class="form-control" aria-label="Text" value="전체" />
+          </div>
+          <div class="input-group mb-1" v-for="(user, index) in state.form.target_users">
+            <div class="input-group-prepend">
+              <div class="input-group-text p-08">
+                <input
+                  type="checkbox"
+                  name="chkUsers"
+                  aria-label="Checkbox"
+                  :value="user.user_email"
+                  @change="changeCheckedUsers(user.user_email)"
+                />
+              </div>
+            </div>
+            <input
+              type="text"
+              name="inpUsers"
+              class="form-control"
+              aria-label="Text"
+              readonly
+              v-model="user.user_name"
+            />
+          </div>
+          <hr />
           <CustomActionButton text="완료" command="create" @buttonClicked="create" option1="btn-admin" />
           <CustomActionButton text="목록" @click="goBack" />
         </form>

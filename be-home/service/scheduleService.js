@@ -143,7 +143,7 @@ const service = {
               left join tb_schedule_detail b
                 on a.schedule_code = b.schedule_code
               left join tb_user c
-                on b.user_code = c.user_code
+                on b.user_email = c.user_email
              where 1=1 
                and a.schedule_code = ?
         ) t1
@@ -194,9 +194,32 @@ const service = {
       scheduleInfo.limit_date,
     ];
 
-    await db.query(sql, param);
+    const result = await db.query(sql, param);
+    return result;
+  },
+  insertScheduleDetail: async (scheduleInfo) => {
+    let result = false;
+    const sql = 'insert into tb_schedule_detail(schedule_code, user_email, status) values (?, ?, ?)';
 
-    return service.getSchedules();
+    let param = [];
+    for (let i = 0; i < scheduleInfo.checked_users.length; i++) {
+      const subParam = [];
+      subParam.push('' + scheduleInfo.insertId);
+      subParam.push(scheduleInfo.checked_users[i]);
+      subParam.push(scheduleInfo.status);
+      param.push(subParam);
+    }
+
+    try {
+      await db.batch(sql, param);
+      result = true;
+    } catch (error) {
+      LOG('error', JSON.stringify(error));
+      result = false;
+    } finally {
+      LOG('finally', JSON.stringify(result));
+      return result;
+    }
   },
 };
 

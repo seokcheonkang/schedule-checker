@@ -8,7 +8,7 @@ const SERVICE_PATH = '../service';
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
-const { getSchedules, getSchedule, insertSchedule } = require(`${SERVICE_PATH}/scheduleService`);
+const { getSchedules, getSchedule, insertSchedule, insertScheduleDetail } = require(`${SERVICE_PATH}/scheduleService`);
 
 // ---
 router.get('/', verifyJwt, async (req, res) => {
@@ -44,9 +44,11 @@ router.post('/create', verifyJwt, async (req, res) => {
   scheduleInfo.regist_date = scheduleInfo.regist_date + ' ' + scheduleInfo.regist_time;
   scheduleInfo.limit_date = scheduleInfo.limit_date + ' ' + scheduleInfo.limit_time;
 
-  const result = await insertSchedule(scheduleInfo);
+  const resultSchedule = await insertSchedule(scheduleInfo);
+  scheduleInfo.insertId = Number(resultSchedule.insertId);
+  const resultScheduleDetail = await insertScheduleDetail(scheduleInfo);
 
-  const response = { code: 201, message: '생성 성공', result };
+  const response = { code: 201, message: '생성 성공', resultScheduleDetail };
 
   LOG(JSON.stringify(response));
 
