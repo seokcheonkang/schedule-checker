@@ -120,7 +120,6 @@ const handleClickSignIn = async () => {
 const handleClickGetAuthCode = async () => {
   try {
     const authCode = await Vue3GoogleOauth.instance.getAuthCode();
-    console.log('handleClickGetAuthCode authCode', authCode);
   } catch (error) {
     //on fail do something
     console.error(error);
@@ -131,7 +130,6 @@ const handleClickGetAuthCode = async () => {
 const handleClickSignOut = async () => {
   try {
     await Vue3GoogleOauth.instance.signOut();
-    console.log('handleClickSignOut isAuthorized', Vue3GoogleOauth.isAuthorized);
     loginStore.setIsLogin(false);
     loginStore.setUserInfo({});
   } catch (error) {

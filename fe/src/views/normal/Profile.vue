@@ -148,6 +148,7 @@ onMounted(() => {
             <h5 class="text-muted">가입일시</h5>
             <div class="mb-3">{{ state.userInfo.regist_date }}</div>
           </div>
+          <hr />
           <CustomActionButton text="회원 탈퇴" command="memberLeave" option1="btn-danger" @buttonClicked="leave" />
         </div>
       </div>

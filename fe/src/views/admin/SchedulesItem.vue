@@ -139,6 +139,7 @@ onMounted(() => {
               <span v-html="state.scheduleInfo.content"></span>
             </div>
           </div>
+          <hr />
           <CustomActionButton text="목록" @click="goBack" />
         </div>
       </div>
