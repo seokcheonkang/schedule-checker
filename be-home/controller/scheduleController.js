@@ -7,24 +7,34 @@ const SERVICE_PATH = '../service';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+
+// ---
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
-const { getSchedules, getSchedule, insertSchedule, insertScheduleDetail } = require(`${SERVICE_PATH}/scheduleService`);
+const {
+  getSchedules,
+  getSchedule,
+  insertSchedule,
+  insertScheduleDetail,
+  getScheduleMember,
+  updateScheduleDetail,
+} = require(`${SERVICE_PATH}/scheduleService`);
 
 // ---
 router.get('/', verifyJwt, async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const result = await getSchedules();
 
   const response = { code: 200, message: '조회 성공', result };
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(200).json(response);
 });
 
 router.get('/:schedule_code', verifyJwt, async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const schedule_code = req.params.schedule_code;
 
@@ -32,13 +42,13 @@ router.get('/:schedule_code', verifyJwt, async (req, res) => {
 
   const response = { code: 200, message: '조회 성공', result };
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(200).json(response);
 });
 
 router.post('/create', verifyJwt, async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const scheduleInfo = req.body;
   scheduleInfo.regist_date = scheduleInfo.regist_date + ' ' + scheduleInfo.regist_time;
@@ -50,7 +60,49 @@ router.post('/create', verifyJwt, async (req, res) => {
 
   const response = { code: 201, message: '생성 성공', resultScheduleDetail };
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
+
+  res.status(201).json(response);
+});
+
+router.get('/:schedule_code/:user_email', verifyJwt, async (req, res) => {
+  LOGD(req.originalUrl);
+
+  const schedule_code = req.params.schedule_code;
+  const user_email = req.params.user_email;
+
+  const scheduleInfo = {
+    schedule_code,
+    user_email,
+  };
+
+  const result = await getScheduleMember(scheduleInfo);
+
+  const response = { code: 200, message: '조회 성공', result };
+
+  LOGD(JSON.stringify(response));
+
+  res.status(200).json(response);
+});
+
+router.patch('/:schedule_code/:user_email', verifyJwt, async (req, res) => {
+  LOGD(req.originalUrl);
+
+  const schedule_code = req.params.schedule_code;
+  const user_email = req.params.user_email;
+  const status = req.body.status;
+
+  const scheduleInfo = {
+    schedule_code,
+    user_email,
+    status,
+  };
+
+  const result = Number(await updateScheduleDetail(scheduleInfo));
+
+  const response = { code: 201, message: '수정 성공', result };
+
+  LOGD(JSON.stringify(response));
 
   res.status(201).json(response);
 });

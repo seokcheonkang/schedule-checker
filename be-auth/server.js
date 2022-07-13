@@ -7,8 +7,11 @@ app.use(express.json());
 
 // --
 const MIDDLEWARE_PATH = './middleware';
-const UTIL = require(`${MIDDLEWARE_PATH}/util`);
+
+// ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+const UTIL = require(`${MIDDLEWARE_PATH}/util`);
 
 // --
 const PORT = process.env.PORT || 8002;
@@ -17,7 +20,7 @@ app.listen(PORT, () => {
 
   const URL = !process.env.BASE_URL_THIS ? ip.address() + ':' + PORT : process.env.BASE_URL_THIS;
 
-  LOG(`Server listening : ${URL}`);
+  LOGD(`Server listening : ${URL}`);
 });
 
 // ---

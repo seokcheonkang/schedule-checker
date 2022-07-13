@@ -1,4 +1,5 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -6,11 +7,15 @@ import { useRoute, useRouter } from 'vue-router';
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
+// data
+import ScheduleMemberStatus from '@/flag/scheduleMemberStatus.json';
+
 // mixin
 import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
+import { LOGOUT } from '@/mixin/logout.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -43,6 +48,11 @@ const state = reactive({
     limit_date: null,
     content: null,
   },
+  targetInfo: {
+    isMine: false,
+    user_email: null,
+    status: null,
+  },
 });
 
 const goBack = () => {
@@ -64,9 +74,116 @@ const getScheduleInfo = async (schedule_code) => {
     state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
     state.scheduleInfo.content = response.result.content.replaceAll('\r', '<br>');
     state.scheduleInfo.content = response.result.content.replaceAll('\n', '<br>');
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    LOGOUT(router);
   } else {
     LOGD(response.code);
   }
+};
+
+const getScheduleMemberInfo = async (schedule_code, user_email) => {
+  const url = `${ENV_URL_BACKEND_HOME}/schedules/${schedule_code}/${user_email}`;
+  const args = {};
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  const response = await API(CONSTANT.GET, url, args, header);
+
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
+    if (user_email === response?.result?.user_email) {
+      state.targetInfo.isMine = true;
+      state.targetInfo.user_email = response.result.user_email;
+      state.targetInfo.status = response.result.status;
+    } else {
+      state.targetInfo.isMine = false;
+      state.targetInfo.user_email = null;
+      state.targetInfo.status = null;
+    }
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    LOGOUT(router);
+  } else {
+    LOGD(response.code);
+  }
+};
+
+const updateSchedule = async () => {
+  const schedule_code = state.scheduleInfo.schedule_code;
+  const isMine = state.targetInfo.isMine;
+  const user_email = state.targetInfo.user_email;
+  const status = state.targetInfo.status;
+
+  if (!isMine) {
+    swal.fire({
+      icon: 'error',
+      title: '현재 스케줄의 대상이 아닙니다.',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_401,
+    });
+    return;
+  }
+
+  const url = `${ENV_URL_BACKEND_HOME}/schedules/${schedule_code}/${user_email}`;
+  const args = { status };
+  const header = {
+    authorization: loginStore.accessToken,
+  };
+
+  const response = await API(CONSTANT.PATCH, url, args, header);
+
+  if (response.code === MESSAGE.CODE_HTTP_STATUS_201) {
+    swal.fire({
+      icon: 'info',
+      title: '수정 완료',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_200,
+    });
+
+    router.go(0);
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+  } else {
+    LOGD(response.code);
+  }
+};
+
+const confirm = (paramForParent) => {
+  const { title, showDenyButton, confirmButtonText, denyButtonText, resultMessageY, resultMessageN } = paramForParent;
+
+  swal
+    .fire({
+      title,
+      showDenyButton,
+      confirmButtonText,
+      denyButtonText,
+    })
+    .then((result) => {
+      let resultMessage = resultMessageN;
+      let confirmText = 'info';
+
+      if (result.isConfirmed) {
+        resultMessage = resultMessageY;
+        confirmText = 'success';
+
+        updateSchedule();
+      }
+
+      swal.fire(resultMessage, '', confirmText);
+    });
 };
 
 onBeforeMount(() => {
@@ -75,6 +192,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
   getScheduleInfo(Number(route.params.schedule_code));
+  getScheduleMemberInfo(Number(route.params.schedule_code), loginStore.userInfo.email);
 });
 </script>
 
@@ -105,15 +223,6 @@ onMounted(() => {
               </span>
             </h5>
             <h5 class="mb-3">
-              <span class="text-muted">완료 : </span>
-              <span class="text-primary">
-                {{ state.scheduleInfo.completed_count }}
-              </span>
-            </h5>
-            <div class="mb-3 text-primary">
-              <span v-html="state.scheduleInfo.completed_user"></span>
-            </div>
-            <h5 class="mb-3">
               <span class="text-muted">미완료 : </span>
               <span class="text-warning">
                 {{ state.scheduleInfo.uncompleted_count }}
@@ -121,6 +230,15 @@ onMounted(() => {
             </h5>
             <div class="mb-3 text-warning">
               <span v-html="state.scheduleInfo.uncompleted_user"></span>
+            </div>
+            <h5 class="mb-3">
+              <span class="text-muted">완료 : </span>
+              <span class="text-primary">
+                {{ state.scheduleInfo.completed_count }}
+              </span>
+            </h5>
+            <div class="mb-3 text-primary">
+              <span v-html="state.scheduleInfo.completed_user"></span>
             </div>
             <h5 class="mb-3">
               <span class="text-muted">등록일시 : </span>
@@ -139,7 +257,26 @@ onMounted(() => {
               <span v-html="state.scheduleInfo.content"></span>
             </div>
           </div>
-          <hr />
+          <div v-if="state.targetInfo.isMine">
+            <hr />
+            <h5 class="mb-3 text-muted">내 스케줄 진행 상태</h5>
+            <div class="form-check" v-for="(column, index) in ScheduleMemberStatus">
+              <input
+                type="radio"
+                name="myScheduleStatus"
+                :id="column.option1"
+                class="form-check-input"
+                :value="column.key"
+                v-model="state.targetInfo.status"
+              />
+              <label :for="column.option1" class="form-check-label" :class="column.option2">{{ column.val }}</label>
+            </div>
+            <hr />
+            <CustomActionButton text="수정" command="scheduleConfirm" option1="btn-primary" @buttonClicked="confirm" />
+          </div>
+          <div v-else>
+            <hr />
+          </div>
           <CustomActionButton text="목록" @click="goBack" />
         </div>
       </div>

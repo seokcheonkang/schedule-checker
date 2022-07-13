@@ -1,0 +1,20 @@
+[
+  {
+    "key": "1",
+    "val": "미확인",
+    "option1": "myScheduleStatus1",
+    "option2": "fw-bold text-danger"
+  },
+  {
+    "key": "2",
+    "val": "확인",
+    "option1": "myScheduleStatus2",
+    "option2": "fw-bold text-warning"
+  },
+  {
+    "key": "99",
+    "val": "완료",
+    "option1": "myScheduleStatu3",
+    "option2": "fw-bold text-primary"
+  }
+]

@@ -22,11 +22,13 @@ const DATABASE_PATH = '../database';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // ---
 const db = require(`${DATABASE_PATH}/db.js`);
 db.getConnection();
 
+// ---
 const service = {
   getMembers: async () => {
     const sql = `
@@ -58,7 +60,7 @@ const service = {
         return members;
       })
       .catch((err) => {
-        LOG(err);
+        LOGD(err);
       });
 
     return result;
@@ -99,7 +101,7 @@ const service = {
         }
       })
       .catch((err) => {
-        LOG(err);
+        LOGD(err);
       });
 
     return result;

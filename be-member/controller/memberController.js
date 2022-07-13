@@ -9,6 +9,9 @@ const SERVICE_PATH = '../service';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+
+// ---
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const {
   getMembers,
@@ -20,7 +23,7 @@ const {
 
 // ---
 router.get('/', verifyJwt, async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const result = await getMembers();
   const response = { code: null, result };
@@ -29,14 +32,14 @@ router.get('/', verifyJwt, async (req, res) => {
     response.code = 204; // No Content
   }
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(response.code).json(response);
 });
 
 // router.get('/:user_email', verifyJwt, async (req, res) => {
 router.get('/:user_email', async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const user_email = req.params.user_email;
 
@@ -48,13 +51,13 @@ router.get('/:user_email', async (req, res) => {
     response.code = 204; // No Content
   }
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(response.code).json(response);
 });
 
 router.post('/', async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const user_code = req.body.user_code;
   const user_email = req.body.user_email;
@@ -74,13 +77,13 @@ router.post('/', async (req, res) => {
     response.code = 204; // No Content
   }
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(response.code).json(response);
 });
 
 router.patch('/:user_email', verifyJwt, async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const grade = req.body.grade;
   const status = req.body.status;
@@ -100,13 +103,13 @@ router.patch('/:user_email', verifyJwt, async (req, res) => {
     response.code = 204; // No Content
   }
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(response.code).json(response);
 });
 
 router.delete('/:user_email', verifyJwt, async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const user_email = req.params.user_email;
 
@@ -118,7 +121,7 @@ router.delete('/:user_email', verifyJwt, async (req, res) => {
     response.code = 204; // No Content
   }
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(response.code).json(response);
 });

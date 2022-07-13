@@ -1,4 +1,5 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
 

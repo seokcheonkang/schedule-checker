@@ -1,13 +1,14 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
+// vuejs-paginate
+import Paginate from 'vuejs-paginate-next';
 
 // custom
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
-
-// vuejs-paginate
-import Paginate from 'vuejs-paginate-next';
 
 // mixin
 import API from '@/mixin/api.js';
@@ -36,6 +37,11 @@ const loginStore = useLoginStore();
 const state = reactive({
   searchKey: '',
   searchValue: '',
+  setClassScheduleStatus: computed(() => {
+    return (status) => {
+      return status === '99' ? 'text-primary' : 'text-warning';
+    };
+  }),
 });
 
 const create = async () => {
@@ -161,7 +167,9 @@ onMounted(() => {
               {{ item.title }}
             </router-link>
           </td>
-          <td class="text-center" title="스케줄 상태">{{ item.status_val }}</td>
+          <td class="text-center" :class="state.setClassScheduleStatus(item.status)" title="스케줄 상태">
+            {{ item.status_val }}
+          </td>
           <td class="text-center" title="미완료">{{ item.uncompleted_count }}</td>
           <td class="text-center" title="완료">{{ item.completed_count }}</td>
           <td class="text-center" title="전체">{{ item.total_count }}</td>

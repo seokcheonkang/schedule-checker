@@ -1,4 +1,5 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -58,6 +59,14 @@ const getUserInfo = async () => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.userInfo = response.result;
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    LOGOUT(router);
   } else {
     LOGD(response.code);
   }
@@ -90,6 +99,8 @@ const deleteMember = async () => {
       title: '에러',
       text: MESSAGE.MESSAGE_HTTP_STATUS_419,
     });
+
+    LOGOUT(router);
   } else {
     LOGD(response.code);
   }

@@ -1,10 +1,15 @@
 const request = require('request');
 
+// ---
 const MIDDLEWARE_PATH = './';
-const LOG = require(`${MIDDLEWARE_PATH}/log`);
 
+// ---
+const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+
+// ---
 const verifyJwt = (req, res, next) => {
-  LOG('fn verifyJwt');
+  LOGD('fn verifyJwt');
 
   let response = null;
 
@@ -17,7 +22,7 @@ const verifyJwt = (req, res, next) => {
   request.post(
     { url: `${process.env.BASE_URL_BACKEND_AUTH}/auth/google/verify`, headers: { authorization }, form: req.body },
     (err, httpResponse, body) => {
-      LOG(body);
+      LOGD(body);
 
       const code = JSON.parse(body).code;
 

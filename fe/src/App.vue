@@ -1,18 +1,17 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, ref } from 'vue';
 
+// component
 import Menu from './components/Menu.vue';
 import Footer from './components/Footer.vue';
 
 import Spinner from './views/normal/Spinner.vue';
 
-// store
-import { useLoginStore } from '@/store/login.js';
+// mixin
+import { LOG, LOGD } from '@/mixin/log.js';
 
-// store
-const loginStore = useLoginStore();
-
-console.log(`GREETING : ${import.meta.env.VITE_APP_GREETING}`);
+LOGD(`${import.meta.env.VITE_APP_GREETING}`);
 
 onBeforeMount(() => {});
 

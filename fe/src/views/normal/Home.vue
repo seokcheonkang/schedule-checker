@@ -1,4 +1,5 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -7,6 +8,7 @@ import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
+import { LOGOUT } from '@/mixin/logout.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -33,6 +35,14 @@ const getInfo = async () => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.msg = response.result;
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    LOGOUT(router);
   } else {
     state.msg.userAgent = MESSAGE.MESSAGE_HTTP_STATUS_500;
     state.msg.hostname = MESSAGE.MESSAGE_HTTP_STATUS_500;

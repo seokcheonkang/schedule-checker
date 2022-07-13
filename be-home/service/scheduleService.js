@@ -39,11 +39,13 @@ const DATABASE_PATH = '../database';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // ---
 const db = require(`${DATABASE_PATH}/db.js`);
 db.getConnection();
 
+// ---
 const service = {
   getSchedules: async () => {
     const sql = `
@@ -93,7 +95,7 @@ const service = {
         return schedules;
       })
       .catch((err) => {
-        LOG(err);
+        LOGD(err);
       });
 
     return result;
@@ -163,7 +165,7 @@ const service = {
         }
       })
       .catch((err) => {
-        LOG(err);
+        LOGD(err);
       });
 
     return result;
@@ -214,12 +216,64 @@ const service = {
       await db.batch(sql, param);
       result = true;
     } catch (error) {
-      LOG('error', JSON.stringify(error));
+      LOGD('error', JSON.stringify(error));
       result = false;
     } finally {
-      LOG('finally', JSON.stringify(result));
+      LOGD('finally', JSON.stringify(result));
       return result;
     }
+  },
+  getScheduleMember: async (scheduleInfo) => {
+    const sql = `
+    select 
+           c.user_email
+         , b.status
+      from tb_schedule a
+      join tb_schedule_detail b
+        on a.schedule_code = b.schedule_code
+      join tb_user c
+        on b.user_email = c.user_email
+     where 1=1
+       and a.status = '99'
+       and a.limit_date > now()
+       and c.grade in ('1', '99')
+       and c.status = '99'
+       and a.schedule_code = ?
+       and b.user_email = ?
+    `;
+
+    const param = [scheduleInfo.schedule_code, scheduleInfo.user_email];
+
+    const result = await db
+      .query(sql, param)
+      .then((response) => {
+        if (response.length < 1) {
+          return null;
+        } else {
+          return response[0];
+        }
+      })
+      .catch((err) => {
+        LOGD(err);
+      });
+
+    return result;
+  },
+  updateScheduleDetail: async (scheduleInfo) => {
+    const sql = `
+    update tb_schedule_detail 
+       set
+           status = ?
+         , update_date = now()
+     where 1=1
+       and schedule_code = ?
+       and user_email = ?
+    `;
+
+    const param = [scheduleInfo.status, scheduleInfo.schedule_code, scheduleInfo.user_email];
+
+    const result = await db.query(sql, param);
+    return result;
   },
 };
 

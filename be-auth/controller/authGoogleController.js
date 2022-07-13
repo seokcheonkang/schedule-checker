@@ -9,12 +9,15 @@ const SERVICE_PATH = '../service';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+
+// ---
 const { generateToken, verifyToken } = require(`${MIDDLEWARE_PATH}/jwt.js`);
 const { getMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
 router.post('/create', async (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const user_email = req.body.user_email;
 
@@ -31,20 +34,20 @@ router.post('/create', async (req, res) => {
 
   const response = { code: 200, message: '토큰이 정상 발급되었습니다.', result };
 
-  LOG(response);
+  LOGD(response);
 
   res.status(200).json(response);
 });
 
 router.post('/verify', (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   let response = null;
   try {
     response = verifyToken(req, res);
-    LOG(response);
+    LOGD(response);
   } catch (error) {
-    LOG(error);
+    LOGD(error);
   } finally {
     return response;
   }

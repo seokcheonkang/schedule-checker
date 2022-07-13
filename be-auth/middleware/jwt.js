@@ -3,11 +3,12 @@ const randToken = require('rand-token');
 
 // ---
 const LOG = require('./log');
+const LOGD = require('./logd');
 
 // ---
 const service = {
   generateToken: (req, res, member) => {
-    LOG('generateToken');
+    LOGD('generateToken');
 
     const args = {
       user_email: member.result.user_email,
@@ -23,7 +24,7 @@ const service = {
       issuer: process.env.JWT_ACCESS_TOKEN_ISSUER,
     };
 
-    LOG('options', JSON.stringify(options));
+    LOGD('options', JSON.stringify(options));
 
     req.headers.authorization = jwt.sign(args, key, options);
 
@@ -35,7 +36,7 @@ const service = {
     return result;
   },
   verifyToken: (req, res) => {
-    LOG('verifyToken');
+    LOGD('verifyToken');
 
     const token = req.headers.authorization.replace('Bearer ', '');
 

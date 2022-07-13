@@ -5,6 +5,7 @@ const MIDDLEWARE_PATH = '../middleware';
 
 // --
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // --
 const dotenv = require('dotenv');
@@ -21,6 +22,6 @@ const options = {
   connectionLimit: process.env.DB_CONNECTION_LIMIT,
 };
 const conn = mariaDB.createPool(options);
-LOG('db.conn', JSON.stringify(options));
+LOGD('db.conn', JSON.stringify(options));
 
 module.exports = conn;

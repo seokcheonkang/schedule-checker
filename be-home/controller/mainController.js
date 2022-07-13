@@ -8,16 +8,17 @@ const MIDDLEWARE_PATH = '../middleware';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // ---
 router.get('/', (req, res) => {
-  LOG(req.originalUrl);
+  LOGD(req.originalUrl);
 
   const result = { userAgent: req.headers['user-agent'], hostname: os.hostname() };
 
   const response = { code: 200, message: '조회 성공', result };
 
-  LOG(JSON.stringify(response));
+  LOGD(JSON.stringify(response));
 
   res.status(200).json(response);
 });

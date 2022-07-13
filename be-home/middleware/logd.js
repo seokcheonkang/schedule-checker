@@ -1,4 +1,4 @@
-const showLog = (type, color, val1, val2, val3, val4, val5) => {
+const showLog = (type, val1, val2, val3, val4, val5) => {
   const datetime = new Date().toISOString();
 
   if (typeof val1 === 'object') {
@@ -22,8 +22,6 @@ const showLog = (type, color, val1, val2, val3, val4, val5) => {
   }
 
   console.log(
-    '%c%s',
-    `color: ${color}`,
     `[${type}][${datetime}]`,
     val1,
     val2 ? ', ' + val2 : '',
@@ -33,22 +31,12 @@ const showLog = (type, color, val1, val2, val3, val4, val5) => {
   );
 };
 
-const LOG = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
-  const type = 'LOG';
-  const color = 'tomato';
-
-  if (import.meta.env.VITE_APP_IS_LOG) {
-    showLog(type, color, val1, val2, val3, val4, val5);
-  }
-};
-
 const LOGD = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
-  const type = 'LOG_DEBUG';
-  const color = 'skyblue';
+  const type = 'LOGD';
 
-  if (import.meta.env.VITE_APP_IS_LOG) {
-    showLog(type, color, val1, val2, val3, val4, val5);
+  if (process.env.IS_LOG === 'Y') {
+    showLog(type, val1, val2, val3, val4, val5);
   }
 };
 
-export { LOG, LOGD };
+module.exports = LOGD;

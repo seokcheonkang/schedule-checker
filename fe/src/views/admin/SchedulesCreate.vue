@@ -1,4 +1,5 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -6,6 +7,7 @@ import { useRoute, useRouter } from 'vue-router';
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 import CustomActionButton from '@/components/CustomActionButton.vue';
 
+// data
 import ScheduleStatus from '@/flag/scheduleStatus.json';
 
 // mixin

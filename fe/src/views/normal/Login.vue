@@ -1,7 +1,9 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+// component
 import GoogleLogin from './GoogleLogin.vue';
 
 // custom
@@ -41,7 +43,6 @@ onMounted(() => {});
         <form class="p-4 p-md-4 border rounded-3 bg-light">
           <div v-if="!loginStore.isLogin">
             <GoogleLogin />
-            <hr class="my-4" />
           </div>
           <div v-else>환영합니다. {{ loginStore.userInfo.name }}님.</div>
         </form>

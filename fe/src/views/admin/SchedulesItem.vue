@@ -1,4 +1,5 @@
 <script setup>
+// library
 import { onBeforeMount, onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -11,6 +12,7 @@ import API from '@/mixin/api.js';
 import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
+import { LOGOUT } from '@/mixin/logout.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -64,6 +66,14 @@ const getScheduleInfo = async (schedule_code) => {
     state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
     state.scheduleInfo.content = response.result.content.replaceAll('\r', '<br>');
     state.scheduleInfo.content = response.result.content.replaceAll('\n', '<br>');
+  } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
+    swal.fire({
+      icon: 'error',
+      title: '에러',
+      text: MESSAGE.MESSAGE_HTTP_STATUS_419,
+    });
+
+    LOGOUT(router);
   } else {
     LOGD(response.code);
   }
@@ -105,15 +115,6 @@ onMounted(() => {
               </span>
             </h5>
             <h5 class="mb-3">
-              <span class="text-muted">완료 : </span>
-              <span class="text-primary">
-                {{ state.scheduleInfo.completed_count }}
-              </span>
-            </h5>
-            <div class="mb-3 text-primary">
-              <span v-html="state.scheduleInfo.completed_user"></span>
-            </div>
-            <h5 class="mb-3">
               <span class="text-muted">미완료 : </span>
               <span class="text-warning">
                 {{ state.scheduleInfo.uncompleted_count }}
@@ -121,6 +122,15 @@ onMounted(() => {
             </h5>
             <div class="mb-3 text-warning">
               <span v-html="state.scheduleInfo.uncompleted_user"></span>
+            </div>
+            <h5 class="mb-3">
+              <span class="text-muted">완료 : </span>
+              <span class="text-primary">
+                {{ state.scheduleInfo.completed_count }}
+              </span>
+            </h5>
+            <div class="mb-3 text-primary">
+              <span v-html="state.scheduleInfo.completed_user"></span>
             </div>
             <h5 class="mb-3">
               <span class="text-muted">등록일시 : </span>
@@ -139,7 +149,6 @@ onMounted(() => {
               <span v-html="state.scheduleInfo.content"></span>
             </div>
           </div>
-          <hr />
           <CustomActionButton text="목록" @click="goBack" />
         </div>
       </div>
