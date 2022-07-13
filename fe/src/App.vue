@@ -12,7 +12,7 @@ import Spinner from './views/normal/Spinner.vue';
 import { LOG, LOGD } from '@/mixin/log.js';
 
 const setAppInfo = () => {
-  const appInfo = `Schedule Checker ${import.meta.env.VITE_APP_SERVER} ${__APP_VERSION__}`;
+  const appInfo = `Schedule Checker ${__APP_VERSION__} ${import.meta.env.VITE_APP_SERVER}`;
   LOGD(appInfo);
   document.querySelector('title').innerText = appInfo;
 };
