@@ -1,6 +1,6 @@
 <script setup>
 // library
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 
 // component
 import Menu from './components/Menu.vue';
@@ -11,11 +11,17 @@ import Spinner from './views/normal/Spinner.vue';
 // mixin
 import { LOG, LOGD } from '@/mixin/log.js';
 
-LOGD(`${import.meta.env.VITE_APP_GREETING}`);
+const setAppInfo = () => {
+  const appInfo = `Schedule Checker ${import.meta.env.VITE_APP_SERVER} ${__APP_VERSION__}`;
+  LOGD(appInfo);
+  document.querySelector('title').innerText = appInfo;
+};
 
 onBeforeMount(() => {});
 
-onMounted(() => {});
+onMounted(() => {
+  setAppInfo();
+});
 </script>
 
 <template>

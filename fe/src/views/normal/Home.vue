@@ -27,10 +27,6 @@ const state = reactive({
   msg: {},
 });
 
-const setAppVersion = () => {
-  document.querySelector('title').innerText = `Schedule Checker ${__APP_VERSION__}`;
-};
-
 const getInfo = async () => {
   const url = `${ENV_URL_BACKEND_HOME}/`;
   const args = {};
@@ -39,7 +35,6 @@ const getInfo = async () => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.msg = response.result;
-    state.msg.appVersion = __APP_VERSION__;
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({
       icon: 'error',
@@ -59,7 +54,6 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  setAppVersion();
   getInfo();
 });
 </script>
@@ -71,10 +65,6 @@ onMounted(() => {
   <hr />
   <h5 class="txt-red" v-if="loginStore.isLogin && loginStore.status !== '99'">
     <span>code : {{ loginStore.status }}, 당신의 계정은 사용 허가가 필요합니다. 관리자에게 문의하세요. </span>
-  </h5>
-  <h5 class="">
-    <span>App Version : </span>
-    <span> {{ state.msg.appVersion }}</span>
   </h5>
   <h5 class="">
     <span>User-Agent : </span>
