@@ -125,17 +125,18 @@ onMounted(() => {
 <template>
   <CustomPageHeader text="스케줄 목록" option3="txt-admin" />
   <form class="d-flex justify-content-center my-3" @submit.prevent>
-    <select class="form-select me-2 w-20" aria-label="searchOption" v-model="state.searchKey">
+    <select class="form-select me-2 btn-condition-1of3" aria-label="searchOption" v-model="state.searchKey">
       <option value="">선택</option>
       <option :value="column.key" v-for="column in pagination.columns">
         {{ column.val }}
       </option>
     </select>
     <input
-      class="form-control me-2 w-50"
+      class="form-control me-2"
       type="search"
       placeholder="검색어"
       aria-label="검색"
+      maxlength="30"
       v-model="state.searchValue"
       @input="pagination.getSearchList"
     />
@@ -143,7 +144,7 @@ onMounted(() => {
       text="글쓰기"
       command="scheduleCreate"
       option1="btn-admin"
-      option3="w-10"
+      option3="btn-condition-3of3"
       option4=""
       @buttonClicked="create"
       v-if="loginStore.isLogin && loginStore.status === '99' && loginStore.grade === '99'"

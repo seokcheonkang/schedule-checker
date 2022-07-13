@@ -140,3 +140,29 @@
   vertical-align: middle;
   cursor: pointer;
 }
+
+.btn-condition-1of3 {
+  width: 10rem !important;
+}
+
+.btn-condition-3of3 {
+  width: 10rem !important;
+}
+
+@media all and (min-width: 485px) and (max-width: 768px) {
+  .btn-condition-3of3 {
+    width: 15rem !important;
+  }
+}
+
+@media all and (min-width: 367px) and (max-width: 485px) {
+  .btn-condition-3of3 {
+    width: 20rem !important;
+  }
+}
+
+@media all and (min-width: 1px) and (max-width: 367px) {
+  .btn-condition-3of3 {
+    width: 30rem !important;
+  }
+}
