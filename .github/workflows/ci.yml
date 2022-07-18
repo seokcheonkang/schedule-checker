@@ -6,6 +6,7 @@ jobs:
     steps:
       - name: Change Directory to fe
         run: cd fe
-      - name: Do npm install by actions
+      - name: Import actions from github
         uses: actions/checkout@v3
+      - name: Do npm install by actions
         run: npm ci
