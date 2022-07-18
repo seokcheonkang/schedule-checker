@@ -11,11 +11,11 @@ import Spinner from './views/normal/Spinner.vue';
 // mixin
 import { LOG, LOGD } from '@/mixin/log.js';
 
-let appInfo = null;
+let appInfo = 'Schedule Checker';
 let appVersion = __APP_VERSION__;
 const setAppInfo = () => {
-  appInfo = `Schedule Checker ${import.meta.env.VITE_APP_SERVER?.substring(0, 3)}`;
-  LOGD(appInfo + ` ${appVersion}`);
+  appInfo += import.meta.env.VITE_APP_SERVER ? ` ${import.meta.env.VITE_APP_SERVER.substring(0, 3)}` : ``;
+  LOGD(`${appInfo} ${appVersion}`);
 };
 setAppInfo();
 
