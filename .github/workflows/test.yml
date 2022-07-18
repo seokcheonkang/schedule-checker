@@ -1,4 +1,4 @@
-name: Our First Workflow
+name: My First Workflow
 on: push
 jobs:
   echo1:
