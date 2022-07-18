@@ -1,15 +1,15 @@
-name: My First Workflow
-on: push
-jobs:
-  echo:
-    runs-on: ubuntu-20.04
-    steps:
-      - run: echo 'Hello, GitHub Actions!'
-  pwd-ls:
-    name: PWD & LS
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Print working directory
-        run: pwd
-      - name: List files
-        run: ls -al
+# name: My First Workflow
+# on: push
+# jobs:
+#   echo:
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - run: echo 'Hello, GitHub Actions!'
+#   pwd-ls:
+#     name: PWD & LS
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - name: Print working directory
+#         run: pwd
+#       - name: List files
+#         run: ls -al
