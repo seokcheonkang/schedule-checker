@@ -20,7 +20,17 @@ const router = useRouter();
 // store
 const loginStore = useLoginStore();
 
+// props
+const props = defineProps({
+  appInfo: {
+    type: String,
+    default: '',
+  },
+});
+
+// state
 const state = reactive({
+  appInfo: props.appInfo,
   profileImage: `/assets/image/profile.png`,
   setProfileImage: () => {
     if (loginStore.isLogin && loginStore.userInfo.image) {
@@ -70,7 +80,7 @@ onMounted(() => {});
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/">Schedule Checker</router-link>
+        <router-link class="navbar-brand" to="/">{{ state.appInfo }}</router-link>
         <button
           class="navbar-toggler p-0 border-0"
           type="button"

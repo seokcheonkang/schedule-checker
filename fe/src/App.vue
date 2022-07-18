@@ -11,26 +11,26 @@ import Spinner from './views/normal/Spinner.vue';
 // mixin
 import { LOG, LOGD } from '@/mixin/log.js';
 
+let appInfo = null;
+let appVersion = __APP_VERSION__;
 const setAppInfo = () => {
-  const appInfo = `Schedule Checker ${__APP_VERSION__} ${import.meta.env.VITE_APP_SERVER}`;
-  LOGD(appInfo);
-  document.querySelector('title').innerText = appInfo;
+  appInfo = `Schedule Checker ${import.meta.env.VITE_APP_SERVER?.substring(0, 3)}`;
+  LOGD(appInfo + ` ${appVersion}`);
 };
+setAppInfo();
 
 onBeforeMount(() => {});
 
-onMounted(() => {
-  setAppInfo();
-});
+onMounted(() => {});
 </script>
 
 <template>
   <Spinner />
-  <Menu />
+  <Menu :appInfo="appInfo" />
   <main class="container py-2 my-3">
     <router-view />
   </main>
-  <Footer />
+  <Footer :appVersion="appVersion" />
 </template>
 
 <style scoped></style>
