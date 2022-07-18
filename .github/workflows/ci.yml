@@ -4,5 +4,8 @@ jobs:
   sc-build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - run: npm ci
+      - name: Change Directory to fe
+        run: cd fe
+      - name: Do npm install by actions
+        uses: actions/checkout@v3
+        run: npm ci
