@@ -66,3 +66,9 @@ $ npm i request
 ```console
 $ npm i mariadb
 ```
+
+#### nodemailer
+
+```console
+$ npm i nodemailer
+```
