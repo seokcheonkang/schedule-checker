@@ -33,10 +33,8 @@ router.post('/email', (req, res) => {
   const contentRawArr = contentRaw?.split('@@');
   let contentHtml = `
     <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
-    <br />
     <h2>${contentRawArr[0]}</h2>
-    <br />
-    <a href="${contentRawArr[1]}" target="_blank">바로가기</a>
+    <h2>${contentRawArr[1]}</h2>
   `;
 
   EMAIL.initTransporter();

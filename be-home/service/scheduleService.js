@@ -201,14 +201,13 @@ const service = {
   },
   insertScheduleDetail: async (scheduleInfo) => {
     let result = false;
-    const sql = 'insert into tb_schedule_detail(schedule_code, user_email, status) values (?, ?, ?)';
+    const sql = 'insert into tb_schedule_detail(schedule_code, user_email) values (?, ?)';
 
     let param = [];
     for (let i = 0; i < scheduleInfo.checked_users.length; i++) {
       const subParam = [];
       subParam.push('' + scheduleInfo.insertId);
       subParam.push(scheduleInfo.checked_users[i]);
-      subParam.push(scheduleInfo.status);
       param.push(subParam);
     }
 
