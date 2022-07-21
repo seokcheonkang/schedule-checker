@@ -47,8 +47,8 @@ const state = reactive({
   },
 });
 
-const goBack = () => {
-  router.go(-1);
+const goList = () => {
+  router.push({ name: 'AdminSchedules' });
 };
 
 const getScheduleInfo = async (schedule_code) => {
@@ -149,7 +149,7 @@ onMounted(() => {
               <span v-html="state.scheduleInfo.content"></span>
             </div>
           </div>
-          <CustomActionButton text="목록" @click="goBack" />
+          <CustomActionButton text="목록" @click="goList" />
         </div>
       </div>
     </div>

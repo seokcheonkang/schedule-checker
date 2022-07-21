@@ -54,8 +54,8 @@ const state = reactive({
   errors: [],
 });
 
-const goBack = () => {
-  router.go(-1);
+const goList = () => {
+  router.push({ name: 'AdminSchedules' });
 };
 
 const getMembers = async () => {
@@ -136,7 +136,7 @@ const createSchedule = async () => {
       text: MESSAGE.MESSAGE_HTTP_STATUS_201,
     });
 
-    goBack();
+    goList();
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({
       icon: 'error',
@@ -327,7 +327,7 @@ onMounted(async () => {
           </div>
           <hr />
           <CustomActionButton text="완료" command="create" @buttonClicked="create" option1="btn-admin" />
-          <CustomActionButton text="목록" @click="goBack" />
+          <CustomActionButton text="목록" @click="goList" />
         </form>
       </div>
     </div>

@@ -55,8 +55,8 @@ const state = reactive({
   },
 });
 
-const goBack = () => {
-  router.go(-1);
+const goList = () => {
+  router.push({ name: 'Schedules' });
 };
 
 const getScheduleInfo = async (schedule_code) => {
@@ -192,7 +192,9 @@ onBeforeMount(() => {
 
 onMounted(() => {
   getScheduleInfo(Number(route.params.schedule_code));
-  getScheduleMemberInfo(Number(route.params.schedule_code), loginStore.userInfo.email);
+  if (loginStore.isLogin) {
+    getScheduleMemberInfo(Number(route.params.schedule_code), loginStore.userInfo.email);
+  }
 });
 </script>
 
@@ -277,7 +279,7 @@ onMounted(() => {
           <div v-else>
             <hr />
           </div>
-          <CustomActionButton text="목록" @click="goBack" />
+          <CustomActionButton text="목록" @click="goList" />
         </div>
       </div>
     </div>

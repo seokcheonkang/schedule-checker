@@ -28,19 +28,19 @@ router.post('/email', (req, res) => {
   LOGD(req.originalUrl);
 
   const email = req.body.email;
-  const title = 'Schedule Checker Email Test';
-  const text = `
-  이 이메일은 단순히 테스트 입니다~
-  감사합니다.
-  `;
-  let html = `
+  const title = req.body.title;
+  const contentRaw = req.body.content;
+  const contentRawArr = contentRaw?.split('@@');
+  let contentHtml = `
     <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
     <br />
-    <b>${text.replaceAll('\r', '<br />')}</b>
+    <h2>${contentRawArr[0]}</h2>
+    <br />
+    <a href="${contentRawArr[1]}" target="_blank">바로가기</a>
   `;
 
   EMAIL.initTransporter();
-  EMAIL.sendEmail(email, title, text, html);
+  EMAIL.sendEmail(email, title, contentRaw, contentHtml);
 
   const response = { code: 200, message: '이메일 전송 성공', result: true };
 

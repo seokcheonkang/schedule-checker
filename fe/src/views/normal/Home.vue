@@ -1,7 +1,7 @@
 <script setup>
 // library
 import { onBeforeMount, onMounted, reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // mixin
 import API from '@/mixin/api.js';
@@ -18,6 +18,7 @@ const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // route
 const route = useRoute();
+const router = useRouter();
 
 // store
 const loginStore = useLoginStore();
@@ -49,12 +50,22 @@ const getInfo = async () => {
   }
 };
 
+const routeLastUrl = () => {
+  const nextUrl = loginStore.lastUrl;
+  if (nextUrl) {
+    loginStore.setLastUrl(null);
+    router.push(nextUrl);
+  }
+};
+
 onBeforeMount(() => {
   LOGD(route.name);
 });
 
 onMounted(() => {
   getInfo();
+
+  routeLastUrl();
 });
 </script>
 

@@ -27,54 +27,52 @@ const routes = [
     component: Err,
   },
   {
-    path: '/Login',
+    path: '/login',
     name: 'Login',
     component: () => import('@/views/normal/Login.vue'), // lazy loading page
   },
   {
-    path: '/Profile',
+    path: '/profile',
     name: 'Profile',
     component: () => import('@/views/normal/Profile.vue'),
     meta: { authorization: ['1', '99'] },
   },
   {
-    path: '/Schedules',
+    path: '/schedules',
     name: 'Schedules',
     component: () => import('@/views/normal/Schedules.vue'),
-    meta: { authorization: ['1', '99'] },
   },
   {
-    path: '/Schedules/:schedule_code',
+    path: '/schedules/:schedule_code',
     name: 'SchedulesItem',
     component: SchedulesItem,
-    meta: { authorization: ['1', '99'] },
   },
   {
-    path: '/Admin/Schedules',
+    path: '/admin/schedules',
     name: 'AdminSchedules',
     component: () => import('@/views/admin/Schedules.vue'),
     meta: { authorization: ['99'] },
   },
   {
-    path: '/Admin/Schedules/:schedule_code',
+    path: '/admin/schedules/:schedule_code',
     name: 'AdminSchedulesItem',
     component: AdminSchedulesItem,
     meta: { authorization: ['99'] },
   },
   {
-    path: '/Admin/Schedules/Create',
+    path: '/admin/schedules/create',
     name: 'AdminSchedulesCreate',
     component: () => import('@/views/admin/SchedulesCreate.vue'),
     meta: { authorization: ['99'] },
   },
   {
-    path: '/Admin/Members',
+    path: '/admin/members',
     name: 'AdminMembers',
     component: () => import('@/views/admin/Members.vue'),
     meta: { authorization: ['99'] },
   },
   {
-    path: '/Admin/Members/:user_email',
+    path: '/admin/members/:user_email',
     name: 'AdminMembersItem',
     component: MembersItem,
     meta: { authorization: ['99'] },
@@ -87,21 +85,24 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  useLoadingStore().setIsLoading(true);
+  const loadingStore = useLoadingStore();
+  loadingStore.setIsLoading(true);
 
-  // const authenticationState = useLoginStore?._pinia?.state?._value?.login;
-  const authenticationState = useLoginStore();
+  const loginStore = useLoginStore();
+  if (to.fullPath === '/login') {
+    loginStore.setLastUrl(from.fullPath);
+  }
 
   const { authorization } = to.meta;
 
   if (authorization) {
     // 로그인하지 않으면
-    if (!authenticationState?.isLogin) {
+    if (!loginStore?.isLogin) {
       return next({ path: '/login' });
     }
 
     // 권한 없으면
-    if (authorization.length && !authorization.includes(authenticationState?.grade)) {
+    if (authorization.length && !authorization.includes(loginStore?.grade)) {
       return next({ path: '/error/needAuth' });
     }
   }
@@ -110,7 +111,8 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
-  useLoadingStore().setIsLoading(false);
+  const loadingStore = useLoadingStore();
+  loadingStore.setIsLoading(false);
 });
 
 export default router;

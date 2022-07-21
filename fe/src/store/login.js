@@ -10,6 +10,7 @@ export const useLoginStore = defineStore({
     status: null,
     accessToken: null,
     refreshToken: null,
+    lastUrl: null,
   }),
   getters: {
     getIsLogin: (state) => {
@@ -29,6 +30,9 @@ export const useLoginStore = defineStore({
     },
     getRefreshToken: (state) => {
       return state.refreshToken;
+    },
+    getLastUrl: (state) => {
+      return state.lastUrl;
     },
   },
   actions: {
@@ -51,6 +55,9 @@ export const useLoginStore = defineStore({
     },
     setRefreshToken(val) {
       this.refreshToken = val;
+    },
+    setLastUrl(val) {
+      this.lastUrl = val;
     },
   },
   persist: {

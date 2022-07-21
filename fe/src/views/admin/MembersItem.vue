@@ -46,8 +46,8 @@ const state = reactive({
   },
 });
 
-const goBack = () => {
-  router.go(-1);
+const goList = () => {
+  router.push({ name: 'AdminMembers' });
 };
 
 const updateMember = async () => {
@@ -193,7 +193,7 @@ onMounted(() => {
           </div>
           <hr />
           <CustomActionButton text="회원 수정" command="memberConfirm" option1="btn-admin" @buttonClicked="confirm" />
-          <CustomActionButton text="목록" @click="goBack" />
+          <CustomActionButton text="목록" @click="goList" />
         </div>
       </div>
     </div>
