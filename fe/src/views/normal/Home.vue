@@ -50,6 +50,7 @@ const getInfo = async () => {
   }
 };
 
+// route from.fullPath after login by pinia
 const routeLastUrl = () => {
   const nextUrl = loginStore.lastUrl;
   if (nextUrl) {

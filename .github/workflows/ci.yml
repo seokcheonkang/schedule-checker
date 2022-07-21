@@ -10,7 +10,7 @@ jobs:
         run: pwd
       - name: List files
         run: ls -al
+      - name: Change Directory to fe
+        run: cd fe
       # - name: Do npm install by actions
       #   run: npm ci
-      # - name: Change Directory to fe
-      #   run: cd fe

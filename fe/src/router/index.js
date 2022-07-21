@@ -85,23 +85,25 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  // spinner on
   const loadingStore = useLoadingStore();
   loadingStore.setIsLoading(true);
 
   const loginStore = useLoginStore();
+
+  // route from.fullPath after login by pinia
   if (to.fullPath === '/login') {
     loginStore.setLastUrl(from.fullPath);
   }
 
   const { authorization } = to.meta;
-
   if (authorization) {
-    // 로그인하지 않으면
+    // not login
     if (!loginStore?.isLogin) {
       return next({ path: '/login' });
     }
 
-    // 권한 없으면
+    // no auth
     if (authorization.length && !authorization.includes(loginStore?.grade)) {
       return next({ path: '/error/needAuth' });
     }
@@ -111,6 +113,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
+  // spinner off
   const loadingStore = useLoadingStore();
   loadingStore.setIsLoading(false);
 });
