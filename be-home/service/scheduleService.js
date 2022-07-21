@@ -47,7 +47,7 @@ db.getConnection();
 
 // ---
 const service = {
-  getSchedules: async () => {
+  selectSchedules: async () => {
     const sql = `
     select 
            t1.schedule_code
@@ -100,7 +100,7 @@ const service = {
 
     return result;
   },
-  getSchedule: async (schedule_code) => {
+  selectSchedule: async (scheduleCode) => {
     const sql = `
     select 
            t1.schedule_code
@@ -153,7 +153,7 @@ const service = {
      group by t1.schedule_code
     `;
 
-    const param = schedule_code;
+    const param = scheduleCode;
 
     const result = await db
       .query(sql, param)
@@ -222,7 +222,7 @@ const service = {
       return result;
     }
   },
-  getScheduleMember: async (scheduleInfo) => {
+  selectScheduleMember: async (scheduleInfo) => {
     const sql = `
     select 
            c.user_email

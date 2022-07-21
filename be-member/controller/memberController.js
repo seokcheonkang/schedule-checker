@@ -14,8 +14,8 @@ const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 // ---
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const {
-  getMembers,
-  getMemberByUserEmail,
+  selectMembers,
+  selectMemberByUserEmail,
   insertMember,
   updateMember,
   deleteMember,
@@ -25,7 +25,7 @@ const {
 router.get('/', verifyJwt, async (req, res) => {
   LOGD(req.originalUrl);
 
-  const result = await getMembers();
+  const result = await selectMembers();
   const response = { code: null, result };
   response.code = 200; // OK
   if (!result) {
@@ -43,7 +43,7 @@ router.get('/:user_email', async (req, res) => {
 
   const user_email = req.params.user_email;
 
-  const result = await getMemberByUserEmail(user_email);
+  const result = await selectMemberByUserEmail(user_email);
 
   const response = { code: null, result };
   response.code = 200; // OK

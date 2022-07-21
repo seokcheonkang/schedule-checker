@@ -13,7 +13,7 @@ const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // ---
 const { generateToken, verifyToken } = require(`${MIDDLEWARE_PATH}/jwt.js`);
-const { getMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
+const { selectMemberByUserEmail } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
 router.post('/create', async (req, res) => {
@@ -25,7 +25,7 @@ router.post('/create', async (req, res) => {
     return res.status(500).json({ code: 500, message: '이메일이 없습니다.' });
   }
 
-  const member = await getMemberByUserEmail(user_email);
+  const member = await selectMemberByUserEmail(user_email);
   if (!member) {
     return res.status(500).json({ code: 500, message: '해당하는 회원이 존재 하지 않습니다.', member });
   }

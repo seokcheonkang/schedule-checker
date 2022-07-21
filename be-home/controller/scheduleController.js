@@ -12,11 +12,11 @@ const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 // ---
 const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const {
-  getSchedules,
-  getSchedule,
+  selectSchedules,
+  selectSchedule,
   insertSchedule,
   insertScheduleDetail,
-  getScheduleMember,
+  selectScheduleMember,
   updateScheduleDetail,
 } = require(`${SERVICE_PATH}/scheduleService`);
 
@@ -24,7 +24,7 @@ const {
 router.get('/', verifyJwt, async (req, res) => {
   LOGD(req.originalUrl);
 
-  const result = await getSchedules();
+  const result = await selectSchedules();
 
   const response = { code: 200, message: '조회 성공', result };
 
@@ -38,7 +38,7 @@ router.get('/:schedule_code', verifyJwt, async (req, res) => {
 
   const schedule_code = req.params.schedule_code;
 
-  const result = await getSchedule(schedule_code);
+  const result = await selectSchedule(schedule_code);
 
   const response = { code: 200, message: '조회 성공', result };
 
@@ -76,7 +76,7 @@ router.get('/:schedule_code/:user_email', verifyJwt, async (req, res) => {
     user_email,
   };
 
-  const result = await getScheduleMember(scheduleInfo);
+  const result = await selectScheduleMember(scheduleInfo);
 
   const response = { code: 200, message: '조회 성공', result };
 

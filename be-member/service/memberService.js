@@ -30,7 +30,7 @@ db.getConnection();
 
 // ---
 const service = {
-  getMembers: async () => {
+  selectMembers: async () => {
     const sql = `
     select 
            user_code
@@ -65,7 +65,7 @@ const service = {
 
     return result;
   },
-  getMemberByUserEmail: async (user_email) => {
+  selectMemberByUserEmail: async (userEmail) => {
     const sql = `
     select 
            user_code
@@ -89,7 +89,7 @@ const service = {
        and user_email = ?
     `;
 
-    const param = user_email;
+    const param = userEmail;
 
     const result = await db
       .query(sql, param)
@@ -130,7 +130,7 @@ const service = {
 
     await db.query(sql, param);
 
-    return service.getMemberByUserEmail(userInfo.user_email);
+    return service.selectMemberByUserEmail(userInfo.user_email);
   },
   updateMember: async (userInfo) => {
     const sql = `
@@ -148,14 +148,14 @@ const service = {
 
     return service.getMemberByUserEmail(userInfo.user_email);
   },
-  deleteMember: async (user_email) => {
+  deleteMember: async (userEmail) => {
     const sql = `
     delete from tb_user
      where 1=1 
        and user_email = ?
     `;
 
-    const param = user_email;
+    const param = userEmail;
 
     await db.query(sql, param);
   },

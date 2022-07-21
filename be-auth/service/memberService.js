@@ -1,32 +1,15 @@
 const request = require('request-promise-native');
 
-const members = {
-  columns: [
-    {
-      key: 'user_code',
-      val: '코드',
-    },
-    { key: 'user_email', val: '이메일' },
-    {
-      key: 'user_name',
-      val: '이름',
-    },
-    { key: 'grade', val: '등급' },
-    { key: 'status', val: '상태' },
-    { key: 'regist_date', val: '가입일시' },
-  ],
-  dataList: null,
-};
-
 // ---
 const MIDDLEWARE_PATH = '../middleware';
 
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
+const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // ---
 const service = {
-  getMemberByUserEmail: async (user_email) => {
+  selectMemberByUserEmail: async (user_email) => {
     const options = { url: `${process.env.BASE_URL_BACKEND_MEMBER}/members/${user_email}`, method: 'get' };
 
     const result = await request
