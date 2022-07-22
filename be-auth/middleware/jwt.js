@@ -1,9 +1,14 @@
 const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
 
-// ---
-const LOG = require('./log');
-const LOGD = require('./logd');
+// --
+const MIDDLEWARE_PATH = './';
+const SECRET_PATH = '../secret';
+
+// --
+const LOG = require(`${MIDDLEWARE_PATH}./log`);
+const LOGD = require(`${MIDDLEWARE_PATH}./logd`);
+const KEY = require(`${SECRET_PATH}/key`);
 
 // ---
 const service = {
@@ -17,7 +22,7 @@ const service = {
       status: member.result.status,
     };
 
-    const key = process.env.JWT_ACCESS_TOKEN_SECRET;
+    const key = KEY.getJwtAccessTokenSecret(process.env.NODE_ENV);
 
     const options = {
       expiresIn: process.env.JWT_ACCESS_TOKEN_TIME,
@@ -40,7 +45,7 @@ const service = {
 
     const token = req.headers.authorization.replace('Bearer ', '');
 
-    const key = process.env.JWT_ACCESS_TOKEN_SECRET;
+    const key = KEY.getJwtAccessTokenSecret(process.env.NODE_ENV);
 
     let result = '';
 

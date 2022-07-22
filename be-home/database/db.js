@@ -2,10 +2,12 @@ const mariaDB = require('mariadb');
 
 // --
 const MIDDLEWARE_PATH = '../middleware';
+const SECRET_PATH = '../secret';
 
 // --
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+const KEY = require(`${SECRET_PATH}/key`);
 
 // --
 const dotenv = require('dotenv');
@@ -17,7 +19,7 @@ const options = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  password: KEY.getDatabasePassword(process.env.NODE_ENV),
   database: process.env.DB_DATABASE,
   connectionLimit: process.env.DB_CONNECTION_LIMIT,
 };
