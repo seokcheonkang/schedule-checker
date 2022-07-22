@@ -108,4 +108,4 @@ dist
 
 # User Customizing
 .vscode
-secret
+**/secret/*.js
