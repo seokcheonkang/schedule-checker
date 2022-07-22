@@ -141,24 +141,24 @@ onMounted(() => {
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center" title="코드">
+          <td class="text-center" :title="item.user_code">
             <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
               {{ item.user_code }}
             </router-link>
           </td>
-          <td class="text-left" title="이메일">
+          <td class="text-left" :title="item.user_email">
             <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
               {{ item.user_email }}
             </router-link>
           </td>
-          <td class="text-left" title="이름">
+          <td class="text-left" :title="item.user_name">
             <router-link :to="{ path: `/admin/members/${item.user_email}` }" class="btn-td">
               {{ item.user_name }}
             </router-link>
           </td>
-          <td class="text-center" title="등급">{{ item.grade_val }}</td>
-          <td class="text-center" title="상태">{{ item.status_val }}</td>
-          <td class="text-center" title="가입일시">{{ item.regist_date }}</td>
+          <td class="text-center" :title="item.grade_val">{{ item.grade_val }}</td>
+          <td class="text-center" :title="item.status_val">{{ item.status_val }}</td>
+          <td class="text-center" :title="item.regist_date">{{ item.regist_date }}</td>
         </tr>
       </tbody>
     </table>

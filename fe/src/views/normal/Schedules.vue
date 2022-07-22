@@ -148,20 +148,20 @@ onMounted(() => {
           <td class="text-center" :colspan="pagination.colspan">조회된 결과가 없습니다.</td>
         </tr>
         <tr v-for="item in pagination.calculatedList" role="button">
-          <td class="text-center" title="순번">{{ item.schedule_code }}&nbsp;</td>
-          <td class="text-center" title="제목">
+          <td class="text-center" :title="item.schedule_code">{{ item.schedule_code }}&nbsp;</td>
+          <td class="text-center" :title="item.title">
             <router-link :to="{ path: `/schedules/${item.schedule_code}` }" class="btn-td">
               {{ item.title }}
             </router-link>
           </td>
-          <td class="text-center" :class="state.setClassScheduleStatus(item.status)" title="스케줄 상태">
+          <td class="text-center" :class="state.setClassScheduleStatus(item.status)" :title="item.status_val">
             {{ item.status_val }}
           </td>
-          <td class="text-center" title="미완료">{{ item.uncompleted_count }}</td>
-          <td class="text-center" title="완료">{{ item.completed_count }}</td>
-          <td class="text-center" title="전체">{{ item.total_count }}</td>
-          <td class="text-center" title="등록일시">{{ item.regist_date }}</td>
-          <td class="text-center" title="만료일시">{{ item.limit_date }}</td>
+          <td class="text-center" :title="item.uncompleted_count">{{ item.uncompleted_count }}</td>
+          <td class="text-center" :title="item.completed_count">{{ item.completed_count }}</td>
+          <td class="text-center" :title="item.total_count">{{ item.total_count }}</td>
+          <td class="text-center" :title="item.regist_date">{{ item.regist_date }}</td>
+          <td class="text-center" :title="item.limit_date">{{ item.limit_date }}</td>
         </tr>
       </tbody>
     </table>
