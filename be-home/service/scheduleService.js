@@ -230,29 +230,6 @@ const service = {
       return result;
     }
   },
-  sendEmail: async (emailInfo) => {
-    let result = null;
-
-    console.log('emailInfo', emailInfo);
-
-    EMAIL.initTransporter();
-
-    const title = '[Schedule Checker] 신규 스케줄 생성 알림';
-
-    const seq = emailInfo.shift();
-    for (let i = 0; i < emailInfo.length; i++) {
-      const email = emailInfo[i];
-      const content = '';
-      const contentHtml = `
-        <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
-        <h2>스케줄이 생성되었습니다. 아래 링크에서 확인하세요.</h2>
-        <h2>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</h2>
-      `;
-      EMAIL.sendEmail(email, title, content, contentHtml);
-    }
-
-    return result;
-  },
   selectScheduleMember: async (scheduleInfo) => {
     const sql = `
     select 

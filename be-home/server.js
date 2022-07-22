@@ -33,6 +33,8 @@ app.all('/*', (req, res, next) => {
 const CONTROLLER_PATH = './controller';
 const mainController = require(`${CONTROLLER_PATH}/mainController`);
 const scheduleController = require(`${CONTROLLER_PATH}/scheduleController`);
+const emailController = require(`${CONTROLLER_PATH}/emailController`);
 
 app.use('/', mainController);
 app.use('/schedules', scheduleController);
+app.use('/email', emailController);

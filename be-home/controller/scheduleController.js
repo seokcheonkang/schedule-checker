@@ -8,19 +8,19 @@ const SERVICE_PATH = '../service';
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 
 // ---
-const verifyJwt = require(`${MIDDLEWARE_PATH}/verifyJwt`);
 const {
   selectSchedules,
   selectSchedule,
   insertSchedule,
   insertScheduleDetail,
-  sendEmail,
   selectScheduleMember,
-  updateSchedule,
   updateScheduleDetail,
 } = require(`${SERVICE_PATH}/scheduleService`);
+
+const { sendEmailInsertNewSchedule } = require(`${SERVICE_PATH}/emailService`);
 
 // ---
 router.get('/', verifyJwt, async (req, res) => {
@@ -66,7 +66,7 @@ router.post('/create', verifyJwt, async (req, res) => {
 
     let resultSendMail = false;
     if (scheduleInfo.status === '99' && resultScheduleDetail.length > 1) {
-      resultSendMail = await sendEmail(resultScheduleDetail, scheduleInfo.status);
+      resultSendMail = await sendEmailInsertNewSchedule(resultScheduleDetail, scheduleInfo.status);
     }
 
     response = { code: 201, message: '생성 성공', resultSendMail };

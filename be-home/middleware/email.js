@@ -28,7 +28,7 @@ const EMAIL = {
   initTransporter: () => {
     setTransporter();
   },
-  sendEmail: async (to = '', subject = '', text = '', html = '') =>
+  sendMail: async (to = '', subject = '', text = '', html = '') =>
     await transporter.sendMail({
       from: `"Schedule Checker Admin" <${process.env.NODEMAILER_USER}>`,
       to,
