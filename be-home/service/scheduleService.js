@@ -40,6 +40,7 @@ const DATABASE_PATH = '../database';
 // ---
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
+const EMAIL = require(`${MIDDLEWARE_PATH}/email`);
 
 // ---
 const db = require(`${DATABASE_PATH}/db.js`);
@@ -200,27 +201,57 @@ const service = {
     return result;
   },
   insertScheduleDetail: async (scheduleInfo) => {
-    let result = false;
+    let result = [];
     const sql = 'insert into tb_schedule_detail(schedule_code, user_email) values (?, ?)';
 
     let param = [];
     for (let i = 0; i < scheduleInfo.checked_users.length; i++) {
       const subParam = [];
-      subParam.push('' + scheduleInfo.insertId);
-      subParam.push(scheduleInfo.checked_users[i]);
+
+      const seq = '' + scheduleInfo.insertId;
+      const email = scheduleInfo.checked_users[i];
+
+      subParam.push(seq);
+      subParam.push(email);
       param.push(subParam);
+
+      if (i === 0) {
+        result.push(seq);
+      }
+      result.push(email);
     }
 
     try {
       await db.batch(sql, param);
-      result = true;
     } catch (error) {
       LOGD('error', JSON.stringify(error));
-      result = false;
     } finally {
       LOGD('finally', JSON.stringify(result));
       return result;
     }
+  },
+  sendEmail: async (emailInfo) => {
+    let result = null;
+
+    console.log('emailInfo', emailInfo);
+
+    EMAIL.initTransporter();
+
+    const title = '[Schedule Checker] 신규 스케줄 생성 알림';
+
+    const seq = emailInfo.shift();
+    for (let i = 0; i < emailInfo.length; i++) {
+      const email = emailInfo[i];
+      const content = '';
+      const contentHtml = `
+        <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
+        <h2>스케줄이 생성되었습니다. 아래 링크에서 확인하세요.</h2>
+        <h2>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</h2>
+      `;
+      EMAIL.sendEmail(email, title, content, contentHtml);
+    }
+
+    return result;
   },
   selectScheduleMember: async (scheduleInfo) => {
     const sql = `

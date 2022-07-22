@@ -16,7 +16,9 @@ const {
   selectSchedule,
   insertSchedule,
   insertScheduleDetail,
+  sendEmail,
   selectScheduleMember,
+  updateSchedule,
   updateScheduleDetail,
 } = require(`${SERVICE_PATH}/scheduleService`);
 
@@ -54,15 +56,27 @@ router.post('/create', verifyJwt, async (req, res) => {
   scheduleInfo.regist_date = scheduleInfo.regist_date + ' ' + scheduleInfo.regist_time;
   scheduleInfo.limit_date = scheduleInfo.limit_date + ' ' + scheduleInfo.limit_time;
 
-  const resultSchedule = await insertSchedule(scheduleInfo);
-  scheduleInfo.insertId = Number(resultSchedule.insertId);
-  const resultScheduleDetail = await insertScheduleDetail(scheduleInfo);
+  let response = { code: 500, message: '실패', result: false };
 
-  const response = { code: 201, message: '생성 성공', resultScheduleDetail };
+  try {
+    const resultSchedule = await insertSchedule(scheduleInfo);
+    scheduleInfo.insertId = Number(resultSchedule.insertId);
 
-  LOGD(JSON.stringify(response));
+    const resultScheduleDetail = await insertScheduleDetail(scheduleInfo);
 
-  res.status(201).json(response);
+    let resultSendMail = false;
+    if (scheduleInfo.status === '99' && resultScheduleDetail.length > 1) {
+      resultSendMail = await sendEmail(resultScheduleDetail, scheduleInfo.status);
+    }
+
+    response = { code: 201, message: '생성 성공', resultSendMail };
+  } catch (error) {
+    LOGD('error', JSON.stringify(error));
+  } finally {
+    LOGD('finally', JSON.stringify(response));
+
+    res.status(201).json(response);
+  }
 });
 
 router.get('/:schedule_code/:user_email', verifyJwt, async (req, res) => {
