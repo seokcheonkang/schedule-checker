@@ -6,26 +6,28 @@ const dotenv = require('dotenv');
 
 // --
 const MIDDLEWARE_PATH = '../middleware';
-
-// --
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 
 // --
 const UTIL = {
   setEnv: (nodeEnv) => {
-    LOGD('UTIL.setEnv()');
-    dotenv.config({ path: path.join(__dirname, `${ENV_PATH}/.env.${nodeEnv}`) });
+    const param = `${ENV_PATH}/.env.${nodeEnv}`;
+    dotenv.config({ path: path.join(__dirname, param) });
+    LOGD('UTIL.setEnv()', param);
   },
   getEnv: () => {
-    LOGD('UTIL.getEnv()');
-    return { path: path.join(__dirname, `${ENV_PATH}/.env.${process.env.NODE_ENV}`) };
+    const param = `${ENV_PATH}/.env.${process.env.NODE_ENV}`;
+    const result = { path: path.join(__dirname, param) };
+    LOGD('UTIL.getEnv()', param);
+    LOGD('UTIL.getEnv()', result);
+    return result;
   },
   setCors: (res) => {
-    LOGD('UTIL.setCors()');
     res.header('Access-Control-Allow-Origin', process.env.BASE_URL_FRONTEND);
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    LOGD('UTIL.setCors()', JSON.stringify({ 'Access-Control-Allow-Origin': process.env.BASE_URL_FRONTEND }));
   },
 };
 
