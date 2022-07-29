@@ -62,26 +62,26 @@ const service = {
          , sum(t1.uncompleted_count) as uncompleted_count
       from (
             select 
-                   a.schedule_code
-                 , a.title
-                 , a.status
-                 , a.regist_date
-                 , a.limit_date
-                 , case when a.status = '1' then '준비'
-                        when a.status = '2' then '취소'
-                        when a.status = '3' then '만료'
-                        when a.status = '99' then '진행'
+                   ts.schedule_code
+                 , ts.title
+                 , ts.status
+                 , ts.regist_date
+                 , ts.limit_date
+                 , case when ts.status = '1' then '준비'
+                        when ts.status = '2' then '취소'
+                        when ts.status = '3' then '만료'
+                        when ts.status = '99' then '진행'
                         else '알수없음'
                     end as status_val
-                 , case when b.status = '99' then 1 
+                 , case when tsd.status = '99' then 1 
                         else 0
                     end as completed_count
-                 , case when b.status != '99' then 1 
+                 , case when tsd.status != '99' then 1 
                         else 0
                     end as uncompleted_count
-              from tb_schedule a
-              left join tb_schedule_detail b
-                on a.schedule_code = b.schedule_code
+              from tb_schedule ts
+              left join tb_schedule_detail tsd
+                on ts.schedule_code = tsd.schedule_code
              where 1=1 
         ) t1
      where 1=1
@@ -154,10 +154,10 @@ const service = {
      group by t1.schedule_code
     `;
 
-    const param = scheduleCode;
+    const dbParam = scheduleCode;
 
     const result = await db
-      .query(sql, param)
+      .query(sql, dbParam)
       .then((response) => {
         if (response.length < 1) {
           return null;
@@ -189,7 +189,7 @@ const service = {
     )
     `;
 
-    const param = [
+    const dbParam = [
       scheduleInfo.title,
       scheduleInfo.content,
       scheduleInfo.status,
@@ -197,12 +197,20 @@ const service = {
       scheduleInfo.limit_date,
     ];
 
-    const result = await db.query(sql, param);
+    const result = await db.query(sql, dbParam);
     return result;
   },
   insertScheduleDetail: async (scheduleInfo) => {
     let result = [];
-    const sql = 'insert into tb_schedule_detail(schedule_code, user_email) values (?, ?)';
+
+    const sql = `
+    insert into tb_schedule_detail
+    (
+        schedule_code
+      , user_email
+    )
+    values (?, ?)
+    `;
 
     let param = [];
     for (let i = 0; i < scheduleInfo.checked_users.length; i++) {
@@ -233,26 +241,26 @@ const service = {
   selectScheduleMember: async (scheduleInfo) => {
     const sql = `
     select 
-           c.user_email
-         , b.status
-      from tb_schedule a
-      join tb_schedule_detail b
-        on a.schedule_code = b.schedule_code
-      join tb_user c
-        on b.user_email = c.user_email
+           tu.user_email
+         , tsd.status
+      from tb_schedule ts
+      join tb_schedule_detail tsd
+        on ts.schedule_code = tsd.schedule_code
+      join tb_user tu
+        on tsd.user_email = tu.user_email
      where 1=1
-       and a.status = '99'
-       and a.limit_date > now()
-       and c.grade in ('1', '99')
-       and c.status = '99'
-       and a.schedule_code = ?
-       and b.user_email = ?
+       and ts.status = '99'
+       and ts.limit_date > now()
+       and tu.grade in ('1', '99')
+       and tu.status = '99'
+       and ts.schedule_code = ?
+       and tsd.user_email = ?
     `;
 
-    const param = [scheduleInfo.schedule_code, scheduleInfo.user_email];
+    const dbParam = [scheduleInfo.schedule_code, scheduleInfo.user_email];
 
     const result = await db
-      .query(sql, param)
+      .query(sql, dbParam)
       .then((response) => {
         if (response.length < 1) {
           return null;
@@ -277,9 +285,9 @@ const service = {
        and user_email = ?
     `;
 
-    const param = [scheduleInfo.status, scheduleInfo.schedule_code, scheduleInfo.user_email];
+    const dbParam = [scheduleInfo.status, scheduleInfo.schedule_code, scheduleInfo.user_email];
 
-    const result = await db.query(sql, param);
+    const result = await db.query(sql, dbParam);
     return result;
   },
 };

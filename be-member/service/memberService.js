@@ -49,7 +49,7 @@ const service = {
                 when status = '99' then '승인'
                 else '알수없음'
             end as status_val
-      from tb_user 
+      from tb_user tu
      where 1=1 
     `;
 
@@ -84,15 +84,15 @@ const service = {
                 when status = '99' then '승인'
                 else '알수없음'
             end as status_val
-      from tb_user 
+      from tb_user tu
      where 1=1 
        and user_email = ?
     `;
 
-    const param = userEmail;
+    const dbParam = userEmail;
 
     const result = await db
-      .query(sql, param)
+      .query(sql, dbParam)
       .then((response) => {
         if (response.length < 1) {
           return null;
@@ -126,9 +126,9 @@ const service = {
     )
     `;
 
-    const param = [userInfo.user_code, userInfo.user_email, userInfo.user_name];
+    const dbParam = [userInfo.user_code, userInfo.user_email, userInfo.user_name];
 
-    await db.query(sql, param);
+    await db.query(sql, dbParam);
 
     return service.selectMemberByUserEmail(userInfo.user_email);
   },
@@ -142,9 +142,9 @@ const service = {
        and user_email = ?
     `;
 
-    const param = [userInfo.grade, userInfo.status, userInfo.user_email];
+    const dbParam = [userInfo.grade, userInfo.status, userInfo.user_email];
 
-    await db.query(sql, param);
+    await db.query(sql, dbParam);
 
     return service.getMemberByUserEmail(userInfo.user_email);
   },
@@ -155,9 +155,9 @@ const service = {
        and user_email = ?
     `;
 
-    const param = userEmail;
+    const dbParam = userEmail;
 
-    await db.query(sql, param);
+    await db.query(sql, dbParam);
   },
 };
 
