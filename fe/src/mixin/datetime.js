@@ -47,4 +47,9 @@ const NOW_TIME = () => {
   return result;
 };
 
-export { NOW_DATE, NOW_TIME };
+const getYyyy = () => {
+  let result = new Date().getFullYear();
+  return result;
+};
+
+export { NOW_DATE, NOW_TIME, getYyyy };

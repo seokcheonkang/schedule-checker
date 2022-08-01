@@ -29,6 +29,40 @@ const UTIL = {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     LOGD('UTIL.setCors()', JSON.stringify({ 'Access-Control-Allow-Origin': process.env.BASE_URL_FRONTEND }));
   },
+  processGet: async (next, res, callback, thisRequestParam) => {
+    let thisResponse = {
+      status: 500,
+      code: 500,
+      message: '',
+      result: null,
+    };
+
+    try {
+      thisResponse.result = await callback(thisRequestParam);
+
+      if (thisResponse.result) {
+        thisResponse.status = 200;
+        thisResponse.code = 200;
+        thisResponse.message = '조회 성공';
+      } else {
+        thisResponse.status = 204;
+        thisResponse.code = 204;
+        thisResponse.message = '콘텐트 없음';
+      }
+    } catch (error) {
+      thisResponse.status = 500;
+      thisResponse.code = 500;
+      thisResponse.message = '서버 내부 에러';
+
+      LOGD('error', JSON.stringify(thisResponse));
+    } finally {
+      LOGD('finally', JSON.stringify(thisResponse));
+
+      res.status(thisResponse.status).json(thisResponse);
+
+      next();
+    }
+  },
 };
 
 module.exports = UTIL;

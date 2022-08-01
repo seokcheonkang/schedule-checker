@@ -31,6 +31,11 @@ const verifyJwt = (req, res, next) => {
         return response;
       }
 
+      if (code === 401) {
+        response = res.status(401).json({ code: 401, message: '유효하지 않은 토큰입니다.' });
+        return response;
+      }
+
       if (code === 419) {
         response = res.status(419).json({ code: 419, message: '인증이 만료되었습니다.' });
         return response;

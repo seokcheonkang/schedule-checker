@@ -12,6 +12,7 @@ import MESSAGE from '@/mixin/message';
 import CONSTANT from '@/mixin/constant';
 import { LOG, LOGD } from '@/mixin/log.js';
 import { LOGOUT } from '@/mixin/logout.js';
+import { NOW_DATE, NOW_TIME, getYyyy } from '@/mixin/datetime.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
@@ -42,7 +43,7 @@ const chart = reactive({
 });
 
 const getScheduleStat = async () => {
-  const url = `${ENV_URL_BACKEND_HOME}/stat/schedule/process`;
+  const url = `${ENV_URL_BACKEND_HOME}/stat/schedule/process?yyyy=${getYyyy()}`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,
@@ -52,6 +53,8 @@ const getScheduleStat = async () => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     chart.data = response.result;
+  } else if (response.code === MESSAGE.CODE_HTTP_STATUS_204) {
+    chart.data = [{ 기준: '없음', 값: '0' }];
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({
       icon: 'error',
