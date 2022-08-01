@@ -34,7 +34,9 @@ const CONTROLLER_PATH = './controller';
 const mainController = require(`${CONTROLLER_PATH}/mainController`);
 const scheduleController = require(`${CONTROLLER_PATH}/scheduleController`);
 const emailController = require(`${CONTROLLER_PATH}/emailController`);
+const statController = require(`${CONTROLLER_PATH}/statController`);
 
 app.use('/', mainController);
 app.use('/schedules', scheduleController);
 app.use('/email', emailController);
+app.use('/stat', statController);

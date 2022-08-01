@@ -77,6 +77,12 @@ const routes = [
     component: MembersItem,
     meta: { authorization: ['99'] },
   },
+  {
+    path: '/admin/stat',
+    name: 'AdminStat',
+    component: () => import('@/views/admin/Stat.vue'),
+    meta: { authorization: ['99'] },
+  },
 ];
 
 const router = createRouter({

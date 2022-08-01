@@ -103,8 +103,8 @@ $ npm i vue3-google-oauth2
 $ npm i sass scss
 ```
 
-####
+#### chart
 
 ```console
-$
+$ npm i vue3-charts
 ```
