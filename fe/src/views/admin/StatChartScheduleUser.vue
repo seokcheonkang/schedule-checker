@@ -42,7 +42,7 @@ const chart = reactive({
   size: { width: 1200, height: 400 },
 });
 
-const getScheduleStat = async () => {
+const getChart = async () => {
   const url = `${ENV_URL_BACKEND_HOME}/stat/schedule/user?yyyy=${getYyyy()}`;
   const args = {};
   const header = {
@@ -68,8 +68,12 @@ const getScheduleStat = async () => {
   }
 };
 
+onBeforeMount(() => {
+  // LOGD(route.name);
+});
+
 onMounted(() => {
-  getScheduleStat();
+  getChart();
 });
 </script>
 

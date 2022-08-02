@@ -7,9 +7,9 @@ import { useRoute, useRouter } from 'vue-router';
 import CustomPageHeader from '@/components/CustomPageHeader.vue';
 
 // chart
-import ChartScheduleStatus from '@/views/admin/ChartScheduleStatus.vue';
-import ChartScheduleProcess from '@/views/admin/ChartScheduleProcess.vue';
-import ChartScheduleUser from '@/views/admin/ChartScheduleUser.vue';
+import StatChartScheduleStatus from '@/views/admin/StatChartScheduleStatus.vue';
+import StatChartScheduleProcess from '@/views/admin/StatChartScheduleProcess.vue';
+import StatChartScheduleUser from '@/views/admin/StatChartScheduleUser.vue';
 
 // mixin
 import { LOG, LOGD } from '@/mixin/log.js';
@@ -30,8 +30,8 @@ onMounted(() => {});
 <template>
   <CustomPageHeader text="통계" option3="txt-admin" />
   <div class="table-responsive">
-    <ChartScheduleStatus />
-    <ChartScheduleProcess />
-    <ChartScheduleUser />
+    <StatChartScheduleStatus />
+    <StatChartScheduleProcess />
+    <StatChartScheduleUser />
   </div>
 </template>

@@ -42,8 +42,8 @@ const chart = reactive({
   size: { width: 1200, height: 400 },
 });
 
-const getScheduleStat = async () => {
-  const url = `${ENV_URL_BACKEND_HOME}/stat/schedule/process?yyyy=${getYyyy()}`;
+const getChart = async () => {
+  const url = `${ENV_URL_BACKEND_HOME}/stat/schedule/status?yyyy=${getYyyy()}`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,
@@ -68,28 +68,34 @@ const getScheduleStat = async () => {
   }
 };
 
+onBeforeMount(() => {
+  // LOGD(route.name);
+});
+
 onMounted(() => {
-  getScheduleStat();
+  getChart();
 });
 </script>
 
 <template>
-  <h2 class="text-center mt-5">스케줄 상태 / 진행</h2>
+  <h2 class="text-center mt-5">스케줄 상태 / 종합</h2>
   <Chart :data="chart.data" :direction="chart.direction" :margin="chart.margin" :size="chart.size">
     <template #layers>
       <Grid strokeDasharray="2,2" />
-      <Bar :dataKeys="['기준', '확인']" :barStyle="{ fill: '#ffc107' }" />
-      <Bar :dataKeys="['기준', '미확인']" :barStyle="{ fill: '#cccccc' }" />
-      <Bar :dataKeys="['기준', '완료']" :barStyle="{ fill: '#0d6efd' }" />
+      <Bar :dataKeys="['기준', '준비']" :barStyle="{ fill: '#ffc107' }" />
+      <Bar :dataKeys="['기준', '취소']" :barStyle="{ fill: '#cccccc' }" />
+      <Bar :dataKeys="['기준', '만료']" :barStyle="{ fill: '#ff0000' }" />
+      <Bar :dataKeys="['기준', '진행']" :barStyle="{ fill: '#0d6efd' }" />
     </template>
 
     <template #widgets>
       <Tooltip
         borderColor="#48CAE4"
         :config="{
-          확인: { color: '#ffc107' },
-          미확인: { color: '#cccccc' },
-          완료: { color: '#0d6efd' },
+          준비: { color: '#ffc107' },
+          취소: { color: '#cccccc' },
+          만료: { color: '#ff0000' },
+          진행: { color: '#0d6efd' },
         }"
       />
     </template>
