@@ -54,7 +54,7 @@ const getChart = async () => {
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     chart.data = response.result;
   } else if (response.code === MESSAGE.CODE_HTTP_STATUS_204) {
-    chart.data = [{ 기준: '없음', 값: '0' }];
+    chart.data = [{ 기준: '없음', 미확인: '0', 확인: '0', 완료: '0' }];
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({
       icon: 'error',
