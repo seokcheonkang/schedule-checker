@@ -23,7 +23,7 @@ const {
 const { sendEmailInsertNewSchedule } = require(`${SERVICE_PATH}/emailService`);
 
 // ---
-router.get('/', verifyJwt, async (req, res) => {
+router.get('/', async (req, res) => {
   LOGD(req.originalUrl);
 
   const result = await selectSchedules();
