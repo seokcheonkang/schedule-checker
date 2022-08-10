@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
   res.status(200).json(response);
 });
 
-router.get('/:schedule_code', verifyJwt, async (req, res) => {
+router.get('/:schedule_code', async (req, res) => {
   LOGD(req.originalUrl);
 
   const schedule_code = req.params.schedule_code;
