@@ -1,0 +1,8 @@
+docker login
+start /b npm run build
+timeout /t 20 /nobreak
+start /b docker build --tag idealful/example:latest C:\data\dev\workspace3\schedule-checker\fe
+timeout /t 5 /nobreak
+docker push idealful/example:latest
+docker rmi idealful/example
+rmdir /s /q dist
