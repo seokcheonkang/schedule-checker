@@ -16,11 +16,13 @@ const {
   selectSchedule,
   insertSchedule,
   insertScheduleDetail,
+  updateSchedule,
+  deleteScheduleDetail,
   selectScheduleMember,
   updateScheduleDetail,
 } = require(`${SERVICE_PATH}/scheduleService`);
 
-const { sendEmailInsertNewSchedule } = require(`${SERVICE_PATH}/emailService`);
+const { sendEmailInsertNewSchedule, sendEmailUpdateSchedule } = require(`${SERVICE_PATH}/emailService`);
 
 // ---
 router.get('/', async (req, res) => {
@@ -66,12 +68,45 @@ router.post('/create', verifyJwt, async (req, res) => {
 
     let resultSendMail = false;
     if (scheduleInfo.status === '99' && resultScheduleDetail.length > 1) {
-      resultSendMail = await sendEmailInsertNewSchedule(resultScheduleDetail, scheduleInfo.status);
+      resultSendMail = await sendEmailInsertNewSchedule(resultScheduleDetail);
     }
 
     response = { code: 201, message: '생성 성공', resultSendMail };
   } catch (error) {
     LOGD('error', JSON.stringify(error));
+  } finally {
+    LOGD('finally', JSON.stringify(response));
+
+    res.status(201).json(response);
+  }
+});
+
+router.patch('/update', verifyJwt, async (req, res) => {
+  LOGD(req.originalUrl);
+
+  const scheduleInfo = req.body;
+  scheduleInfo.regist_date = scheduleInfo.regist_date + ' ' + scheduleInfo.regist_time;
+  scheduleInfo.limit_date = scheduleInfo.limit_date + ' ' + scheduleInfo.limit_time;
+
+  let response = { code: 500, message: '실패', result: false };
+
+  try {
+    const resultSchedule = await updateSchedule(scheduleInfo);
+    scheduleInfo.insertId = scheduleInfo.schedule_code;
+
+    if (scheduleInfo.checked_users) {
+      const resultDeleteScheduleDetail = await deleteScheduleDetail(scheduleInfo);
+      const resultInsertScheduleDetail = await insertScheduleDetail(scheduleInfo);
+
+      let resultSendMail = false;
+      if (scheduleInfo.status === '99' && resultInsertScheduleDetail.length > 1) {
+        resultSendMail = await sendEmailUpdateSchedule(resultInsertScheduleDetail);
+      }
+
+      response = { code: 201, message: '수정 성공', resultSendMail };
+    }
+  } catch (error) {
+    LOGD('error', error);
   } finally {
     LOGD('finally', JSON.stringify(response));
 

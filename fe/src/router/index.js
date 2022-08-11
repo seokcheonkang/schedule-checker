@@ -66,6 +66,12 @@ const routes = [
     meta: { authorization: ['99'] },
   },
   {
+    path: '/admin/schedules/update',
+    name: 'AdminSchedulesUpdate',
+    component: () => import('@/views/admin/SchedulesUpdate.vue'),
+    meta: { authorization: ['99'] },
+  },
+  {
     path: '/admin/members',
     name: 'AdminMembers',
     component: () => import('@/views/admin/Members.vue'),

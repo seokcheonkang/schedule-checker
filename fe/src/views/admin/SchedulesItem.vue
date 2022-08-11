@@ -39,6 +39,8 @@ const state = reactive({
     total_count: null,
     completed_count: null,
     uncompleted_count: null,
+    all_user_origin: null,
+    all_user: null,
     completed_user: null,
     uncompleted_user: null,
     regist_date: null,
@@ -46,6 +48,10 @@ const state = reactive({
     content: null,
   },
 });
+
+const goUpdate = () => {
+  router.push({ name: 'AdminSchedulesUpdate', query: { scheduleInfo: JSON.stringify(state.scheduleInfo) } });
+};
 
 const goList = () => {
   router.push({ name: 'AdminSchedules' });
@@ -62,6 +68,8 @@ const getScheduleInfo = async (schedule_code) => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     state.scheduleInfo = response.result;
+    state.scheduleInfo.all_user_origin = response.result.all_user.split(',').map((one) => one.split('/')[1]);
+    state.scheduleInfo.all_user = response.result.all_user.split(',').join('<br>');
     state.scheduleInfo.completed_user = response.result.completed_user.split(',').join('<br>');
     state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
     state.scheduleInfo.content = response.result.content.replaceAll('\r', '<br>');
@@ -114,9 +122,12 @@ onMounted(() => {
                 {{ state.scheduleInfo.total_count }}
               </span>
             </h5>
+            <div class="mb-3 text-muted">
+              <span v-html="state.scheduleInfo.all_user"></span>
+            </div>
             <h5 class="mb-3">
               <span class="text-muted">미완료 : </span>
-              <span class="text-warning">
+              <span class="text-dark">
                 {{ state.scheduleInfo.uncompleted_count }}
               </span>
             </h5>
@@ -149,6 +160,12 @@ onMounted(() => {
               <span v-html="state.scheduleInfo.content"></span>
             </div>
           </div>
+          <CustomActionButton
+            text="수정"
+            @click="goUpdate"
+            option1="btn-admin"
+            v-if="loginStore.isLogin && loginStore.status === '99' && loginStore.grade === '99'"
+          />
           <CustomActionButton text="목록" @click="goList" />
         </div>
       </div>

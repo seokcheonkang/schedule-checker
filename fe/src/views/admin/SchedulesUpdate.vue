@@ -37,25 +37,66 @@ const loginStore = useLoginStore();
 
 // state
 const state = reactive({
+  scheduleInfoOrigin: {},
   form: {
     title: '',
     content: '',
-    status: '1',
-    regist_date: NOW_DATE(),
-    regist_time: NOW_TIME(),
-    limit_date: NOW_DATE(),
-    limit_time: '23:59:59',
+    status: '',
+    regist_date: '',
+    regist_time: '',
+    limit_date: '',
+    limit_time: '',
     regist_user: loginStore.userInfo.name + '/' + loginStore.userInfo.email,
     user_code: loginStore.userInfo.id,
     user_email: loginStore.userInfo.email,
     target_users: [],
     checked_users: [],
+    all_user_origin: [],
   },
   errors: [],
 });
 
+const goBack = () => {
+  router.go(-1);
+};
+
 const goList = () => {
   router.push({ name: 'AdminSchedules' });
+};
+
+const setScheduleItem = () => {
+  state.scheduleInfoOrigin = JSON.parse(route.query.scheduleInfo);
+  state.form.schedule_code = state.scheduleInfoOrigin.schedule_code;
+  state.form.regist_date = state.scheduleInfoOrigin.regist_date?.split(' ')[0];
+  state.form.regist_time = state.scheduleInfoOrigin.regist_date?.split(' ')[1];
+  state.form.limit_date = state.scheduleInfoOrigin.limit_date?.split(' ')[0];
+  state.form.limit_time = state.scheduleInfoOrigin.limit_date?.split(' ')[1];
+  state.form.status = state.scheduleInfoOrigin.status;
+  state.form.completed_user = state.scheduleInfoOrigin.completed_user;
+  state.form.title = state.scheduleInfoOrigin.title;
+  state.form.content = state.scheduleInfoOrigin.content;
+  state.form.all_user_origin = state.scheduleInfoOrigin.all_user_origin;
+};
+
+const setPrevChkUsers = () => {
+  const chkUsers = document.querySelectorAll('[name=chkUsers]');
+  const originUsers = JSON.parse(JSON.stringify(state.form.all_user_origin));
+
+  chkUsers.forEach((chkUser, idx) => {
+    if (idx !== 0) {
+      const isEqual = originUsers.includes(chkUser.value);
+      if (isEqual) {
+        chkUser.checked = true;
+        state.form.checked_users.push(chkUser.value);
+      }
+    }
+  });
+
+  if (state.form.checked_users.length === chkUsers.length - 1) {
+    document.querySelector('#chkUsersAll').checked = true;
+  } else {
+    document.querySelector('#chkUsersAll').checked = false;
+  }
 };
 
 const getMembers = async () => {
@@ -120,19 +161,19 @@ const changeCheckAll = () => {
   }
 };
 
-const createSchedule = async () => {
-  const url = `${ENV_URL_BACKEND_HOME}/schedules/create`;
+const updateSchedule = async () => {
+  const url = `${ENV_URL_BACKEND_HOME}/schedules/update`;
   const args = state.form;
   const header = {
     authorization: loginStore.accessToken,
   };
 
-  const response = await API(CONSTANT.POST, url, args, header);
+  const response = await API(CONSTANT.PATCH, url, args, header);
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_201) {
     swal.fire({
       icon: 'info',
-      title: '스케줄 생성 완료',
+      title: '스케줄 수정 완료',
       text: MESSAGE.MESSAGE_HTTP_STATUS_201,
     });
 
@@ -186,7 +227,7 @@ const validation = {
   },
 };
 
-const create = (paramForParent) => {
+const update = (paramForParent) => {
   validation.validateAll();
 
   if (state.errors.length === 0) {
@@ -207,7 +248,7 @@ const create = (paramForParent) => {
           resultMessage = resultMessageY;
           confirmText = 'success';
 
-          createSchedule();
+          updateSchedule();
         }
 
         swal.fire(resultMessage, '', confirmText);
@@ -221,11 +262,15 @@ onBeforeMount(() => {
 
 onMounted(async () => {
   await getMembers();
+
+  await setScheduleItem();
+
+  await setPrevChkUsers();
 });
 </script>
 
 <template>
-  <CustomPageHeader text="스케줄 생성" option3="txt-admin" />
+  <CustomPageHeader text="스케줄 수정" option3="txt-admin" />
   <div class="container">
     <div class="row align-items-center py-1">
       <div class="col-md-10 mx-auto col-lg-10">
@@ -326,7 +371,8 @@ onMounted(async () => {
             />
           </div>
           <hr />
-          <CustomActionButton text="완료" command="create" @buttonClicked="create" option1="btn-admin" />
+          <CustomActionButton text="완료" command="update" @buttonClicked="update" option1="btn-admin" />
+          <CustomActionButton text="이전" @click="goBack" />
           <CustomActionButton text="목록" @click="goList" />
         </form>
       </div>

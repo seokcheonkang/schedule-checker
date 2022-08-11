@@ -54,8 +54,8 @@ const service = {
            t1.schedule_code
          , max(t1.title) as title
          , max(t1.status) as status
-         , date_format(max(t1.regist_date), '%Y-%m-%d %h:%i:%s') as regist_date
-         , date_format(max(t1.limit_date), '%Y-%m-%d %h:%i:%s') as limit_date
+         , date_format(max(t1.regist_date), '%Y-%m-%d %H:%i:%s') as regist_date
+         , date_format(max(t1.limit_date), '%Y-%m-%d %H:%i:%s') as limit_date
          , max(t1.status_val) as status_val
          , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count
@@ -107,12 +107,13 @@ const service = {
            t1.schedule_code
          , max(t1.title) as title
          , max(t1.status) as status
-         , date_format(max(t1.regist_date), '%Y-%m-%d %h:%i:%s') as regist_date
-         , date_format(max(t1.limit_date), '%Y-%m-%d %h:%i:%s') as limit_date
+         , date_format(max(t1.regist_date), '%Y-%m-%d %H:%i:%s') as regist_date
+         , date_format(max(t1.limit_date), '%Y-%m-%d %H:%i:%s') as limit_date
          , max(t1.status_val) as status_val
          , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count
          , sum(t1.uncompleted_count) as uncompleted_count
+         , ifnull(group_concat(t1.all_user separator ','), '없음') as all_user
          , ifnull(group_concat(t1.completed_user separator ','), '없음') as completed_user
          , ifnull(group_concat(t1.uncompleted_user separator ','), '없음') as uncompleted_user
          , max(t1.content) as content
@@ -135,6 +136,7 @@ const service = {
                  , case when b.status != '99' then 1 
                         else 0
                     end as uncompleted_count
+                 , concat(c.user_name, '/', c.user_email) as all_user
                  , case when b.status = '99' then concat(c.user_name, '/', c.user_email)
                         else null
                     end as completed_user
@@ -237,6 +239,44 @@ const service = {
       LOGD('finally', JSON.stringify(result));
       return result;
     }
+  },
+  updateSchedule: async (scheduleInfo) => {
+    const sql = `
+    update tb_schedule
+       set
+           title = ?
+         , content = ?
+         , status = ?
+         , regist_date = STR_TO_DATE(?,'%Y-%m-%d %H:%i:%s')
+         , limit_date = STR_TO_DATE(?,'%Y-%m-%d %H:%i:%s')
+     where 1=1
+       and schedule_code = ?
+    `;
+
+    const dbParam = [
+      scheduleInfo.title,
+      scheduleInfo.content,
+      scheduleInfo.status,
+      scheduleInfo.regist_date,
+      scheduleInfo.limit_date,
+      scheduleInfo.schedule_code,
+    ];
+
+    const result = await db.query(sql, dbParam);
+    return result;
+  },
+  deleteScheduleDetail: async (scheduleInfo) => {
+    const sql = `
+    delete 
+      from tb_schedule_detail
+     where 1=1
+       and schedule_code = ?
+    `;
+
+    const dbParam = [scheduleInfo.schedule_code];
+
+    const result = await db.query(sql, dbParam);
+    return result;
   },
   selectScheduleMember: async (scheduleInfo) => {
     const sql = `

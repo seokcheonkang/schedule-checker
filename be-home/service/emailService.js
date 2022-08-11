@@ -13,7 +13,7 @@ db.getConnection();
 
 // ---
 const service = {
-  sendEmailByRequest: async (emailInfo) => {
+  sendEmailByRequest: (emailInfo) => {
     let result = null;
 
     LOGD('check parameters', emailInfo); // TODO
@@ -37,28 +37,61 @@ const service = {
 
     return result;
   },
-  sendEmailInsertNewSchedule: async (emailInfo) => {
+  sendEmailInsertNewSchedule: (emailInfo) => {
     let result = null;
-
-    LOGD('check parameters', emailInfo); // TODO
 
     EMAIL.initTransporter();
 
-    const title = '[Schedule Checker] 신규 스케줄 생성 알림';
+    const title = '[Schedule Checker] 스케줄 생성 알림';
 
-    const seq = emailInfo.shift();
-    for (let i = 0; i < emailInfo.length; i++) {
-      const email = emailInfo[i];
-      const content = '';
-      const contentHtml = `
-        <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
-        <h2>스케줄이 생성되었습니다. 아래 링크에서 확인하세요.</h2>
-        <h2>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</h2>
-      `;
-      EMAIL.sendMail(email, title, content, contentHtml);
+    try {
+      const seq = emailInfo.shift();
+      for (let i = 0; i < emailInfo.length; i++) {
+        const email = emailInfo[i];
+        const content = '';
+        const contentHtml = `
+          <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
+          <h2>스케줄이 생성되었습니다. 아래 링크에서 확인하세요.</h2>
+          <h2>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</h2>
+        `;
+        EMAIL.sendMail(email, title, content, contentHtml);
+      }
+
+      result = true;
+    } catch (error) {
+      result = false;
+      LOGD(error);
+    } finally {
+      return result;
     }
+  },
+  sendEmailUpdateSchedule: (emailInfo) => {
+    let result = null;
 
-    return result;
+    EMAIL.initTransporter();
+
+    const title = '[Schedule Checker] 스케줄 수정 알림';
+
+    try {
+      const seq = emailInfo.shift();
+      for (let i = 0; i < emailInfo.length; i++) {
+        const email = emailInfo[i];
+        const content = '';
+        const contentHtml = `
+          <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
+          <h2>스케줄이 수정되었습니다. 아래 링크에서 확인하세요.</h2>
+          <h2>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</h2>
+        `;
+        EMAIL.sendMail(email, title, content, contentHtml);
+      }
+
+      result = true;
+    } catch (error) {
+      result = false;
+      LOGD(error);
+    } finally {
+      return result;
+    }
   },
 };
 
