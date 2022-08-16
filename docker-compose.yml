@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  be-home:
+    container_name: be-home
+    build:
+      context: ./be-home
+      dockerfile: ./Dockerfile
+    ports:
+      - '8001:8001'
+    environment:
+      - DB_HOST=host.docker.internal
+    networks:
+      - db_network
+  be-auth:
+    container_name: be-auth
+    build:
+      context: ./be-auth
+      dockerfile: ./Dockerfile
+    ports:
+      - '8002:8002'
+    environment:
+      - DB_HOST=host.docker.internal
+    networks:
+      - db_network
+  be-member:
+    container_name: be-member
+    build:
+      context: ./be-member
+      dockerfile: ./Dockerfile
+    ports:
+      - '8003:8003'
+    environment:
+      - DB_HOST=host.docker.internal
+    networks:
+      - db_network
+networks:
+  db_network:
+    driver: bridge

@@ -5,7 +5,7 @@ FROM node:lts-alpine
 MAINTAINER yunbeom.kim@bespinglobal.com
 
 # 앱 디렉터리 생성
-WORKDIR /app/be-home
+WORKDIR /app/be-member
 
 # 앱 의존성 설치
 # 가능한 경우(npm@5+) package.json과 package-lock.json을 모두 복사하기 위해
@@ -20,14 +20,14 @@ RUN npm i
 COPY . .
 
 # ENV 설정
-ENV BASE_URL_THIS=http://host.docker.internal:8001
+ENV BASE_URL_THIS=http://host.docker.internal:8003
 ENV BASE_URL_BACKEND_HOME=http://host.docker.internal:8001
 ENV BASE_URL_BACKEND_AUTH=http://host.docker.internal:8002
 ENV BASE_URL_BACKEND_MEMBER=http://host.docker.internal:8003
 ENV DB_HOST=host.docker.internal
 
 # PORT 매핑
-EXPOSE 8001
+EXPOSE 8003
 
 # 실행
 CMD [ "npm", "run", "dev"]

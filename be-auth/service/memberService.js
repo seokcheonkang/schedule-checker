@@ -10,29 +10,43 @@ const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
 // ---
 const service = {
   selectMemberByUserEmail: async (user_email) => {
+    let result = null;
+
     const options = { url: `${process.env.BASE_URL_BACKEND_MEMBER}/members/${user_email}`, method: 'get' };
 
-    const result = await request
-      .get(options)
-      .then((res) => {
-        let response = null;
-        const code = res.code;
-        if (code === 204) {
-          response = res.status(204).json({ code: 204, message: 'No Content' });
-          return response;
-        }
+    LOGD('options', JSON.stringify(options)); // TODO
 
-        response = JSON.parse(res);
-        return response;
-      })
-      .catch((err) => {
-        if (err) {
-          response = res.status(500).json({ code: 500, message: 'Internal Server Error' });
-          return response;
-        }
-      });
+    try {
+      result = await request
+        .get(options)
+        .then((res) => {
+          LOGD('res', res); // TODO
+          LOGD('res1', JSON.stringify(res)); // TODO
+          LOGD('res2', JSON.parse(res)); // TODO
 
-    return result;
+          let response = null;
+          const code = res.code;
+          if (code === 204) {
+            response = res.status(204).json({ code: 204, message: 'No Content' });
+            return response;
+          }
+
+          response = JSON.parse(res);
+          return response;
+        })
+        .catch((err) => {
+          if (err) {
+            response = res.status(500).json({ code: 500, message: 'Internal Server Error' });
+            return response;
+          }
+        });
+    } catch (error) {
+      LOGD('error', error); // TODO
+      LOGD('error1', JSON.stringify(error)); // TODO
+      LOGD('error2', JSON.parse(error)); // TODO
+    } finally {
+      return result;
+    }
   },
 };
 
