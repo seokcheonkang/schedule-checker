@@ -6,17 +6,17 @@ services:
     container_name: be-home
     build:
       context: ./be-home
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-dev
     ports:
       - '8001:8001'
     environment:
-      - DB_HOST=144.24.79.181
+      - DB_HOST=host.docker.internal
   be-auth:
     image: idealful/sc-be-auth
     container_name: be-auth
     build:
       context: ./be-auth
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-dev
     ports:
       - '8002:8002'
   be-member:
@@ -24,8 +24,8 @@ services:
     container_name: be-member
     build:
       context: ./be-member
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-dev
     ports:
       - '8003:8003'
     environment:
-      - DB_HOST=144.24.79.181
+      - DB_HOST=host.docker.internal

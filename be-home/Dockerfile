@@ -20,11 +20,11 @@ RUN npm i
 COPY . .
 
 # ENV 설정
-ENV BASE_URL_THIS=http://host.docker.internal:8001
-ENV BASE_URL_BACKEND_HOME=http://host.docker.internal:8001
-ENV BASE_URL_BACKEND_AUTH=http://host.docker.internal:8002
-ENV BASE_URL_BACKEND_MEMBER=http://host.docker.internal:8003
-ENV DB_HOST=host.docker.internal
+ENV BASE_URL_THIS=http://idealful.kro.kr:8001
+ENV BASE_URL_BACKEND_HOME=http://idealful.kro.kr:8001
+ENV BASE_URL_BACKEND_AUTH=http://idealful.kro.kr:8002
+ENV BASE_URL_BACKEND_MEMBER=http://idealful.kro.kr:8003
+ENV BASE_URL_FRONTEND=http://idealful.kro.kr
 
 # PORT 매핑
 EXPOSE 8001
