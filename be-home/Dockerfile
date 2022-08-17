@@ -1,8 +1,9 @@
 # Base Image 지정
 FROM node:lts-alpine
 
-# Author
-MAINTAINER yunbeom.kim@bespinglobal.com
+# Info
+LABEL maintainer "김윤범YunBeom Kim<yunbeom.kim@bespinglobal.com>"
+LABEL title="Schedule Checker"
 
 # 앱 디렉터리 생성
 WORKDIR /app/be-home
