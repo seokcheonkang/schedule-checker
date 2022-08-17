@@ -2,9 +2,10 @@
 
 FROM node:lts-alpine
 
-# Author
+# Info
 
-MAINTAINER yunbeom.kim@bespinglobal.com
+LABEL maintainer "김윤범YunBeom Kim<yunbeom.kim@bespinglobal.com>"
+LABEL title="Schedule Checker"
 
 # 앱 디렉터리 생성
 
@@ -19,8 +20,6 @@ WORKDIR /app/be-home
 COPY package\*.json ./
 
 # 프로덕션을 위한 코드를 빌드하는 경우
-
-# RUN npm ci --only=production
 
 RUN npm i
 

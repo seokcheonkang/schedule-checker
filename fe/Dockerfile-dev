@@ -2,9 +2,10 @@
 
 FROM nginx:alpine
 
-# Author
+# Info
 
-MAINTAINER yunbeom.kim@bespinglobal.com
+LABEL maintainer "김윤범YunBeom Kim<yunbeom.kim@bespinglobal.com>"
+LABEL title="Schedule Checker"
 
 # root 에 app 폴더를 생성.
 
