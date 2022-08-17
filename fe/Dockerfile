@@ -5,6 +5,10 @@ FROM nginx:alpine
 LABEL maintainer "김윤범YunBeom Kim<yunbeom.kim@bespinglobal.com>"
 LABEL title="Schedule Checker"
 
+# SSL 파일 복사
+COPY ./public/ssl/certificate.crt /etc/ssl
+COPY ./public/ssl/private.key     /etc/ssl
+
 # root 에 app 폴더를 생성.
 RUN mkdir -p /app/fe
 
