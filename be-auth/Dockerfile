@@ -30,4 +30,4 @@ ENV BASE_URL_FRONTEND=http://idealful.kro.kr
 EXPOSE 8002
 
 # 실행
-CMD [ "npm", "run", "dev"]
+CMD ["npm", "run", "prd"]

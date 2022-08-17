@@ -1,12 +1,13 @@
 {
   "name": "fe",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "start": "vite --mode production",
     "dev": "vite --mode development",
     "prd": "vite --mode production",
     "build": "vite build --mode production",
+    "build-dev": "vite build --mode development",
     "preview": "vite preview"
   },
   "dependencies": {

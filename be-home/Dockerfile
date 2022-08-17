@@ -25,9 +25,10 @@ ENV BASE_URL_BACKEND_HOME=http://idealful.kro.kr:8001
 ENV BASE_URL_BACKEND_AUTH=http://idealful.kro.kr:8002
 ENV BASE_URL_BACKEND_MEMBER=http://idealful.kro.kr:8003
 ENV BASE_URL_FRONTEND=http://idealful.kro.kr
+ENV DB_HOST=144.24.79.181
 
 # PORT 매핑
 EXPOSE 8001
 
 # 실행
-CMD [ "npm", "run", "dev"]
+CMD ["npm", "run", "prd"]
