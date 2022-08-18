@@ -2,35 +2,41 @@ version: '3.4'
 
 services:
   be-home:
-    image: idealful/example:1.0.0
+    image: ghcr.io/kimyunbeom/schedulechecker_be_home:latest
     container_name: be-home
     build:
       context: ./be-home
       dockerfile: ./Dockerfile
+    volumes:
+      - /app/deploy/secret:/app/deploy/secret
     ports:
       - '8001:8001'
     environment:
       - DB_HOST=144.24.79.181
   be-auth:
-    image: idealful/example:2.0.0
+    image: ghcr.io/kimyunbeom/schedulechecker_be_auth:latest
     container_name: be-auth
     build:
       context: ./be-auth
       dockerfile: ./Dockerfile
+    volumes:
+      - /app/deploy/secret:/app/deploy/secret
     ports:
       - '8002:8002'
   be-member:
-    image: idealful/example:3.0.0
+    image: ghcr.io/kimyunbeom/schedulechecker_be_member:latest
     container_name: be-member
     build:
       context: ./be-member
       dockerfile: ./Dockerfile
+    volumes:
+      - /app/deploy/secret:/app/deploy/secret
     ports:
       - '8003:8003'
     environment:
       - DB_HOST=144.24.79.181
   fe:
-    image: idealful/example:4.0.0
+    image: ghcr.io/kimyunbeom/schedulechecker_fe:latest
     container_name: fe
     build:
       context: ./fe

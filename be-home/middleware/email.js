@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 // --
-const SECRET_PATH = '../secret';
+const SECRET_PATH = '/app/deploy/secret';
 
 // --
-const KEY = require(`${SECRET_PATH}/key`);
+const KEY = require(path.join(SECRET_PATH, 'key'));
 
 // --
 let transporter = null;

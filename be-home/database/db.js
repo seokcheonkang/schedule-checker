@@ -1,13 +1,14 @@
 const mariaDB = require('mariadb');
+const path = require('path');
 
 // --
 const MIDDLEWARE_PATH = '../middleware';
-const SECRET_PATH = '../secret';
+const SECRET_PATH = '/app/deploy/secret';
 
 // --
 const LOG = require(`${MIDDLEWARE_PATH}/log`);
 const LOGD = require(`${MIDDLEWARE_PATH}/logd`);
-const KEY = require(`${SECRET_PATH}/key`);
+const KEY = require(path.join(SECRET_PATH, 'key'));
 
 // --
 const dotenv = require('dotenv');

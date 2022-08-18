@@ -4,6 +4,7 @@ FROM node:lts-alpine
 # Info
 LABEL maintainer "김윤범YunBeom Kim<yunbeom.kim@bespinglobal.com>"
 LABEL title="Schedule Checker"
+LABEL org.opencontainers.image.source https://github.com/KimYunBeom/schedule-checker
 
 # 앱 디렉터리 생성
 WORKDIR /app/be-member
@@ -18,6 +19,9 @@ RUN npm i
 
 # 앱 소스 추가
 COPY . .
+
+# 볼륨 설정
+VOLUME ["/app/deploy/secret", "/app/deploy/secret"]
 
 # ENV 설정
 ENV BASE_URL_THIS=http://idealful.kro.kr:8003
