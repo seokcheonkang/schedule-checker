@@ -1,4 +1,4 @@
-name: Create Docker Images by Github Actions for Schedule Checker App
+name: Create Docker Images by Github Actions for Schedule Checker App (dev)
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - main
 
 env:
-  DOCKER_IMAGE1: ghcr.io/kimyunbeom/schedulechecker_be_home
-  DOCKER_IMAGE2: ghcr.io/kimyunbeom/schedulechecker_be_auth
-  DOCKER_IMAGE3: ghcr.io/kimyunbeom/schedulechecker_be_member
-  DOCKER_IMAGE4: ghcr.io/kimyunbeom/schedulechecker_fe
-  VERSION_LATEST: latest
+  REPOSITORY_PATH1: ghcr.io/kimyunbeom/schedulechecker_be_home
+  REPOSITORY_PATH2: ghcr.io/kimyunbeom/schedulechecker_be_auth
+  REPOSITORY_PATH3: ghcr.io/kimyunbeom/schedulechecker_be_member
+  REPOSITORY_PATH4: ghcr.io/kimyunbeom/schedulechecker_fe
+  APP_VERSION: latest
 
 jobs:
   be-home:
@@ -54,7 +54,7 @@ jobs:
           file: be-home/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.DOCKER_IMAGE1 }}:${{ env.VERSION_LATEST }}
+          tags: ${{ env.REPOSITORY_PATH1 }}:${{ env.APP_VERSION }}
   be-auth:
     runs-on: ubuntu-20.04
     defaults:
@@ -91,7 +91,7 @@ jobs:
           file: be-auth/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.DOCKER_IMAGE2 }}:${{ env.VERSION_LATEST }}
+          tags: ${{ env.REPOSITORY_PATH2 }}:${{ env.APP_VERSION }}
   be-member:
     runs-on: ubuntu-20.04
     defaults:
@@ -128,7 +128,7 @@ jobs:
           file: be-member/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.DOCKER_IMAGE3 }}:${{ env.VERSION_LATEST }}
+          tags: ${{ env.REPOSITORY_PATH3 }}:${{ env.APP_VERSION }}
   fe:
     runs-on: ubuntu-20.04
     defaults:
@@ -190,4 +190,4 @@ jobs:
           file: fe/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.DOCKER_IMAGE4 }}:${{ env.VERSION_LATEST }}
+          tags: ${{ env.REPOSITORY_PATH4 }}:${{ env.APP_VERSION }}
