@@ -2,44 +2,67 @@ version: '3.4'
 
 services:
   be-home:
-    image: ghcr.io/kimyunbeom/schedulechecker_be_home:latest
+    image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_home:latest
     container_name: be-home
     build:
       context: ./be-home
       dockerfile: ./Dockerfile
     volumes:
-      - /app/deploy/secret:/app/deploy/secret
+      - /home/toyuser/secret:/app/deploy/secret
     ports:
       - '8001:8001'
     environment:
-      - DB_HOST=144.24.79.181
+      - BASE_URL_THIS=http://54.180.217.226:8001
+      - BASE_URL_BACKEND_HOME=http://54.180.217.226:8001
+      - BASE_URL_BACKEND_AUTH=http://54.180.217.226:8002
+      - BASE_URL_BACKEND_MEMBER=http://54.180.217.226:8003
+      - BASE_URL_FRONTEND=http://54.180.217.226
+      - DB_HOST=54.180.217.226
   be-auth:
-    image: ghcr.io/kimyunbeom/schedulechecker_be_auth:latest
+    image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_auth:latest
     container_name: be-auth
     build:
       context: ./be-auth
       dockerfile: ./Dockerfile
     volumes:
-      - /app/deploy/secret:/app/deploy/secret
+      - /home/toyuser/secret:/app/deploy/secret
     ports:
       - '8002:8002'
+    environment:
+      - BASE_URL_THIS=http://54.180.217.226:8002
+      - BASE_URL_BACKEND_HOME=http://54.180.217.226:8001
+      - BASE_URL_BACKEND_AUTH=http://54.180.217.226:8002
+      - BASE_URL_BACKEND_MEMBER=http://54.180.217.226:8003
+      - BASE_URL_FRONTEND=http://54.180.217.226
   be-member:
-    image: ghcr.io/kimyunbeom/schedulechecker_be_member:latest
+    image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_member:latest
     container_name: be-member
     build:
       context: ./be-member
       dockerfile: ./Dockerfile
     volumes:
-      - /app/deploy/secret:/app/deploy/secret
+      - /home/toyuser/secret:/app/deploy/secret
     ports:
       - '8003:8003'
     environment:
-      - DB_HOST=144.24.79.181
+      - BASE_URL_THIS=http://54.180.217.226:8003
+      - BASE_URL_BACKEND_HOME=http://54.180.217.226:8001
+      - BASE_URL_BACKEND_AUTH=http://54.180.217.226:8002
+      - BASE_URL_BACKEND_MEMBER=http://54.180.217.226:8003
+      - BASE_URL_FRONTEND=http://54.180.217.226
+      - DB_HOST=54.180.217.226
   fe:
-    image: ghcr.io/kimyunbeom/schedulechecker_fe:latest
+    image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_fe:latest
     container_name: fe
     build:
       context: ./fe
       dockerfile: ./Dockerfile
     ports:
       - '80:80'
+    environment:
+      - VITE_APP_IS_LOG=N
+      - VITE_APP_SERVER=
+      - VITE_APP_BASE_URL_BACKEND_HOME=http://54.180.217.226:8001
+      - VITE_APP_BASE_URL_BACKEND_AUTH=http://54.180.217.226:8002
+      - VITE_APP_BASE_URL_BACKEND_MEMBER=http://54.180.217.226:8003
+      - VITE_APP_BASE_URL_FRONTEND=http://54.180.217.226

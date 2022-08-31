@@ -1,16 +1,16 @@
-name: Create Docker Images by Github Actions for Schedule Checker App (dev)
+name: Deploy to OCI
 
 on:
   push:
     branches:
-      - main
+      - test
 
 env:
   REPOSITORY_PATH1: ghcr.io/kimyunbeom/schedulechecker_be_home
   REPOSITORY_PATH2: ghcr.io/kimyunbeom/schedulechecker_be_auth
   REPOSITORY_PATH3: ghcr.io/kimyunbeom/schedulechecker_be_member
   REPOSITORY_PATH4: ghcr.io/kimyunbeom/schedulechecker_fe
-  APP_VERSION: latest
+  IMAGE_TAG: latest
 
 jobs:
   be-home:
@@ -26,6 +26,7 @@ jobs:
         run: |
           echo "BUILD_DATE=$(date '+%Y-%m-%d_%H:%M:%S')"
           echo "BUILD_ID=${GITHUB_RUN_ID}"
+          echo "BUILD_REF=${GITHUB_REF}"
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
@@ -54,7 +55,7 @@ jobs:
           file: be-home/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.REPOSITORY_PATH1 }}:${{ env.APP_VERSION }}
+          tags: ${{ env.REPOSITORY_PATH1 }}:${{ env.IMAGE_TAG }}
   be-auth:
     runs-on: ubuntu-20.04
     defaults:
@@ -91,7 +92,7 @@ jobs:
           file: be-auth/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.REPOSITORY_PATH2 }}:${{ env.APP_VERSION }}
+          tags: ${{ env.REPOSITORY_PATH2 }}:${{ env.IMAGE_TAG }}
   be-member:
     runs-on: ubuntu-20.04
     defaults:
@@ -128,7 +129,7 @@ jobs:
           file: be-member/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.REPOSITORY_PATH3 }}:${{ env.APP_VERSION }}
+          tags: ${{ env.REPOSITORY_PATH3 }}:${{ env.IMAGE_TAG }}
   fe:
     runs-on: ubuntu-20.04
     defaults:
@@ -190,4 +191,4 @@ jobs:
           file: fe/Dockerfile
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ env.REPOSITORY_PATH4 }}:${{ env.APP_VERSION }}
+          tags: ${{ env.REPOSITORY_PATH4 }}:${{ env.IMAGE_TAG }}
