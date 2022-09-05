@@ -52,7 +52,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker build -t $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG
   be-auth:
@@ -93,7 +93,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker build -t $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG
   be-member:
@@ -134,7 +134,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker build -t $ECR_REGISTRY/$REPOSITORY_PATH3:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH3:$IMAGE_TAG
   fe:
@@ -190,6 +190,6 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker build -t $ECR_REGISTRY/$REPOSITORY_PATH4:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH4:$IMAGE_TAG
