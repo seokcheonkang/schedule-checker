@@ -108,5 +108,5 @@ dist
 
 # User Customizing
 .vscode
-**/secret/*.js
+# **/secret/*.js
 **/public/ssl/
