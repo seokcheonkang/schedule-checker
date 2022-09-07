@@ -1,0 +1,13 @@
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always # automatic create DB schema objects on boot. ex) always, embedded, never
+  datasource:
+    url: jdbc:mariadb://144.24.79.181:3306/scdb
+    password: bespin123
+
+logging:
+  level:
+    root: info
+    com:
+      batch: info
