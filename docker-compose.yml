@@ -7,50 +7,44 @@ services:
     build:
       context: ./be-home
       dockerfile: ./Dockerfile
-    # volumes:
-    #   - /home/toyuser/secret:/app/deploy/secret
     ports:
       - '8001:8001'
     environment:
-      - BASE_URL_THIS=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-      - BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-      - BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8002
-      - BASE_URL_BACKEND_MEMBER=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8003
-      - BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
-      - DB_HOST=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
+      - BASE_URL_THIS=http://schedulechecker.kro.kr:8001
+      - BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+      - BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
+      - BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - BASE_URL_FRONTEND=http://schedulechecker.kro.kr
+      - DB_HOST=10.0.144.10
   be-auth:
     image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_auth:latest
     container_name: be-auth
     build:
       context: ./be-auth
       dockerfile: ./Dockerfile
-    # volumes:
-    #   - /home/toyuser/secret:/app/deploy/secret
     ports:
       - '8002:8002'
     environment:
-      - BASE_URL_THIS=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8002
-      - BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-      - BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8002
-      - BASE_URL_BACKEND_MEMBER=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8003
-      - BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
+      - BASE_URL_THIS=http://schedulechecker.kro.kr:8002
+      - BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+      - BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
+      - BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - BASE_URL_FRONTEND=10.0.144.10
   be-member:
     image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_member:latest
     container_name: be-member
     build:
       context: ./be-member
       dockerfile: ./Dockerfile
-    # volumes:
-    #   - /home/toyuser/secret:/app/deploy/secret
     ports:
       - '8003:8003'
     environment:
-      - BASE_URL_THIS=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8003
-      - BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-      - BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8002
-      - BASE_URL_BACKEND_MEMBER=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8003
-      - BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
-      - DB_HOST=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
+      - BASE_URL_THIS=http://schedulechecker.kro.kr:8003
+      - BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+      - BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
+      - BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - BASE_URL_FRONTEND=http://schedulechecker.kro.kr
+      - DB_HOST=10.0.144.10
   fe:
     image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_fe:latest
     container_name: fe
@@ -60,9 +54,8 @@ services:
     ports:
       - '80:80'
     environment:
-      - VITE_APP_IS_LOG=N
       - VITE_APP_SERVER=
-      - VITE_APP_BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-      - VITE_APP_BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8002
-      - VITE_APP_BASE_URL_BACKEND_MEMBER=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8003
-      - VITE_APP_BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
+      - VITE_APP_BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+      - VITE_APP_BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
+      - VITE_APP_BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - VITE_APP_BASE_URL_FRONTEND=http://schedulechecker.kro.kr

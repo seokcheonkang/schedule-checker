@@ -18,6 +18,15 @@ RUN rm /etc/nginx/conf.d/default.conf
 # host pc 의 default.conf 를 아래 경로에 복사.
 COPY ./default.conf /etc/nginx/conf.d
 
+# ENV 설정
+
+ENV VITE_APP_SERVER=
+ENV VITE_APP_BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
+ENV VITE_APP_BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+ENV VITE_APP_BASE_URL_FRONTEND=http://schedulechecker.kro.kr
+ENV VITE_APP_GOOGLE_CLIENT_ID=594148934886-26bepje4v1immq8gii3jiusci6d989dn.apps.googleusercontent.com
+
 # PORT 매핑
 EXPOSE 80
 

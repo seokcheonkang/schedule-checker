@@ -27,7 +27,7 @@ COPY . .
 
 # 볼륨 설정
 
-VOLUME ["/app/deploy/secret", "/app/deploy/secret"]
+# VOLUME ["/app/deploy/secret", "/app/deploy/secret"]
 
 # ENV 설정
 

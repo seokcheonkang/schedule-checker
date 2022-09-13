@@ -23,12 +23,12 @@ COPY . .
 # VOLUME ["/app/deploy/secret", "/app/deploy/secret"]
 
 # ENV 설정
-ENV BASE_URL_THIS=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-ENV BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8001
-ENV BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8002
-ENV BASE_URL_BACKEND_MEMBER=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com:8003
-ENV BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
-ENV DB_HOST=http://k8s-default-frontend-0d7d9686de-270860005.ap-northeast-2.elb.amazonaws.com
+ENV BASE_URL_THIS=http://schedulechecker.kro.kr:8001
+ENV BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+ENV BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
+ENV BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+ENV BASE_URL_FRONTEND=http://schedulechecker.kro.kr
+ENV DB_HOST=10.0.144.10
 
 # PORT 매핑
 EXPOSE 8001
