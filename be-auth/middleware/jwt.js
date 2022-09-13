@@ -4,12 +4,10 @@ const path = require('path');
 
 // --
 const MIDDLEWARE_PATH = './';
-const SECRET_PATH = '/app/deploy/secret';
 
 // --
 const LOG = require(`${MIDDLEWARE_PATH}./log`);
 const LOGD = require(`${MIDDLEWARE_PATH}./logd`);
-const KEY = require(path.join(SECRET_PATH, 'key'));
 
 // ---
 const service = {
@@ -23,7 +21,7 @@ const service = {
       status: member.result.status,
     };
 
-    const key = KEY.getJwtAccessTokenSecret(process.env.NODE_ENV);
+    const key = process.env.JWT_ACCESS_TOKEN_SECRET;
 
     const options = {
       expiresIn: process.env.JWT_ACCESS_TOKEN_TIME,
@@ -46,7 +44,7 @@ const service = {
 
     const token = req.headers.authorization.replace('Bearer ', '');
 
-    const key = KEY.getJwtAccessTokenSecret(process.env.NODE_ENV);
+    const key = process.env.JWT_ACCESS_TOKEN_SECRET;
 
     let result = '';
 

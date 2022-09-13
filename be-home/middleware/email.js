@@ -2,12 +2,6 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 
 // --
-const SECRET_PATH = '/app/deploy/secret';
-
-// --
-const KEY = require(path.join(SECRET_PATH, 'key'));
-
-// --
 let transporter = null;
 
 const setTransporter = () => {
@@ -18,8 +12,8 @@ const setTransporter = () => {
       port: 587,
       secure: true,
       auth: {
-        user: KEY.getNodeMailerUserName(process.env.NODE_ENV),
-        pass: KEY.getNodeMailerUserPassword(process.env.NODE_ENV),
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASSWORD,
       },
     });
   }
