@@ -11,9 +11,9 @@ services:
       - '8001:8001'
     environment:
       - BASE_URL_THIS=http://schedulechecker.kro.kr:8001
-      - BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
-      - BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
-      - BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
+      - BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
+      - BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - BASE_URL_FRONTEND=http://schedulechecker.kro.kr
       - DB_HOST=10.0.144.10
   be-auth:
@@ -26,9 +26,9 @@ services:
       - '8002:8002'
     environment:
       - BASE_URL_THIS=http://schedulechecker.kro.kr:8002
-      - BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
-      - BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
-      - BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
+      - BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
+      - BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - BASE_URL_FRONTEND=10.0.144.10
   be-member:
     image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_member:latest
@@ -40,9 +40,9 @@ services:
       - '8003:8003'
     environment:
       - BASE_URL_THIS=http://schedulechecker.kro.kr:8003
-      - BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
-      - BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
-      - BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
+      - BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
+      - BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - BASE_URL_FRONTEND=http://schedulechecker.kro.kr
       - DB_HOST=10.0.144.10
   fe:
@@ -55,7 +55,7 @@ services:
       - '80:80'
     environment:
       - VITE_APP_SERVER=
-      - VITE_APP_BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
-      - VITE_APP_BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
-      - VITE_APP_BASE_URL_BACKEND_MEMBER=http://schedulechecker.kro.kr:8003
+      - VITE_APP_BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
+      - VITE_APP_BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
+      - VITE_APP_BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - VITE_APP_BASE_URL_FRONTEND=http://schedulechecker.kro.kr
