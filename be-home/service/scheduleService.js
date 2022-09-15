@@ -210,8 +210,9 @@ const service = {
     (
         schedule_code
       , user_email
+      , status
     )
-    values (?, ?)
+    values (?, ?, ?)
     `;
 
     let param = [];
@@ -220,9 +221,11 @@ const service = {
 
       const seq = '' + scheduleInfo.insertId;
       const email = scheduleInfo.checked_users[i];
+      const status = scheduleInfo.status;
 
       subParam.push(seq);
       subParam.push(email);
+      subParam.push(status);
       param.push(subParam);
 
       if (i === 0) {
