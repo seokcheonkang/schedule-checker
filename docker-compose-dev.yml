@@ -19,16 +19,6 @@ services:
       dockerfile: ./Dockerfile-dev
     ports:
       - '8002:8002'
-  be-member:
-    image: idealful/example:3.0.0
-    container_name: be-member
-    build:
-      context: ./be-member
-      dockerfile: ./Dockerfile-dev
-    ports:
-      - '8003:8003'
-    environment:
-      - DB_HOST=host.docker.internal
   fe:
     image: idealful/example:4.0.0
     container_name: fe

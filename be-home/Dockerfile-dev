@@ -34,7 +34,6 @@ COPY . .
 ENV BASE_URL_THIS=http://host.docker.internal:8001
 ENV BASE_URL_BACKEND_HOME=http://host.docker.internal:8001
 ENV BASE_URL_BACKEND_AUTH=http://host.docker.internal:8002
-ENV BASE_URL_BACKEND_MEMBER=http://host.docker.internal:8003
 ENV BASE_URL_FRONTEND=http://localhost
 
 # PORT 매핑

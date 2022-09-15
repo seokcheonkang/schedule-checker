@@ -23,7 +23,7 @@ import { useLoginStore } from '@/store/login.js';
 import swal from 'sweetalert2';
 
 // env
-const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
+const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // route
 const route = useRoute();
@@ -76,7 +76,7 @@ const pagination = reactive({
 });
 
 const getMembers = async () => {
-  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
+  const url = `${ENV_URL_BACKEND_HOME}/members`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,

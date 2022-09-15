@@ -6,12 +6,11 @@ on:
       - main
 
 env:
-  AWS_REGION: ap-northeast-2
   REPOSITORY_PATH1: schedulechecker_be_home
   REPOSITORY_PATH2: schedulechecker_be_auth
-  REPOSITORY_PATH3: schedulechecker_be_member
-  REPOSITORY_PATH4: schedulechecker_fe
+  REPOSITORY_PATH3: schedulechecker_fe
   IMAGE_TAG: latest
+  AWS_REGION: ap-northeast-2
 
 jobs:
   be-home:
@@ -96,47 +95,6 @@ jobs:
           echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker build -t $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG
-  be-member:
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        working-directory: ./be-member
-    steps:
-      - name: Import actions from github
-        uses: actions/checkout@v3
-
-      - name: Check build date
-        run: |
-          echo "BUILD_DATE=$(date '+%Y-%m-%d_%H:%M:%S')"
-          echo "BUILD_ID=${GITHUB_RUN_ID}"
-          echo "BUILD_REF=${GITHUB_REF}"
-
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.17
-
-      - name: Npm install
-        run: npm ci
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Push image to Amazon ECR after Build and tag
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        run: |
-          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$REPOSITORY_PATH3:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$REPOSITORY_PATH3:$IMAGE_TAG
   fe:
     runs-on: ubuntu-20.04
     defaults:
@@ -158,14 +116,12 @@ jobs:
           echo "VITE_APP_IS_LOG=$VITE_APP_IS_LOG" >> .env.production
           echo "VITE_APP_BASE_URL_BACKEND_HOME=$VITE_APP_BASE_URL_BACKEND_HOME" >> .env.production
           echo "VITE_APP_BASE_URL_BACKEND_AUTH=$VITE_APP_BASE_URL_BACKEND_AUTH" >> .env.production
-          echo "VITE_APP_BASE_URL_BACKEND_MEMBER=$VITE_APP_BASE_URL_BACKEND_MEMBER" >> .env.production
           echo "VITE_APP_BASE_URL_FRONTEND=$VITE_APP_BASE_URL_FRONTEND" >> .env.production
         env:
           VITE_APP_SERVER: ${{ secrets.VITE_APP_SERVER }}
           VITE_APP_IS_LOG: ${{ secrets.VITE_APP_IS_LOG }}
           VITE_APP_BASE_URL_BACKEND_HOME: ${{ secrets.VITE_APP_BASE_URL_BACKEND_HOME }}
           VITE_APP_BASE_URL_BACKEND_AUTH: ${{ secrets.VITE_APP_BASE_URL_BACKEND_AUTH }}
-          VITE_APP_BASE_URL_BACKEND_MEMBER: ${{ secrets.VITE_APP_BASE_URL_BACKEND_MEMBER }}
           VITE_APP_BASE_URL_FRONTEND: ${{ secrets.VITE_APP_BASE_URL_FRONTEND }}
           VITE_APP_GOOGLE_CLIENT_ID: ${{secrets.VITE_APP_GOOGLE_CLIENT_ID}}
 
@@ -191,5 +147,5 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$REPOSITORY_PATH4:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$REPOSITORY_PATH4:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$REPOSITORY_PATH3:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$REPOSITORY_PATH3:$IMAGE_TAG

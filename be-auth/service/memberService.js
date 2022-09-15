@@ -12,7 +12,7 @@ const service = {
   selectMemberByUserEmail: async (user_email) => {
     let result = null;
 
-    const options = { url: `${process.env.BASE_URL_BACKEND_MEMBER}/members/${user_email}`, method: 'get' };
+    const options = { url: `${process.env.BASE_URL_BACKEND_HOME}/members/${user_email}`, method: 'get' };
 
     LOGD('options', JSON.stringify(options)); // TODO
 

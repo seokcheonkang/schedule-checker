@@ -21,7 +21,7 @@ import { useLoginStore } from '@/store/login.js';
 import swal from 'sweetalert2';
 
 // env
-const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
+const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 
 // route
 const route = useRoute();
@@ -49,7 +49,7 @@ const getUserInfo = async () => {
     userInfo: { email: user_email },
   } = loginStore;
 
-  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const url = `${ENV_URL_BACKEND_HOME}/members/${user_email}`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,
@@ -77,7 +77,7 @@ const deleteMember = async () => {
     userInfo: { email: user_email },
   } = loginStore;
 
-  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const url = `${ENV_URL_BACKEND_HOME}/members/${user_email}`;
   const args = {};
   const header = {
     authorization: loginStore.accessToken,

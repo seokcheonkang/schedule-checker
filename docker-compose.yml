@@ -13,7 +13,6 @@ services:
       - BASE_URL_THIS=http://schedulechecker.kro.kr:8001
       - BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
       - BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
-      - BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - BASE_URL_FRONTEND=http://schedulechecker.kro.kr
       - DB_HOST=10.0.144.10
   be-auth:
@@ -28,23 +27,7 @@ services:
       - BASE_URL_THIS=http://schedulechecker.kro.kr:8002
       - BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
       - BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
-      - BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - BASE_URL_FRONTEND=10.0.144.10
-  be-member:
-    image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_be_member:latest
-    container_name: be-member
-    build:
-      context: ./be-member
-      dockerfile: ./Dockerfile
-    ports:
-      - '8003:8003'
-    environment:
-      - BASE_URL_THIS=http://schedulechecker.kro.kr:8003
-      - BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
-      - BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
-      - BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
-      - BASE_URL_FRONTEND=http://schedulechecker.kro.kr
-      - DB_HOST=10.0.144.10
   fe:
     image: 817757596025.dkr.ecr.ap-northeast-2.amazonaws.com/schedulechecker_fe:latest
     container_name: fe
@@ -57,5 +40,4 @@ services:
       - VITE_APP_SERVER=
       - VITE_APP_BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
       - VITE_APP_BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
-      - VITE_APP_BASE_URL_BACKEND_MEMBER=http://toy-backend-member:8003
       - VITE_APP_BASE_URL_FRONTEND=http://schedulechecker.kro.kr

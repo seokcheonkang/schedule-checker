@@ -11,14 +11,13 @@ import { LOG, LOGD } from '@/mixin/log.js';
 
 // store
 import { useLoginStore } from '@/store/login.js';
-import router from '../../router';
 
 // swal
 import swal from 'sweetalert2';
 
 // env
+const ENV_URL_BACKEND_HOME = import.meta.env.VITE_APP_BASE_URL_BACKEND_HOME;
 const ENV_URL_BACKEND_AUTH = import.meta.env.VITE_APP_BASE_URL_BACKEND_AUTH;
-const ENV_URL_BACKEND_MEMBER = import.meta.env.VITE_APP_BASE_URL_BACKEND_MEMBER;
 
 // route
 const route = useRoute();
@@ -30,8 +29,10 @@ const loginStore = useLoginStore();
 const Vue3GoogleOauth = inject('Vue3GoogleOauth');
 
 const isMember = async (user_email) => {
-  const url = `${ENV_URL_BACKEND_MEMBER}/members/${user_email}`;
+  const url = `${ENV_URL_BACKEND_HOME}/members/${user_email}`;
   const args = {};
+
+  LOGD('url', url);
 
   const response = await API(CONSTANT.GET, url, args);
 
@@ -39,7 +40,7 @@ const isMember = async (user_email) => {
 };
 
 const createMember = async (profile) => {
-  const url = `${ENV_URL_BACKEND_MEMBER}/members`;
+  const url = `${ENV_URL_BACKEND_HOME}/members`;
   const args = { user_code: profile.id, user_name: profile.name, user_email: profile.email };
 
   const response = await API(CONSTANT.POST, url, args);
