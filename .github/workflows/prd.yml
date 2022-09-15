@@ -111,12 +111,12 @@ jobs:
 
       - name: Generate Environment Variables File for Production
         run: |
-          echo "VITE_APP_GOOGLE_CLIENT_ID=$VITE_APP_GOOGLE_CLIENT_ID" >> .env.production
           echo "VITE_APP_SERVER=$VITE_APP_SERVER" >> .env.production
           echo "VITE_APP_IS_LOG=$VITE_APP_IS_LOG" >> .env.production
           echo "VITE_APP_BASE_URL_BACKEND_HOME=$VITE_APP_BASE_URL_BACKEND_HOME" >> .env.production
           echo "VITE_APP_BASE_URL_BACKEND_AUTH=$VITE_APP_BASE_URL_BACKEND_AUTH" >> .env.production
           echo "VITE_APP_BASE_URL_FRONTEND=$VITE_APP_BASE_URL_FRONTEND" >> .env.production
+          echo "VITE_APP_GOOGLE_CLIENT_ID=$VITE_APP_GOOGLE_CLIENT_ID" >> .env.production
         env:
           VITE_APP_SERVER: ${{ secrets.VITE_APP_SERVER }}
           VITE_APP_IS_LOG: ${{ secrets.VITE_APP_IS_LOG }}

@@ -1,4 +1,4 @@
-name: Deploy to OCI
+name: Deploy to Test
 
 on:
   push:
@@ -110,21 +110,21 @@ jobs:
         with:
           node-version: 16
 
-      - name: Generate Environment Variables File for Production
+      - name: Generate Environment Variables File for Test
         run: |
-          echo "VITE_APP_GOOGLE_CLIENT_ID=$VITE_APP_GOOGLE_CLIENT_ID" >> .env.production
-          echo "VITE_APP_SERVER=$VITE_APP_SERVER" >> .env.production
-          echo "VITE_APP_IS_LOG=$VITE_APP_IS_LOG" >> .env.production
-          echo "VITE_APP_BASE_URL_BACKEND_HOME=$VITE_APP_BASE_URL_BACKEND_HOME" >> .env.production
-          echo "VITE_APP_BASE_URL_BACKEND_AUTH=$VITE_APP_BASE_URL_BACKEND_AUTH" >> .env.production
-          echo "VITE_APP_BASE_URL_FRONTEND=$VITE_APP_BASE_URL_FRONTEND" >> .env.production
+          echo "VITE_APP_SERVER=$VITE_APP_SERVER" >> .env.test
+          echo "VITE_APP_IS_LOG=$VITE_APP_IS_LOG" >> .env.test
+          echo "VITE_APP_BASE_URL_BACKEND_HOME=$VITE_APP_BASE_URL_BACKEND_HOME" >> .env.test
+          echo "VITE_APP_BASE_URL_BACKEND_AUTH=$VITE_APP_BASE_URL_BACKEND_AUTH" >> .env.test
+          echo "VITE_APP_BASE_URL_FRONTEND=$VITE_APP_BASE_URL_FRONTEND" >> .env.test
+          echo "VITE_APP_GOOGLE_CLIENT_ID=$VITE_APP_GOOGLE_CLIENT_ID" >> .env.test
         env:
-          VITE_APP_SERVER: ${{ secrets.VITE_APP_SERVER }}
-          VITE_APP_IS_LOG: ${{ secrets.VITE_APP_IS_LOG }}
-          VITE_APP_BASE_URL_BACKEND_HOME: ${{ secrets.VITE_APP_BASE_URL_BACKEND_HOME }}
-          VITE_APP_BASE_URL_BACKEND_AUTH: ${{ secrets.VITE_APP_BASE_URL_BACKEND_AUTH }}
-          VITE_APP_BASE_URL_FRONTEND: ${{ secrets.VITE_APP_BASE_URL_FRONTEND }}
-          VITE_APP_GOOGLE_CLIENT_ID: ${{secrets.VITE_APP_GOOGLE_CLIENT_ID}}
+          VITE_APP_SERVER: test
+          VITE_APP_IS_LOG: Y
+          VITE_APP_BASE_URL_BACKEND_HOME: http://idealful.kro.kr:8001
+          VITE_APP_BASE_URL_BACKEND_AUTH: http://idealful.kro.kr:8002
+          VITE_APP_BASE_URL_FRONTEND: http://idealful.kro.kr
+          VITE_APP_GOOGLE_CLIENT_ID: 594148934886-26bepje4v1immq8gii3jiusci6d989dn.apps.googleusercontent.com
 
       - name: npm install
         run: npm ci

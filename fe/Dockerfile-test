@@ -22,7 +22,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 # host pc 의 default.conf 를 아래 경로에 복사.
 
-COPY ./default-dev.conf /etc/nginx/conf.d/default.conf
+COPY ./default-test.conf /etc/nginx/conf.d/default.conf
 
 # ENV 설정
 
@@ -30,6 +30,7 @@ ENV VITE_APP_SERVER=test
 ENV VITE_APP_BASE_URL_BACKEND_HOME=http://idealful.kro.kr:8001
 ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://idealful.kro.kr:8002
 ENV VITE_APP_BASE_URL_FRONTEND=http://idealful.kro.kr
+ENV VITE_APP_GOOGLE_CLIENT_ID=594148934886-26bepje4v1immq8gii3jiusci6d989dn.apps.googleusercontent.com
 
 # PORT 매핑
 
