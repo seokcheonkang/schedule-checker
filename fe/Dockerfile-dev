@@ -34,8 +34,8 @@ COPY ./default-dev.conf /etc/nginx/conf.d/default.conf
 # ENV 설정
 
 ENV VITE_APP_SERVER=development
-ENV VITE_APP_BASE_URL_BACKEND_HOME=http://host.docker.internal:8001
-ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://host.docker.internal:8002
+ENV VITE_APP_BASE_URL_BACKEND_HOME=http://host.docker.internal:8001/home
+ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://host.docker.internal:8002/auth
 ENV VITE_APP_BASE_URL_FRONTEND=http://host.docker.internal
 
 # PORT 매핑

@@ -20,7 +20,7 @@ const verifyJwt = (req, res, next) => {
   }
 
   request.post(
-    { url: `${process.env.BASE_URL_BACKEND_AUTH}/auth/google/verify`, headers: { authorization }, form: req.body },
+    { url: `${process.env.BASE_URL_BACKEND_AUTH}/google/verify`, headers: { authorization }, form: req.body },
     (err, httpResponse, body) => {
       LOGD(body);
 

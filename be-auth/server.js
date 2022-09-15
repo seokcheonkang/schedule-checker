@@ -31,8 +31,8 @@ app.all('/*', (req, res, next) => {
 
 // ---
 const CONTROLLER_PATH = './controller';
-const mainController = require(`${CONTROLLER_PATH}/mainController`);
+const authMainController = require(`${CONTROLLER_PATH}/authMainController`);
 const authGoogleController = require(`${CONTROLLER_PATH}/authGoogleController`);
 
-app.use('/', mainController);
+app.use('/auth', authMainController);
 app.use('/auth/google', authGoogleController);

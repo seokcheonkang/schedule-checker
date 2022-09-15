@@ -6,11 +6,11 @@ on:
       - main
 
 env:
+  AWS_REGION: ap-northeast-2
   REPOSITORY_PATH1: schedulechecker_be_home
   REPOSITORY_PATH2: schedulechecker_be_auth
   REPOSITORY_PATH3: schedulechecker_fe
   IMAGE_TAG: latest
-  AWS_REGION: ap-northeast-2
 
 jobs:
   be-home:

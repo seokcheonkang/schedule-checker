@@ -49,7 +49,7 @@ const createMember = async (profile) => {
 };
 
 const createToken = async (user_email) => {
-  const url = `${ENV_URL_BACKEND_AUTH}/auth/google/create`;
+  const url = `${ENV_URL_BACKEND_AUTH}/google/create`;
   const args = { user_email };
 
   const response = await API(CONSTANT.POST, url, args);
@@ -60,7 +60,7 @@ const createToken = async (user_email) => {
 const verifyToken = async (responseCreateToken) => {
   const authorization = CONSTANT.BEARER + responseCreateToken.result.accessToken;
 
-  const url = `${ENV_URL_BACKEND_AUTH}/auth/google/verify`;
+  const url = `${ENV_URL_BACKEND_AUTH}/google/verify`;
   const args = {};
   const header = { authorization };
 

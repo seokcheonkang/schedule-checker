@@ -31,14 +31,14 @@ app.all('/*', (req, res, next) => {
 
 // ---
 const CONTROLLER_PATH = './controller';
-const mainController = require(`${CONTROLLER_PATH}/mainController`);
-const scheduleController = require(`${CONTROLLER_PATH}/scheduleController`);
-const emailController = require(`${CONTROLLER_PATH}/emailController`);
-const statController = require(`${CONTROLLER_PATH}/statController`);
-const memberController = require(`${CONTROLLER_PATH}/memberController`);
+const homeMainController = require(`${CONTROLLER_PATH}/homeMainController`);
+const homeScheduleController = require(`${CONTROLLER_PATH}/homeScheduleController`);
+const homeEmailController = require(`${CONTROLLER_PATH}/homeEmailController`);
+const homeStatController = require(`${CONTROLLER_PATH}/homeStatController`);
+const homeMemberController = require(`${CONTROLLER_PATH}/homeMemberController`);
 
-app.use('/', mainController);
-app.use('/schedules', scheduleController);
-app.use('/email', emailController);
-app.use('/stat', statController);
-app.use('/members', memberController);
+app.use('/home', homeMainController);
+app.use('/home/schedules', homeScheduleController);
+app.use('/home/email', homeEmailController);
+app.use('/home/stat', homeStatController);
+app.use('/home/members', homeMemberController);
