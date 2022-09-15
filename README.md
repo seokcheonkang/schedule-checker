@@ -6,7 +6,6 @@
 
 be-home
 be-auth
-be-member
 
 ### 2. frontend
 

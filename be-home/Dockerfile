@@ -23,9 +23,9 @@ COPY . .
 # VOLUME ["/app/deploy/secret", "/app/deploy/secret"]
 
 # ENV 설정
-ENV BASE_URL_THIS=http://toy-backend-home:8001
-ENV BASE_URL_BACKEND_HOME=http://toy-backend-home:8001
-ENV BASE_URL_BACKEND_AUTH=http://toy-backend-auth:8002
+ENV BASE_URL_THIS=http://schedulechecker.kro.kr:8001
+ENV BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001
+ENV BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002
 ENV BASE_URL_FRONTEND=http://schedulechecker.kro.kr
 ENV DB_HOST=10.0.144.10
 
