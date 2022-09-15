@@ -51,7 +51,7 @@ jobs:
         id: docker_build
         with:
           context: be-home
-          file: be-home/Dockerfile
+          file: be-home/Dockerfile-test
           push: true
           builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ env.REPOSITORY_PATH1 }}:${{ env.IMAGE_TAG }}
@@ -88,7 +88,7 @@ jobs:
         id: docker_build
         with:
           context: be-auth
-          file: be-auth/Dockerfile
+          file: be-auth/Dockerfile-test
           push: true
           builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ env.REPOSITORY_PATH2 }}:${{ env.IMAGE_TAG }}
@@ -119,18 +119,18 @@ jobs:
           echo "VITE_APP_BASE_URL_FRONTEND=$VITE_APP_BASE_URL_FRONTEND" >> .env.test
           echo "VITE_APP_GOOGLE_CLIENT_ID=$VITE_APP_GOOGLE_CLIENT_ID" >> .env.test
         env:
-          VITE_APP_SERVER: test
-          VITE_APP_IS_LOG: Y
-          VITE_APP_BASE_URL_BACKEND_HOME: http://idealful.kro.kr:8001/home
-          VITE_APP_BASE_URL_BACKEND_AUTH: http://idealful.kro.kr:8002/auth
-          VITE_APP_BASE_URL_FRONTEND: http://idealful.kro.kr
-          VITE_APP_GOOGLE_CLIENT_ID: 594148934886-26bepje4v1immq8gii3jiusci6d989dn.apps.googleusercontent.com
+          VITE_APP_SERVER: ${{ secrets.TEST_VITE_APP_SERVER }}
+          VITE_APP_IS_LOG: ${{ secrets.TEST_VITE_APP_IS_LOG }}
+          VITE_APP_BASE_URL_BACKEND_HOME: ${{ secrets.TEST_VITE_APP_BASE_URL_BACKEND_HOME }}
+          VITE_APP_BASE_URL_BACKEND_AUTH: ${{ secrets.TEST_VITE_APP_BASE_URL_BACKEND_AUTH }}
+          VITE_APP_BASE_URL_FRONTEND: ${{ secrets.TEST_VITE_APP_BASE_URL_FRONTEND }}
+          VITE_APP_GOOGLE_CLIENT_ID: ${{secrets.TEST_VITE_APP_GOOGLE_CLIENT_ID}}
 
       - name: npm install
         run: npm ci
 
-      - name: npm build
-        run: npm run build
+      - name: npm build test
+        run: npm run build-test
 
       - name: Set up Docker Buildx
         id: buildx
@@ -148,7 +148,7 @@ jobs:
         id: docker_build
         with:
           context: fe
-          file: fe/Dockerfile
+          file: fe/Dockerfile-test
           push: true
           builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ env.REPOSITORY_PATH3 }}:${{ env.IMAGE_TAG }}

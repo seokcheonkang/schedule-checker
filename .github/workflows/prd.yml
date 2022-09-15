@@ -118,12 +118,12 @@ jobs:
           echo "VITE_APP_BASE_URL_FRONTEND=$VITE_APP_BASE_URL_FRONTEND" >> .env.production
           echo "VITE_APP_GOOGLE_CLIENT_ID=$VITE_APP_GOOGLE_CLIENT_ID" >> .env.production
         env:
-          VITE_APP_SERVER: ${{ secrets.VITE_APP_SERVER }}
-          VITE_APP_IS_LOG: ${{ secrets.VITE_APP_IS_LOG }}
-          VITE_APP_BASE_URL_BACKEND_HOME: ${{ secrets.VITE_APP_BASE_URL_BACKEND_HOME }}
-          VITE_APP_BASE_URL_BACKEND_AUTH: ${{ secrets.VITE_APP_BASE_URL_BACKEND_AUTH }}
-          VITE_APP_BASE_URL_FRONTEND: ${{ secrets.VITE_APP_BASE_URL_FRONTEND }}
-          VITE_APP_GOOGLE_CLIENT_ID: ${{secrets.VITE_APP_GOOGLE_CLIENT_ID}}
+          VITE_APP_SERVER: ${{ secrets.PRD_VITE_APP_SERVER }}
+          VITE_APP_IS_LOG: ${{ secrets.PRD_VITE_APP_IS_LOG }}
+          VITE_APP_BASE_URL_BACKEND_HOME: ${{ secrets.PRD_VITE_APP_BASE_URL_BACKEND_HOME }}
+          VITE_APP_BASE_URL_BACKEND_AUTH: ${{ secrets.PRD_VITE_APP_BASE_URL_BACKEND_AUTH }}
+          VITE_APP_BASE_URL_FRONTEND: ${{ secrets.PRD_VITE_APP_BASE_URL_FRONTEND }}
+          VITE_APP_GOOGLE_CLIENT_ID: ${{secrets.PRD_VITE_APP_GOOGLE_CLIENT_ID}}
 
       - name: npm install
         run: npm ci
