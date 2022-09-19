@@ -1,0 +1,62 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="schedule, devops2, bespinglobal" />
+    <meta name="description" content="Schedule Checker" />
+    <meta name="author" content="yunbeom.kim@bespinglobal.com" />
+    <title>Schedule Checker</title>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+  </head>
+  <body>
+    <div id="app" data-v-app="">
+      <!--v-if-->
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
+          <div class="container-fluid">
+            <a href="/" class="router-link-active router-link-exact-active navbar-brand" aria-current="page"
+              >Schedule Checker 테스트</a
+            ><button
+              class="navbar-toggler p-0 border-0"
+              type="button"
+              id="navbarSideCollapse"
+              aria-label="Toggle navigation"
+              data-bs-toggle="collapse"
+              data-bs-target="#navBarsMobile"
+              aria-controls="navBarsMobile"
+              aria-expanded="true"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse show" id="navBarsMobile">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a aria-current="page" href="/schedules" class="nav-link">스케줄</a></li>
+                <!--v-if-->
+              </ul>
+              <!--v-if-->
+              <div class="d-flex"><a href="/login" class="btn btn-outline-light" id="btnLogin">로그인</a></div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main class="container py-2 my-3">
+        <h5 class="tac">
+          <span><a href="#" onclick="history.go(-1);">Back</a></span>
+        </h5>
+        <h5 class="tac">
+          <img src="../image/403.jpg" alt="403" width="750" height="600" />
+        </h5>
+        <hr />
+      </main>
+      <footer class="container py-2">
+        <div class="border-top">
+          <p class="text-center text-muted mt-2">
+            Copyright 2022 DevOps 2 team, BespinGlobalKorea All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
