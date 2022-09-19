@@ -10,7 +10,7 @@ services:
     ports:
       - '8001:8001'
     environment:
-      - DB_HOST=host.docker.internal
+      - DB_HOST=144.24.79.181
   be-auth:
     image: idealful/example:2.0.0
     container_name: be-auth
@@ -20,7 +20,7 @@ services:
     ports:
       - '8002:8002'
   fe:
-    image: idealful/example:4.0.0
+    image: idealful/example:3.0.0
     container_name: fe
     build:
       context: ./fe
