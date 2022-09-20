@@ -21,8 +21,8 @@ COPY ./default.conf /etc/nginx/conf.d
 # ENV 설정
 
 ENV VITE_APP_SERVER=
-ENV VITE_APP_BASE_URL_BACKEND_HOME=http://k8s-default-toyhomei-5c0af96e17-333535182.ap-northeast-2.elb.amazonaws.com/home
-ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://k8s-default-toyauthi-581853d7c8-590377782.ap-northeast-2.elb.amazonaws.com/auth
+ENV VITE_APP_BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com:8001/home
+ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com:8002/auth
 ENV VITE_APP_BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com
 ENV VITE_APP_GOOGLE_CLIENT_ID=594148934886-26bepje4v1immq8gii3jiusci6d989dn.apps.googleusercontent.com
 
