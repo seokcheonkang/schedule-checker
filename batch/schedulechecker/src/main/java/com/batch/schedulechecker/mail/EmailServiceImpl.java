@@ -24,15 +24,15 @@ public class EmailServiceImpl implements EmailService {
 	@Value("${spring.mail.username}")
 	private String sender;
 
-	private String SUCCESS = "Mail sent Successfully";
-	private String FAIL = "Error while sending mail!!!";
+	private String STATUS_SUCCESS = "[SUCCESS] The email has been sent!";
+	private String STATUS_ERROR = "[ERROR] The email is failed to be sent.";
 
 	/**
 	 * To send a simple email
 	 */
 	@Override
 	public String sendSimpleMail(EmailEntity emailEntity) {
-		String result = this.FAIL;
+		String result = this.STATUS_ERROR;
 
 		try {
 			// Creating a simple mail message
@@ -47,14 +47,12 @@ public class EmailServiceImpl implements EmailService {
 			// Sending the mail
 			javaMailSender.send(mailMessage);
 
-			result = this.SUCCESS;
+			result = this.STATUS_SUCCESS;
 
 			log.info("sender : {}", sender);
 			log.info("entity : {}", emailEntity);
 		} catch (Exception e) {
-			result = this.FAIL;
-		} finally {
-			log.info("result : {}", result);
+			result = this.STATUS_ERROR;
 		}
 		
 		return result;
@@ -65,7 +63,7 @@ public class EmailServiceImpl implements EmailService {
 	 */
 	@Override
 	public String sendMailWithAttachment(EmailEntity emailEntity) {
-		String result = this.FAIL;
+		String result = this.STATUS_ERROR;
 
 		// Creating a mime message
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -87,14 +85,12 @@ public class EmailServiceImpl implements EmailService {
 			// Sending the mail
 			javaMailSender.send(mimeMessage);
 
-			result = this.SUCCESS;
+			result = this.STATUS_SUCCESS;
 
 			log.info("sender : {}", sender);
 			log.info("entity : {}", emailEntity);
 		} catch (Exception e) {
-			result = this.FAIL;
-		} finally {
-			log.info("result : {}", result);
+			result = this.STATUS_ERROR;
 		}
 		
 		return result;
