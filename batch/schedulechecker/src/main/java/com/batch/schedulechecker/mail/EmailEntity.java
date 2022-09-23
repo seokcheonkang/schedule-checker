@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmailEntity {
 
-	// Class data members
 	private String to;
-	private String text;
 	private String subject;
+	private String text;
 	private String attachment;
+
+	@Override
+	public String toString() {
+		return "EmailEntity [to=" + to + ", subject=" + subject + ", text=" + text + ", attachment=" + attachment + "]";
+	}
 }

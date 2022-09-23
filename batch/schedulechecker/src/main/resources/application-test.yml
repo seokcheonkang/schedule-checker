@@ -4,10 +4,23 @@ spring:
       initialize-schema: always # automatic create DB schema objects on boot. ex) always, embedded, never
   datasource:
     url: jdbc:mariadb://144.24.79.181:3306/scdb
-    password: bespin123
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: idealful@gmail.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 logging:
   level:
     root: info
     com:
       batch: info
+
+custom:
+  INTERVAL: 60000 # MilliSeconds. ex) 1ms * 1000 = 1s, 1ms * 1000 * 60 = 60s = 1m
+  SCHEDULE_NOTI_LIMIT_DAY: 2
+  BASE_URL_THIS: http://idealful.kro.kr

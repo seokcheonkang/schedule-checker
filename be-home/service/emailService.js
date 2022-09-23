@@ -29,7 +29,7 @@ const service = {
       const contentHtml = `
         <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
         <h2>${content}</h2>
-        <h2>${process.env.BASE_URL_FRONTEND}/home/schedules/${seq}</h2>
+        <h2>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</h2>
       `;
 
       EMAIL.sendMail(email, title, content, contentHtml);
@@ -51,8 +51,11 @@ const service = {
         const content = '';
         const contentHtml = `
           <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
-          <h2>스케줄이 생성되었습니다. 아래 링크에서 확인하세요.</h2>
-          <h2>${process.env.BASE_URL_FRONTEND}/home/schedules/${seq}</h2>
+          <br>
+          <div>스케줄이 생성되었습니다.</div>
+          <div>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</div>
+          <br>
+          <div>감사합니다.</div>
         `;
         EMAIL.sendMail(email, title, content, contentHtml);
       }
@@ -79,8 +82,11 @@ const service = {
         const content = '';
         const contentHtml = `
           <h1>안녕하세요? Schedule Checker 관리자입니다.</h1>
-          <h2>스케줄이 수정되었습니다. 아래 링크에서 확인하세요.</h2>
-          <h2>${process.env.BASE_URL_FRONTEND}/home/schedules/${seq}</h2>
+          <br>
+          <div>스케줄이 수정되었습니다.</div>
+          <div>${process.env.BASE_URL_FRONTEND}/schedules/${seq}</div>
+          <br>
+          <div>감사합니다.</div>
         `;
         EMAIL.sendMail(email, title, content, contentHtml);
       }
