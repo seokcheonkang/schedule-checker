@@ -21,4 +21,4 @@ logging:
 custom:
   INTERVAL: 60000 # MilliSeconds. ex) 1ms * 1000 = 1s, 1ms * 1000 * 60 = 60s = 1m
   SCHEDULE_NOTI_LIMIT_DAY: 2
-  BASE_URL_THIS: k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com
+  BASE_URL_THIS: schedulechecker.kro.kr

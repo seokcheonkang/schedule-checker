@@ -21,9 +21,9 @@ COPY ./default.conf /etc/nginx/conf.d
 # ENV 설정
 
 ENV VITE_APP_SERVER=
-ENV VITE_APP_BASE_URL_BACKEND_HOME=http://k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com/home
-ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com/auth
-ENV VITE_APP_BASE_URL_FRONTEND=http://k8s-default-frontend-0d7d9686de-951151430.ap-northeast-2.elb.amazonaws.com
+ENV VITE_APP_BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr/home
+ENV VITE_APP_BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr/auth
+ENV VITE_APP_BASE_URL_FRONTEND=http://schedulechecker.kro.kr
 ENV VITE_APP_GOOGLE_CLIENT_ID=594148934886-26bepje4v1immq8gii3jiusci6d989dn.apps.googleusercontent.com
 
 # PORT 매핑
