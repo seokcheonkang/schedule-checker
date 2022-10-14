@@ -1,4 +1,4 @@
-package com.batch.schedulechecker.job;
+package com.batch.schedulechecker.job.limitDay;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -13,18 +13,18 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 @EnableBatchProcessing
 @Component
-public class BatchExecutor {
+public class BatchExecutorNotifySchedulesToExpireOnTheLimitDay {
 
 	@Autowired
-	JobLauncher jobLauncher;
+	JobLauncher jobLauncherNotifySchedulesToExpireOnTheLimitDay;
 
 	@Autowired
-	Job job;
+	Job jobNotifySchedulesToExpireOnTheLimitDay;
 
 	@Scheduled(fixedRateString = "${custom.INTERVAL}")
 	public void perform() throws Exception {
-		JobParameters jobParameters = new JobParametersBuilder()
+		JobParameters jobParametersNotifySchedulesToExpireOnTheLimitDay = new JobParametersBuilder()
 				.addString("JobID", String.valueOf(System.currentTimeMillis())).toJobParameters();
-		jobLauncher.run(job, jobParameters);
+		jobLauncherNotifySchedulesToExpireOnTheLimitDay.run(jobNotifySchedulesToExpireOnTheLimitDay, jobParametersNotifySchedulesToExpireOnTheLimitDay);
 	}
 }
