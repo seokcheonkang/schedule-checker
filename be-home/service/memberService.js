@@ -146,7 +146,7 @@ const service = {
 
     await db.query(sql, dbParam);
 
-    return service.getMemberByUserEmail(userInfo.user_email);
+    return service.selectMemberByUserEmail(userInfo.user_email);
   },
   deleteMember: async (userEmail) => {
     const sql = `
