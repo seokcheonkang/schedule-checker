@@ -221,7 +221,7 @@ const service = {
 
       const seq = '' + scheduleInfo.insertId;
       const email = scheduleInfo.checked_users[i];
-      const status = scheduleInfo.status;
+      const status = '1';
 
       subParam.push(seq);
       subParam.push(email);
