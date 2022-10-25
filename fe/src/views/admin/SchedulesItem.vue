@@ -72,7 +72,6 @@ const getScheduleInfo = async (schedule_code) => {
     state.scheduleInfo.all_user = response.result.all_user.split(',').join('<br>');
     state.scheduleInfo.completed_user = response.result.completed_user.split(',').join('<br>');
     state.scheduleInfo.uncompleted_user = response.result.uncompleted_user.split(',').join('<br>');
-    state.scheduleInfo.content = response.result.content.replaceAll('\r', '<br>');
     state.scheduleInfo.content = response.result.content.replaceAll('\n', '<br>');
   } else if (response.code === MESSAGE.CODE_ERR_BAD_REQUEST || response.code === MESSAGE.CODE_HTTP_STATUS_419) {
     swal.fire({

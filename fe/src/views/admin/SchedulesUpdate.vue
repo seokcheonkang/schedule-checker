@@ -73,7 +73,7 @@ const setScheduleItem = () => {
   state.form.status = state.scheduleInfoOrigin.status;
   state.form.completed_user = state.scheduleInfoOrigin.completed_user;
   state.form.title = state.scheduleInfoOrigin.title;
-  state.form.content = state.scheduleInfoOrigin.content;
+  state.form.content = state.scheduleInfoOrigin.content.replaceAll('<br>', '\n');
   state.form.all_user_origin = state.scheduleInfoOrigin.all_user_origin;
 };
 
