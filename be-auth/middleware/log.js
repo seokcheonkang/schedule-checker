@@ -22,7 +22,7 @@ const showLog = (type, val1, val2, val3, val4, val5) => {
   }
 
   console.log(
-    `[${type}][${datetime}]`,
+    `${datetime} [${type}]`,
     val1,
     val2 ? ', ' + val2 : '',
     val3 ? ', ' + val3 : '',
@@ -32,7 +32,7 @@ const showLog = (type, val1, val2, val3, val4, val5) => {
 };
 
 const LOG = (val1 = '', val2 = '', val3 = '', val4 = '', val5 = '') => {
-  const type = 'LOG';
+  const type = 'INFO';
 
   if (process.env.IS_LOG === 'Y') {
     showLog(type, val1, val2, val3, val4, val5);
