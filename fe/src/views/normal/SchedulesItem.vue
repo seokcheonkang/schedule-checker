@@ -47,9 +47,10 @@ const state = reactive({
     regist_date: null,
     limit_date: null,
     content: null,
+    is_expired: null,
   },
   targetInfo: {
-    isMine: false,
+    is_mine: false,
     user_email: null,
     status: null,
   },
@@ -98,11 +99,11 @@ const getScheduleMemberInfo = async (schedule_code, user_email) => {
 
   if (response.code === MESSAGE.CODE_HTTP_STATUS_200) {
     if (user_email === response?.result?.user_email) {
-      state.targetInfo.isMine = true;
+      state.targetInfo.is_mine = true;
       state.targetInfo.user_email = response.result.user_email;
       state.targetInfo.status = response.result.status;
     } else {
-      state.targetInfo.isMine = false;
+      state.targetInfo.is_mine = false;
       state.targetInfo.user_email = null;
       state.targetInfo.status = null;
     }
@@ -121,11 +122,11 @@ const getScheduleMemberInfo = async (schedule_code, user_email) => {
 
 const updateSchedule = async () => {
   const schedule_code = state.scheduleInfo.schedule_code;
-  const isMine = state.targetInfo.isMine;
+  const is_mine = state.targetInfo.is_mine;
   const user_email = state.targetInfo.user_email;
   const status = state.targetInfo.status;
 
-  if (!isMine) {
+  if (!is_mine) {
     swal.fire({
       icon: 'error',
       title: '현재 스케줄의 대상이 아닙니다.',
@@ -250,16 +251,21 @@ onMounted(() => {
             </h5>
             <h5 class="mb-3">
               <span class="text-muted">만료일시 : </span>
-              <span class="text-dark">
-                {{ state.scheduleInfo.limit_date }}
+              <span v-if="state.scheduleInfo.is_expired == 'Y'">
+                <span class="txt-red">
+                  {{ state.scheduleInfo.limit_date }}
+                </span>
               </span>
+              <span v-else>
+                <span class="text-dark">{{ state.scheduleInfo.limit_date }} </span></span
+              >
             </h5>
             <h5 class="mb-3 text-muted">내용</h5>
             <div class="mb-3">
               <span v-html="state.scheduleInfo.content"></span>
             </div>
           </div>
-          <div v-if="state.targetInfo.isMine">
+          <div v-if="state.targetInfo.is_mine">
             <hr />
             <h5 class="mb-3 text-muted">내 스케줄 진행 상태</h5>
             <div class="form-check" v-for="(column, index) in ScheduleMemberStatus">

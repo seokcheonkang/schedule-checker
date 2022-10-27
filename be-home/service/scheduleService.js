@@ -29,6 +29,10 @@ const schedules = {
       key: 'limit_date',
       val: '마감일시',
     },
+    {
+      key: 'is_expired',
+      val: '마감여부',
+    },
   ],
   dataList: [],
 };
@@ -117,6 +121,9 @@ const service = {
          , ifnull(group_concat(t1.completed_user separator ','), '없음') as completed_user
          , ifnull(group_concat(t1.uncompleted_user separator ','), '없음') as uncompleted_user
          , max(t1.content) as content
+         , case when t1.limit_date <= now() then 'Y'
+                else 'N' 
+            end as is_expired
       from (
             select 
                    a.schedule_code
