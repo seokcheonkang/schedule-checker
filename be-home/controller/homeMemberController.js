@@ -22,19 +22,27 @@ const {
 } = require(`${SERVICE_PATH}/memberService.js`);
 
 // ---
-router.get('/', verifyJwt, async (req, res) => {
-  LOGD(req.originalUrl);
+router.get('/', async (req, res) => {
+  LOG(req.originalUrl);
 
-  const result = await selectMembers();
-  const response = { code: null, result };
-  response.code = 200; // OK
-  if (!result) {
-    response.code = 204; // No Content
+  let response = {};
+  try {
+    const result = await selectMembers();
+
+    response.code = 200; // OK
+    if (!result) {
+      response.code = 204; // No Content
+    }
+    response.result = result;
+
+    LOGD(JSON.stringify(response));
+  } catch (error) {
+    response.code = 500; // Internal Server Error
+    response.result = 'Error occured. Ask the administrator.';
+    LOG('[ERROR]', JSON.stringify(error?.toString()));
+  } finally {
+    res.status(response.code).json(response);
   }
-
-  LOGD(JSON.stringify(response));
-
-  res.status(response.code).json(response);
 });
 
 // router.get('/:user_email', verifyJwt, async (req, res) => {
