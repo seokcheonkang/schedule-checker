@@ -43,7 +43,7 @@ const UTIL = {
       if (thisResponse.result) {
         thisResponse.status = 200;
         thisResponse.code = 200;
-        thisResponse.message = '조회 성공';
+        thisResponse.message = '성공';
       } else {
         thisResponse.status = 204;
         thisResponse.code = 204;

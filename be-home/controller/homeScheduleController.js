@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 
   const result = await selectSchedules();
 
-  const response = { code: 200, message: '조회 성공', result };
+  const response = { code: 200, message: '성공', result };
 
   LOGD(JSON.stringify(response));
 
@@ -44,7 +44,7 @@ router.get('/:schedule_code', async (req, res) => {
 
   const result = await selectSchedule(schedule_code);
 
-  const response = { code: 200, message: '조회 성공', result };
+  const response = { code: 200, message: '성공', result };
 
   LOGD(JSON.stringify(response));
 
@@ -127,7 +127,7 @@ router.get('/:schedule_code/:user_email', verifyJwt, async (req, res) => {
 
   const result = await selectScheduleMember(scheduleInfo);
 
-  const response = { code: 200, message: '조회 성공', result };
+  const response = { code: 200, message: '성공', result };
 
   LOGD(JSON.stringify(response));
 

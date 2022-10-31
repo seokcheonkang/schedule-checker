@@ -23,12 +23,14 @@ router.get('/', (req, res) => {
       response.code = 204; // No Content
     }
     response.result = result;
-    response.message = '조회 성공';
+    response.message = '성공';
 
     LOGD(JSON.stringify(response));
   } catch (error) {
     response.code = 500; // Internal Server Error
-    response.result = 'Error occured. Ask the administrator.';
+    response.result = null;
+    response.message = '에러가 발생했습니다. 관리자에게 문의하세요.';
+
     LOG('[ERROR]', JSON.stringify(error?.toString()));
   } finally {
     res.status(200).json(response);
