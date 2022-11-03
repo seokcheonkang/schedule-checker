@@ -122,7 +122,7 @@ jobs:
           VITE_APP_IS_LOG: ${{ secrets.PRD_VITE_APP_IS_LOG }}
           VITE_APP_BASE_URL_BACKEND_HOME: http://schedulechecker.kro.kr/home
           VITE_APP_BASE_URL_BACKEND_AUTH: http://schedulechecker.kro.kr/auth
-          VITE_APP_BASE_URL_FRONTEND: ${{ secrets.PRD_VITE_APP_BASE_URL_FRONTEND }}
+          VITE_APP_BASE_URL_FRONTEND: http://schedulechecker.kro.kr
           VITE_APP_GOOGLE_CLIENT_ID: ${{secrets.PRD_VITE_APP_GOOGLE_CLIENT_ID}}
 
       - name: npm install
