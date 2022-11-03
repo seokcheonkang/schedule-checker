@@ -23,14 +23,14 @@ COPY . .
 # VOLUME ["/app/deploy/secret", "/app/deploy/secret"]
 
 # ENV 설정
-ENV BASE_URL_THIS=http://schedulechecker.kro.kr:8001/home
-ENV BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr:8001/home
-ENV BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr:8002/auth
+ENV BASE_URL_THIS=http://schedulechecker.kro.kr/home
+ENV BASE_URL_BACKEND_HOME=http://schedulechecker.kro.kr/home
+ENV BASE_URL_BACKEND_AUTH=http://schedulechecker.kro.kr/auth
 ENV BASE_URL_FRONTEND=http://schedulechecker.kro.kr
 ENV DB_HOST=10.0.144.10
 
 # PORT 매핑
-EXPOSE 8001
+EXPOSE 80
 
 # 실행
 CMD ["npm", "run", "prd"]
