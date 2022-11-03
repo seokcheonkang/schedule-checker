@@ -64,6 +64,7 @@ const service = {
          , sum(t1.completed_count) + sum(t1.uncompleted_count) as total_count
          , sum(t1.completed_count) as completed_count
          , sum(t1.uncompleted_count) as uncompleted_count
+         , max(t1.is_expired) as is_expired
       from (
             select 
                    ts.schedule_code
@@ -83,6 +84,9 @@ const service = {
                  , case when tsd.status != '99' then 1 
                         else 0
                     end as uncompleted_count
+                 , case when ts.limit_date <= now() then 'Y'
+                        else 'N' 
+                    end as is_expired
               from tb_schedule ts
               left join tb_schedule_detail tsd
                 on ts.schedule_code = tsd.schedule_code
@@ -121,43 +125,44 @@ const service = {
          , ifnull(group_concat(t1.completed_user separator ','), '없음') as completed_user
          , ifnull(group_concat(t1.uncompleted_user separator ','), '없음') as uncompleted_user
          , max(t1.content) as content
-         , case when t1.limit_date <= now() then 'Y'
-                else 'N' 
-            end as is_expired
+         , max(t1.is_expired) as is_expired
       from (
             select 
-                   a.schedule_code
-                 , a.title
-                 , a.status
-                 , a.regist_date
-                 , a.limit_date
-                 , case when a.status = '1' then '준비'
-                        when a.status = '2' then '취소'
-                        when a.status = '3' then '만료'
-                        when a.status = '99' then '진행'
+                   ts.schedule_code
+                 , ts.title
+                 , ts.status
+                 , ts.regist_date
+                 , ts.limit_date
+                 , case when ts.status = '1' then '준비'
+                        when ts.status = '2' then '취소'
+                        when ts.status = '3' then '만료'
+                        when ts.status = '99' then '진행'
                         else '알수없음'
                     end as status_val
-                 , case when b.status = '99' then 1 
+                 , case when tsd.status = '99' then 1 
                         else 0
                     end as completed_count
-                 , case when b.status != '99' then 1 
+                 , case when tsd.status != '99' then 1 
                         else 0
                     end as uncompleted_count
-                 , concat(c.user_name, '/', c.user_email) as all_user
-                 , case when b.status = '99' then concat(c.user_name, '/', c.user_email)
+                 , concat(tu.user_name, '/', tu.user_email) as all_user
+                 , case when tsd.status = '99' then concat(tu.user_name, '/', tu.user_email)
                         else null
                     end as completed_user
-                 , case when b.status != '99' then concat(c.user_name, '/', c.user_email)
+                 , case when tsd.status != '99' then concat(tu.user_name, '/', tu.user_email)
                    else null
                     end as uncompleted_user
-                 , a.content
-              from tb_schedule a
-              left join tb_schedule_detail b
-                on a.schedule_code = b.schedule_code
-              left join tb_user c
-                on b.user_email = c.user_email
+                 , ts.content
+                 , case when ts.limit_date <= now() then 'Y'
+                        else 'N' 
+                    end as is_expired
+              from tb_schedule ts
+              left join tb_schedule_detail tsd
+                on ts.schedule_code = tsd.schedule_code
+              left join tb_user tu
+                on tsd.user_email = tu.user_email
              where 1=1 
-               and a.schedule_code = ?
+               and ts.schedule_code = ?
         ) t1
      where 1=1
      group by t1.schedule_code

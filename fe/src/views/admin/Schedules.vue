@@ -176,6 +176,7 @@ onMounted(() => {
           <td class="text-center" :title="item.total_count">{{ item.total_count }}</td>
           <td class="text-center" :title="item.regist_date">{{ item.regist_date }}</td>
           <td class="text-center" :title="item.limit_date">{{ item.limit_date }}</td>
+          <td class="text-center" :title="item.is_expired">{{ item.is_expired }}</td>
         </tr>
       </tbody>
     </table>
