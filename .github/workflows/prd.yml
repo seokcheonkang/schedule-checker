@@ -60,7 +60,7 @@ jobs:
           IMAGE_TAG: ${{ steps.image.outputs.version }}
         run: |
           echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG
   be-auth:
     runs-on: ubuntu-20.04
