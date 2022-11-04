@@ -50,9 +50,9 @@ jobs:
       - name: Get image tag(verion)
         id: image
         run: |
-          VERSION=\$(echo \${{ github.sha }} | cut -c1-8)
-          echo VERSION=\$VERSION
-          echo "::set-output name=version::\$VERSION"
+          VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+          echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
 
       - name: Push image to Amazon ECR after Build and tag
         env:
@@ -98,9 +98,9 @@ jobs:
       - name: Get image tag(verion)
         id: image
         run: |
-          VERSION=\$(echo \${{ github.sha }} | cut -c1-8)
-          echo VERSION=\$VERSION
-          echo "::set-output name=version::\$VERSION"
+          VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+          echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
 
       - name: Push image to Amazon ECR after Build and tag
         env:
@@ -159,9 +159,9 @@ jobs:
       - name: Get image tag(verion)
         id: image
         run: |
-          VERSION=\$(echo \${{ github.sha }} | cut -c1-8)
-          echo VERSION=\$VERSION
-          echo "::set-output name=version::\$VERSION"
+          VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+          echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
 
       - name: Push image to Amazon ECR after Build and tag
         env:
