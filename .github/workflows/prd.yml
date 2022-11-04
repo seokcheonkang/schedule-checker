@@ -62,56 +62,56 @@ jobs:
           echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker build -t $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$REPOSITORY_PATH1:$IMAGE_TAG
-  be-auth:
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        working-directory: ./be-auth
-    steps:
-      - name: Import actions from github
-        uses: actions/checkout@v3
+  # be-auth:
+  #   runs-on: ubuntu-20.04
+  #   defaults:
+  #     run:
+  #       working-directory: ./be-auth
+  #   steps:
+  #     - name: Import actions from github
+  #       uses: actions/checkout@v3
 
-      - name: Check build date
-        run: |
-          echo "BUILD_DATE=$(date '+%Y-%m-%d_%H:%M:%S')"
-          echo "BUILD_ID=${GITHUB_RUN_ID}"
-          echo "BUILD_REF=${GITHUB_REF}"
+  #     - name: Check build date
+  #       run: |
+  #         echo "BUILD_DATE=$(date '+%Y-%m-%d_%H:%M:%S')"
+  #         echo "BUILD_ID=${GITHUB_RUN_ID}"
+  #         echo "BUILD_REF=${GITHUB_REF}"
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.17
+  #     - name: Set up Node.js version
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.17
 
-      - name: Npm install
-        run: npm ci
+  #     - name: Npm install
+  #       run: npm ci
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+  #     - name: Login to Amazon ECR
+  #       id: login-ecr
+  #       uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Get image tag(verion)
-        id: image
-        run: |
-          VERSION=$(echo ${{ github.sha }} | cut -c1-8)
-          echo VERSION=$VERSION
-          echo "::set-output name=version::$VERSION"
+  #     - name: Get image tag(verion)
+  #       id: image
+  #       run: |
+  #         VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+  #         echo VERSION=$VERSION
+  #         echo "::set-output name=version::$VERSION"
 
-      - name: Push image to Amazon ECR after Build and tag
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ steps.image.outputs.version }}
-        run: |
-          echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG
-  fe:
+  #     - name: Push image to Amazon ECR after Build and tag
+  #       env:
+  #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #         IMAGE_TAG: ${{ steps.image.outputs.version }}
+  #       run: |
+  #         echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+  #         docker build -t $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG .
+  #         docker push $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG
+  # fe:
     runs-on: ubuntu-20.04
     defaults:
       run:
