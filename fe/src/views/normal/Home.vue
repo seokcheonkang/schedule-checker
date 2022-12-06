@@ -71,23 +71,51 @@ onMounted(() => {
 </script>
 
 <template>
-  <h5 class="tac">
-    <img src="/assets/image/bespinglobal_logo_B.png" alt="베스핀글로벌" width="300" height="60" />
-  </h5>
-  <hr />
   <h5 class="txt-red" v-if="loginStore.isLogin && loginStore.status !== '99'">
     <span>code : {{ loginStore.status }}, 당신의 계정은 사용 허가가 필요합니다. 관리자에게 문의하세요. </span>
   </h5>
-  <h5 class="">
-    <span>User-Agent : </span>
-    <span> {{ state.msg.userAgent }}</span>
+  <h5 class="tac">
+    <img src="/assets/image/opinion.png" alt="소감" class="main_image" />
   </h5>
-  <h5 class="">
-    <span>hostname : </span>
-    <span>{{ state.msg.hostname }} </span>
-  </h5>
+  <div class="dspn">
+    <h5>
+      <span>User-Agent : </span>
+      <span> {{ state.msg.userAgent }}</span>
+    </h5>
+    <h5>
+      <span>hostname : </span>
+      <span>{{ state.msg.hostname }} </span>
+    </h5>
+  </div>
   <hr />
-  <h5 class="">
-    <span>Link : <a href="https://bespinglobal.okta.com/" target="_blank">Okta</a> </span>
-  </h5>
+  <div class="container text-center w-25">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-primary">Link</li>
+      <li class="list-group-item list-group-item-info">
+        <a
+          href="https://bespinlearmingmate.notion.site/Top-ShareMate-Schedule-Checker-1710a43460824f67964991aaa0bc33e9"
+          target="_blank"
+          >Notion</a
+        >
+      </li>
+      <li class="list-group-item list-group-item-info">
+        <a href="https://github.com/KimYunBeom/schedule-checker" target="_blank">Github</a>
+      </li>
+    </ul>
+  </div>
 </template>
+
+<style scoped>
+.main_image {
+  width: 50%;
+  height: 60%;
+}
+
+.dspn {
+  display: none;
+}
+
+a:hover {
+  font-weight: bold;
+}
+</style>
