@@ -252,7 +252,7 @@ onMounted(async () => {
           </div>
           <div class="d-flex justify-content-start">
             <div class="form-floating mb-3 w-50 me-2">
-              <select class="form-select me-2 p-select dpin" aria-label="searchOption" v-model="state.form.status">
+              <select class="form-select me-2 p-select dpin" aria-label="searchOption1" v-model="state.form.status">
                 <option :value="column.key" v-for="column in ScheduleStatus">
                   {{ column.val }}
                 </option>
