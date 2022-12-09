@@ -78,7 +78,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h2 class="text-center mt-5">스케줄 상태 / 종합</h2>
+  <h2 class="text-center mt-5">스케줄 현황</h2>
   <Chart :data="chart.data" :direction="chart.direction" :margin="chart.margin" :size="chart.size">
     <template #layers>
       <Grid strokeDasharray="2,2" />
