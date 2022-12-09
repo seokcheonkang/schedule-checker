@@ -132,8 +132,8 @@ onMounted(() => {
       placeholder="검색어"
       aria-label="검색"
       maxlength="30"
-      v-model="state.searchValue"
-      @input="pagination.getSearchList"
+      :value="state.searchValue"
+      @input="state.searchValue = $event.target.value"
     />
   </form>
   <div class="table-responsive">
