@@ -7,10 +7,11 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
+  ROOT_PATH: schedule-checker-k8s
   REPOSITORY_PATH1: schedulechecker_be_home
   REPOSITORY_PATH2: schedulechecker_be_auth
   REPOSITORY_PATH3: schedulechecker_fe
-  # IMAGE_TAG: latest
+  USERNAME: KimYunBeom
 
 jobs:
   be-home:
@@ -58,7 +59,7 @@ jobs:
         id: image-info
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: schedulechecker_be_home
+          ECR_REPOSITORY: ${{ env.REPOSITORY_PATH1 }}
           IMAGE_TAG: ${{ steps.image.outputs.version }}
         run: |
           echo "::set-output name=ecr_repository::$ECR_REPOSITORY"
@@ -72,26 +73,26 @@ jobs:
       - name: Checkout kustomize repository
         uses: actions/checkout@v2
         with:
-          repository: KimYunBeom/schedule-checker-k8s
+          repository: ${{ env.USERNAME }}/${{ env.ROOT_PATH }}
           ref: main
           token: ${{ secrets.ACTION_TOKEN }}
-          path: schedule-checker-k8s
+          path: ${{ env.ROOT_PATH }}
 
       - name: Update Kubernetes resources
         run: |
           echo ${{ steps.login-ecr.outputs.registry }}
           echo ${{ steps.image-info.outputs.ecr_repository }}
           echo ${{ steps.image-info.outputs.image_tag }}
-          cd ../schedule-checker-k8s/overlays/dev
+          cd ../${{ env.ROOT_PATH }}/overlays/dev
           kustomize edit set image ${{ steps.login-ecr.outputs.registry}}/${{ steps.image-info.outputs.ecr_repository }}=${{ steps.login-ecr.outputs.registry}}/${{ steps.image-info.outputs.ecr_repository }}:${{ steps.image-info.outputs.image_tag }}
           cat kustomization.yaml
 
       - name: Commit files
         run: |
-          cd ../schedule-checker-k8s
+          cd ../${{ env.ROOT_PATH }}
           git config --global user.email "yunbeom.kim@bespinglobal.com"
           git config --global user.name "KimYunBeom"
-          git commit -am "Update image tag for argo"
+          git commit -am "Update image tag for ARGO REPOSITORY_PATH1"
           git push -u origin main
   # be-auth:
   #   runs-on: ubuntu-20.04
@@ -134,14 +135,45 @@ jobs:
   #         echo VERSION=$VERSION
   #         echo "::set-output name=version::$VERSION"
 
-  #     - name: Push image to Amazon ECR after Build and tag
+  #     - name: Build, tag, and push image to Amazon ECR
+  #       id: image-info
   #       env:
   #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #         ECR_REPOSITORY: ${{ env.REPOSITORY_PATH2 }}
   #         IMAGE_TAG: ${{ steps.image.outputs.version }}
   #       run: |
-  #         echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-  #         docker build -t $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG .
-  #         docker push $ECR_REGISTRY/$REPOSITORY_PATH2:$IMAGE_TAG
+  #         echo "::set-output name=ecr_repository::$ECR_REPOSITORY"
+  #         echo "::set-output name=image_tag::$IMAGE_TAG"
+  #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+  #         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  #     - name: Setup Kustomize
+  #       uses: imranismail/setup-kustomize@v1
+
+  #     - name: Checkout kustomize repository
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: ${{ env.USERNAME }}/${{ env.ROOT_PATH }}
+  #         ref: main
+  #         token: ${{ secrets.ACTION_TOKEN }}
+  #         path: ${{ env.ROOT_PATH }}
+
+  #     - name: Update Kubernetes resources
+  #       run: |
+  #         echo ${{ steps.login-ecr.outputs.registry }}
+  #         echo ${{ steps.image-info.outputs.ecr_repository }}
+  #         echo ${{ steps.image-info.outputs.image_tag }}
+  #         cd ../${{ env.ROOT_PATH }}/overlays/dev
+  #         kustomize edit set image ${{ steps.login-ecr.outputs.registry}}/${{ steps.image-info.outputs.ecr_repository }}=${{ steps.login-ecr.outputs.registry}}/${{ steps.image-info.outputs.ecr_repository }}:${{ steps.image-info.outputs.image_tag }}
+  #         cat kustomization.yaml
+
+  #     - name: Commit files
+  #       run: |
+  #         cd ../${{ env.ROOT_PATH }}
+  #         git config --global user.email "yunbeom.kim@bespinglobal.com"
+  #         git config --global user.name "KimYunBeom"
+  #         git commit -am "Update image tag for ARGO REPOSITORY_PATH2"
+  #         git push -u origin main
   # fe:
   # runs-on: ubuntu-20.04
   # defaults:
