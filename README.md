@@ -1,6 +1,6 @@
 # schedule-checker
 
-## updated : 2022-10-28
+## updated : 2022-12-15
 
 ---
 
@@ -105,9 +105,14 @@ batch
 
 - Github Actions
 
+### CD
+
+- Argo CD
+
 ### Cloud
 
-- Oracle Cloud
+- Oracle Cloud (TEST)
+- AWS ECR (PRD)
 
 ## Environment > Local Setting
 
@@ -128,30 +133,13 @@ $vite build --mode test
 
 ## Deployment
 
-### ~~Github Pages - 종료~~
-
-정적 페이지 임시 배포
-
-주의 : 웹 브라우저에서 Refresh(단축키 F5)는 /(Root) 에서만 실행하세요. 로컬은 F5 됩니다.
-
-[Schedule Checker Github Pages](https://kimyunbeom.github.io)
-
-#### Action
-
-schedule-checker의 dist 폴더를 수동 업로드 혹은 아래 실행
-
-```
-92copy-gitHubPages.bat
-```
-
-## Github Actions
-
-#### Action
-
-원격 소스 업로드 이후, 자체 빌드 및 컨테이너 이미지 생성됨
-
-[Schedule Checker](https://idealful.kro.kr)
+### Github Actions
 
 ```
 git push
 ```
+
+## Target Site Url
+
+[Schedule Checker Test](https://idealful.kro.kr)
+[Schedule Checker Prd](https://schedule-checker.kro.kr)

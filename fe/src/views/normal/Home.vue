@@ -99,7 +99,10 @@ onMounted(() => {
         >
       </li>
       <li class="list-group-item list-group-item-info">
-        <a href="https://github.com/KimYunBeom/schedule-checker" target="_blank">Github</a>
+        <a href="https://github.com/KimYunBeom/schedule-checker" target="_blank">Github, Source</a>
+      </li>
+      <li class="list-group-item list-group-item-info">
+        <a href="https://github.com/KimYunBeom/schedule-checker-k8s" target="_blank">Github, CD</a>
       </li>
     </ul>
   </div>
