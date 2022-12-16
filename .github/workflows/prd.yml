@@ -11,7 +11,7 @@ env:
   REPOSITORY_PATH1: schedulechecker_be_home
   REPOSITORY_PATH2: schedulechecker_be_auth
   REPOSITORY_PATH3: schedulechecker_fe
-  USERNAME: KimYunBeom
+  USERNAME: seokcheonkang
 
 jobs:
   be-home:
@@ -90,8 +90,8 @@ jobs:
       - name: Commit files
         run: |
           cd ../${{ env.ROOT_PATH }}
-          git config --global user.email "yunbeom.kim@bespinglobal.com"
-          git config --global user.name "KimYunBeom"
+          git config --global user.email "seokcheon.kang@bespinglobal.com"
+          git config --global user.name "seokcheonkang"
           git commit -am "Update image tag for ARGO REPOSITORY_PATH1"
           git push -u origin main
   be-auth:
@@ -170,8 +170,8 @@ jobs:
       - name: Commit files
         run: |
           cd ../${{ env.ROOT_PATH }}
-          git config --global user.email "yunbeom.kim@bespinglobal.com"
-          git config --global user.name "KimYunBeom"
+          git config --global user.email "seokcheon.kang@bespinglobal.com"
+          git config --global user.name "seokcheonkang"
           git commit -am "Update image tag for ARGO REPOSITORY_PATH2"
           git push -u origin main
   fe:
@@ -263,7 +263,7 @@ jobs:
       - name: Commit files
         run: |
           cd ../${{ env.ROOT_PATH }}
-          git config --global user.email "yunbeom.kim@bespinglobal.com"
-          git config --global user.name "KimYunBeom"
+          git config --global user.email "seokcheon.kang@bespinglobal.com"
+          git config --global user.name "seokcheonkang"
           git commit -am "Update image tag for ARGO REPOSITORY_PATH3"
           git push -u origin main
