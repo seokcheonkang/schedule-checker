@@ -1,6 +1,6 @@
 # schedule-checker
 
-## updated : 2022-12-15
+## updated : 2022-12-16
 
 ---
 
